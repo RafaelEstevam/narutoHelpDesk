@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Provider } from 'react-router-dom';
 
 import LoginView from './views/Login/login.view'
 import ProfileView from './views/Profile/profile.view'
@@ -11,8 +11,8 @@ function Routes(){
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={LoginView} />
-                <Route path="/profile" exact component={ProfileView} />
-                <Route path="/users" exact component={UserView} />
+                <Route path="/profile" component={ProfileView} />
+                <Route path="/users" component={UserView} />
                 <Route path="*" component={NoMatchView} />
             </Switch>
         </BrowserRouter>

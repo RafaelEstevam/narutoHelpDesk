@@ -1,24 +1,28 @@
   
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
-import { ShadowCard } from '../../components/Cards'
+import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { BetweenWrapper } from '../../components/Wrappers';
 import * as S from "./styled";
 import {loginSchema} from '../../validations/login.validation';
+import {mainLightColor} from '../../styles/variables'
+
+import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
+import mainImage2 from '../../assets/undraw_To_do_list_re_9nt7.svg'
 
 import api from '../../services/api';
 
 function LoginView(){
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     const handleSubmit = async e =>{
         e.preventDefault();
 
-        let loginData = {
-            email: 'teste@teset.com',
-            password: '2323233'
-        }
+        const loginData = { email, password }
+        console.log(loginData);
 
-        loginSchema.isValid(loginData).then( valid =>{
+        await loginSchema.isValid(loginData).then( valid =>{
             try{
                 const logedUser = api.post('/sessions');
             }catch(err){
@@ -29,37 +33,36 @@ function LoginView(){
     }
 
     return(
-        <S.DivFullHeight style={{display:'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Row>
-                <Col>
-                    <ShadowCard className="p-3" style={{width: '500px', minHeight: '400px'}}>
-                        <ShadowCard.Title className="text-center">Escolha um tipo de usuário</ShadowCard.Title>
-                        <BetweenWrapper>
-                            <div>teste</div>
-                            <div>1234</div>
-                        </BetweenWrapper>
-                        <div>
+        <S.DivFullHeight >
+            <Container fluid>
+                <Row>
+                    <S.ColFullHeight md="4">
+                        <div className="p-3" style={{width: '100%', maxWidth: '400px'}}>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" />
+                                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                 </Form.Group>
-
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" />
+                                    <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                                 </Form.Group>
-                                <Form.Group controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label="Check me out" />
-                                </Form.Group>
-                                <Button variant="primary" type="submit">
-                                    Submit
-                                </Button>
+                                <BetweenWrapper>
+                                    <Button variant="primary" type="submit">Login</Button>
+                                    <a className="btn btn-outline-dark">Sign Up</a>
+                                </BetweenWrapper>
                             </Form>
                         </div>
-                    </ShadowCard>
-                </Col>
-            </Row>
+                    </S.ColFullHeight>
+
+                    <S.ColFullHeight md="8" style={{background: mainLightColor}}>
+                        <Row style={{justifyContent: 'center'}}>
+                            <Col md="9">
+                                <img src={mainImage} className="img-fluid" />
+                            </Col>
+                        </Row>
+                    </S.ColFullHeight>
+                    
+                </Row>
+            </Container>
         </S.DivFullHeight>
     )
 }
