@@ -3,7 +3,8 @@ import {
     bgLightColor,
     mainWrapperSize,
     mainColor,
-    bgDarkColor
+    bgDarkColor,
+    viewSm
 
 } from '../styles/variables.jsx'
 
@@ -46,7 +47,12 @@ const BetweenWrapper = styled('div')`
 `
 
 const ToolBarWrapper = styled(FullHeightWrapper)`
-    background : ${bgDarkColor}
+    background : ${bgDarkColor};
+    width: 300px;
+
+    @media(max-width: ${viewSm}){
+        display: none;
+    }
 `
 
 export {
