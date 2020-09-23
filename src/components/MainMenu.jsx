@@ -5,7 +5,7 @@ import * as V from '../styles/variables';
 import MenuItem from './MenuItem';
 
 
-function MainMenu({items}){
+function MainMenu(){
 
     const MainMenu = styled('ul')`
         list-style: none;
@@ -14,9 +14,8 @@ function MainMenu({items}){
 
     return(
         <MainMenu>
-            {items.map((item) => {
-                return( <MenuItem key={item.id} icon={item.icon} label={item.label} link={item.link} /> ); 
-            })}
+            <MenuItem key={1} icon={'fa fa-search'} label={'Dashboard'} link={'/dashboard'} />
+            <MenuItem key={4} icon={'fa fa-search'} label={'Users'} link={'/users'} />
         </MainMenu>
     )
 }

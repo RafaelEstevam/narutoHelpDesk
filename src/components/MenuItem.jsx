@@ -30,7 +30,9 @@ function MenuItem({icon, label, link}){
     `
 
     return(
-        <ItemMenu><a href={link}> <i className={icon}></i> {label}</a></ItemMenu>
+        <ItemMenu>
+            <a href={link}> <i className={icon}></i> {label}</a>
+        </ItemMenu>
     )
 }
 
