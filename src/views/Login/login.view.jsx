@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { BetweenWrapper } from '../../components/Wrappers';
 import * as S from "./styled";
-import {loginSchema} from '../../validations/login.validation';
+import {loginValidation} from '../../validations/validations';
 import {mainLightColor} from '../../styles/variables'
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
@@ -22,7 +22,7 @@ function LoginView(){
         const loginData = { email, password }
         console.log(loginData);
 
-        await loginSchema.isValid(loginData).then( valid =>{
+        await loginValidation.isValid(loginData).then( valid =>{
             try{
                 const logedUser = api.post('/sessions');
             }catch(err){

@@ -16,6 +16,7 @@ function MainMenu(){
         <MainMenu>
             <MenuItem key={1} icon={'fa fa-search'} label={'Dashboard'} link={'/dashboard'} />
             <MenuItem key={4} icon={'fa fa-search'} label={'Users'} link={'/users'} />
+            <MenuItem key={5} icon={'fa fa-search'} label={'Profile'} link={'/profile'} />
         </MainMenu>
     )
 }
