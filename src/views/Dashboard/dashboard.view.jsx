@@ -1,10 +1,10 @@
   
 import React from 'react';
 
-import DefaultWrapper from '../../components/DefaultWrapper';
-import { ChildContentWrapper } from '../../components/Wrappers';
-import Calendar from '../../components/Calendar';
-import BarChartComponent from '../../components/BarChartComponent';
+import DefaultWrapper from '../../components/DefaultWrapper.component';
+import { ChildContentWrapper } from '../../components/Wrappers.component';
+import Calendar from '../../components/Calendar.component';
+import BarChartComponent from '../../components/BarChartComponent.component';
 
 function DashboardView(){
 
@@ -19,8 +19,8 @@ function DashboardView(){
     ];
 
     const events= [
-      {id: 3, title: 'ticket 1', date: '2020-09-05', url: '/ticket/3'},
-      {id: 4, title: 'ticket 2', date: '2020-09-10', url: '/ticket/4'}
+      {id: 3, title: 'ticket 1', date: '2020-09-05', url: '/tickets/3'},
+      {id: 4, title: 'ticket 2', date: '2020-09-10', url: '/tickets/4'}
     ];
 
     const renderContent = () =>{

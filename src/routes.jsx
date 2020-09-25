@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route, Provider } from 'react-router-dom';
-
-import LoginView from './views/Login/login.view'
-import ProfileView from './views/Profile/profile.view'
-import UserView from './views/Users/user.view'
-import DashboardView from './views/Dashboard/dashboard.view'
-import NoMatchView from './views/404/404.view'
+import * as R from './services/routes.service';
 
 function Routes(){
+
+    const [userType, setUserType] = useState('manager');
+
+    useEffect(() => {
+        console.log(userType);
+    });
+
+    function handleLoadRoutes (userType){
+        const routesList = userType == 'client' ? R.clientRoutes : userType == 'employee' ? R.employeeRoutes : R.managerRoutes;
+        return routesList;
+    }
+
     return(
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={LoginView} />
-                <Route path="/profile" component={ProfileView} />
-                <Route path="/users" component={UserView} />
-                <Route path="/dashboard" component={DashboardView} />
-                <Route path="/tickets/:id" component={NoMatchView} />
-                <Route path="*" component={NoMatchView} />
+                {
+                    handleLoadRoutes(userType).map((item) => {
+                        return (
+                            <Route path={item.path} exact component={item.component} key={item.path} />
+                        )
+                    })
+                }
+
+                {
+                    R.defaultRoutes.map((item) => {
+                        return (
+                            <Route path={item.path} exact component={item.component} key={item.path} />
+                        )
+                    })
+                }
             </Switch>
         </BrowserRouter>
     )

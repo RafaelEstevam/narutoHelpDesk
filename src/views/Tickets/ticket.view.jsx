@@ -8,7 +8,7 @@ function TicketView(){
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <h1>Profile</h1>
+                <h1>Ticket</h1>
             </ChildContentWrapper>
         )
     }

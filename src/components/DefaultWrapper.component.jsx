@@ -1,8 +1,8 @@
 import React from 'react';
-import {ToolBarWrapper, FlexWrapper, ContentWrapper} from './Wrappers';
+import {ToolBarWrapper, FlexWrapper, ContentWrapper} from './Wrappers.component';
 
-import Header from './Header';
-import MainMenu from './MainMenu';
+import Header from './Header.component';
+import MainMenu from './MainMenu.component';
 
 function DefaultWrapper ({content}){
 

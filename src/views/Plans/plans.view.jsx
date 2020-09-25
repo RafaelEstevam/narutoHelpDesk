@@ -1,7 +1,7 @@
   
 import React, { useEffect, useState } from 'react';
-import DefaultWrapper from '../../components/DefaultWrapper';
-import { ChildContentWrapper } from '../../components/Wrappers';
+import DefaultWrapper from '../../components/DefaultWrapper.component';
+import { ChildContentWrapper } from '../../components/Wrappers.component';
 import DataTable from 'react-data-table-component';
 
 function UserView(){
@@ -11,7 +11,6 @@ function UserView(){
     }
 
     const columns = [
-        
         {
             name: 'Name',
             selector: 'name',
