@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route, Provider } from 'react-router-dom';
 import * as R from './services/routes.service';
+import api from './services/api.service';
 
 function Routes(){
 
@@ -21,7 +22,7 @@ function Routes(){
                 {
                     handleLoadRoutes(userType).map((item) => {
                         return (
-                            <Route path={item.path} exact component={item.component} key={item.path} />
+                            <Route path={item.path} exact key={item.path} />
                         )
                     })
                 }
