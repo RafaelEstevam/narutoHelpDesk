@@ -1,39 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Switch, Route, Provider } from 'react-router-dom';
-import * as R from './services/routes.service';
-import api from './services/api.service';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import {getStorageLogin} from './services/auth.service';
+import {searchRoute} from './services/routes.service';
+
+import LoginView from './views/Login/login.view'
+import NoMatchView from './views/404/404.view'
+import RegisterView from './views/Register/register.view'
+import ProfileView from './views/Profile/profile.view'
+import UsersView from './views/Users/users.view'
+import TicketView from './views/Tickets/ticket.view'
+import TicketsView from './views/Tickets/tickets.view'
+import TicketsCategoriesView from './views/Tickets/ticketCategories.view'
+import TicketsCategoryView from './views/Tickets/ticketCategory.view'
+import DashboardView from './views/Dashboard/dashboard.view'
+import ReportView from './views/Report/report.view'
+import PlansView from './views/Plans/plans.view'
 
 function Routes(){
 
-    const [userType, setUserType] = useState('manager');
+    function isAllow(userType, route){
+        return searchRoute(userType, route);
+    }
+    
+    function PrivateRoutes({ component: Component, ...rest }){
+        const {userType} = getStorageLogin();
 
-    useEffect(() => {
-        console.log(userType);
-    });
-
-    function handleLoadRoutes (userType){
-        const routesList = userType == 'client' ? R.clientRoutes : userType == 'employee' ? R.employeeRoutes : R.managerRoutes;
-        return routesList;
+        return(
+            <Route
+                {...rest}
+                render={props=>
+                    isAllow(userType, rest.path) ? (
+                        <Component {...props} />
+                    ) : (
+                        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+                    )
+                }
+            />
+        )
     }
 
     return(
         <BrowserRouter>
             <Switch>
-                {
-                    handleLoadRoutes(userType).map((item) => {
-                        return (
-                            <Route path={item.path} exact key={item.path} />
-                        )
-                    })
-                }
-
-                {
-                    R.defaultRoutes.map((item) => {
-                        return (
-                            <Route path={item.path} exact component={item.component} key={item.path} />
-                        )
-                    })
-                }
+                <Route path="/" exact component={LoginView} />
+                <Route path="/register" exact component={RegisterView} />
+                <PrivateRoutes path="/dashboard" exact component={DashboardView} />
+                <PrivateRoutes path="/users" exact component={UsersView} />
+                <PrivateRoutes path="/users/:id" exact component={ProfileView} />
+                <PrivateRoutes path="/tickets" exact component={TicketsView} />
+                <PrivateRoutes path="/tickets/:id" exact component={TicketView} />
+                <PrivateRoutes path="/tickets-categories" exact component={TicketsCategoriesView} />
+                <PrivateRoutes path="/tickets-categories/:id" exact component={TicketsCategoryView} />
+                <PrivateRoutes path="/reports" exact component={ReportView} />
+                <PrivateRoutes path="/plans" exact component={PlansView} />
+                <Route path="*" exact component={NoMatchView} />
             </Switch>
         </BrowserRouter>
     )

@@ -4,10 +4,11 @@ import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { BetweenWrapper } from '../../components/Wrappers.component';
 import * as S from "./styled";
 import {loginValidation} from '../../validations/validations';
-import {mainLightColor} from '../../styles/variables'
+import {mainLightColor} from '../../styles/variables';
+import {setStorageLogin} from '../../services/auth.service';
+
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
-import mainImage2 from '../../assets/undraw_To_do_list_re_9nt7.svg'
 
 import api from '../../services/api.service';
 
@@ -18,18 +19,20 @@ function LoginView(){
 
     const handleSubmit = async e =>{
         e.preventDefault();
+        const loginData = { email, password };
 
-        const loginData = { email, password }
-        console.log(loginData);
+        const formData = await loginValidation.isValid(loginData).then( valid =>{
+            return valid
+        });
 
-        await loginValidation.isValid(loginData).then( valid =>{
-            try{
-                const logedUser = api.post('/sessions');
+        if(formData){
+            try {
+                const loggedUser = await api.post('/sessions');
+                setStorageLogin(loggedUser);
             }catch(err){
                 console.log(err);
             }
-        })
-
+        }
     }
 
     return(
