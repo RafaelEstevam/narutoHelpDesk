@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import {
-    bgLightColor,
-    mainWrapperSize,
-    mainColor,
-    bgDarkColor,
-    viewSm
-
-} from '../styles/variables.jsx'
+import * as V from '../styles/variables.jsx';
 
 const CenterWrapper = styled('div')`
     display: flex;
@@ -22,7 +15,12 @@ const ContentWrapper = styled('div')`
     overflow: hidden;
     height: 100vh;
     flex: 100%;
-    background-color: ${bgLightColor};
+    
+`
+
+const MainContentWrapper = styled('div')`
+    background-color: ${V.bgLightColor};
+    box-shadow: 0px 0px 10px inset ${V.bgLightPurple};
 `
 
 const ChildContentWrapper = styled('div')`
@@ -37,7 +35,7 @@ const FlexWrapper = styled('div')`
 `
 
 const MainWrapper = styled('div')`
-    max-width: ${mainWrapperSize};
+    max-width: ${V.mainWrapperSize};
     margin: 0 auto;
 `
 const BetweenWrapper = styled('div')`
@@ -47,10 +45,10 @@ const BetweenWrapper = styled('div')`
 `
 
 const ToolBarWrapper = styled(FullHeightWrapper)`
-    background : ${bgDarkColor};
+    background : ${V.bgDarkColor};
     width: 300px;
 
-    @media(max-width: ${viewSm}){
+    @media(max-width: ${V.viewSm}){
         display: none;
     }
 `
@@ -63,5 +61,6 @@ export {
     FlexWrapper,
     ContentWrapper,
     ChildContentWrapper,
-    ToolBarWrapper
+    ToolBarWrapper,
+    MainContentWrapper
 };

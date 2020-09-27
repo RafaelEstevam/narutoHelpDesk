@@ -1,5 +1,5 @@
 import React from 'react';
-import {ToolBarWrapper, FlexWrapper, ContentWrapper} from './Wrappers.component';
+import {ToolBarWrapper, FlexWrapper, ContentWrapper, MainContentWrapper} from './Wrappers.component';
 
 import Header from './Header.component';
 import MainMenu from './MainMenu.component';
@@ -13,7 +13,9 @@ function DefaultWrapper ({content}){
             </ToolBarWrapper>
             <ContentWrapper>
                 <Header />
-                {content}
+                <MainContentWrapper>
+                    {content}
+                </MainContentWrapper>
             </ContentWrapper>
         </FlexWrapper>
     )

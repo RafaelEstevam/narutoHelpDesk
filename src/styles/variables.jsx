@@ -1,11 +1,12 @@
 
 const mainWrapperSize = '1200px';
-const mainColor = '#f97926';
+const mainColor = '#d1cfea';
 const mainLightColor = '#ffede1';
-const bgLightColor = '#dde0e6';
-const bgDarkColor = '#3f3d56';
+const bgLightColor = '#faf8fb';
+const bgDarkColor = '#584475';
 const whiteColor = '#ffffff';
 const borderHoverColor = '#796dff';
+const bgLightPurple = '#efecf3';
 
 const viewXs = '360px';
 const viewSm = '767px';
@@ -19,7 +20,8 @@ export {
     bgLightColor,
     bgDarkColor,
     whiteColor,
-    borderHoverColor, 
+    borderHoverColor,
+    bgLightPurple,
     viewXs,
     viewSm,
     viewMd,

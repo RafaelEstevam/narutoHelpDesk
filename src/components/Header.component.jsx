@@ -11,11 +11,19 @@ function Header(){
     const Header = styled('div')`
         padding: 0px 15px;
         height: 60px;
-        background: ${V.mainColor};
+        background: ${V.whiteColor};
         display: flex;
         justify-content: space-between;
         align-items: center;
     `;
+
+    const HeaderButton = styled('button')`
+        border: 3px solid ${V.mainLightColor};
+        border-radius: 100px;
+        padding: 5px 10px;
+        background: ${V.bgDarkColor};
+        color: ${V.whiteColor};
+    `
 
     function handleLogout(){
         removeStorageLogin();
@@ -31,7 +39,7 @@ function Header(){
             </div>
 
             <div style={{display: 'flex'}}>
-                <button onClick={() => handleLogout()}> Logout </button>
+                <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
             </div>
             
         </Header>

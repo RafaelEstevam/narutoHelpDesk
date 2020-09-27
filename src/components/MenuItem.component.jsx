@@ -8,7 +8,7 @@ function MenuItem({icon, label, link}){
         display: block;
 
         a{
-            padding: 15px 15px;
+            padding: 12px 15px;
             display: block;
             text-decoration: none;
             color: ${V.whiteColor};
@@ -21,7 +21,7 @@ function MenuItem({icon, label, link}){
             }
 
             :hover{
-                background: rgba(0,0,0,0.2);
+                background: rgba(255,255,255,0.15);
                 opacity: 1;
                 border-left-color: ${V.borderHoverColor};
             }
