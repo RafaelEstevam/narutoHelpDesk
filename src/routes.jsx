@@ -21,7 +21,7 @@ function Routes(){
     function isAllow(userType, route){
         return searchRoute(userType, route);
     }
-    
+
     function PrivateRoutes({ component: Component, ...rest }){
         const {userType} = getStorageLogin();
 

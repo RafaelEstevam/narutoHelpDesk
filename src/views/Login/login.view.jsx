@@ -1,7 +1,9 @@
   
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
-import { BetweenWrapper } from '../../components/Wrappers.component';
+import {useHistory} from 'react-router-dom';
+
+import {BetweenWrapper} from '../../components/Wrappers.component';
 import * as S from "./styled";
 import {loginValidation} from '../../validations/validations';
 import {mainLightColor} from '../../styles/variables';
@@ -16,19 +18,28 @@ function LoginView(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
     const handleSubmit = async e =>{
         e.preventDefault();
         const loginData = { email, password };
-
         const formData = await loginValidation.isValid(loginData).then( valid =>{
             return valid
         });
 
         if(formData){
             try {
-                const loggedUser = await api.post('/sessions');
+                const loggedUser = await api.post('/sessions', loginData);
                 setStorageLogin(loggedUser);
+
+                if(loggedUser.data.userType == 'manager'){
+                    history.push('/dashboard');
+                }else if(loggedUser.data.userType == 'employee'){
+                    history.push('/dashboard');
+                }else{
+                    history.push('/tickets');
+                }
+
             }catch(err){
                 console.log(err);
             }
