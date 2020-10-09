@@ -19,7 +19,8 @@ import PlansView from './views/Plans/plans.view'
 function Routes(){
 
     function isAllow(userType, route){
-        return searchRoute(userType, route);
+        // return searchRoute(userType, route);
+        return true;
     }
 
     function PrivateRoutes({ component: Component, ...rest }){
