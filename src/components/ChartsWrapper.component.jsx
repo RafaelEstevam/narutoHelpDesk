@@ -7,8 +7,8 @@ function ChartsWrapper({content, bgcolor}){
 
     const ChartWrapper = styled('div')`
         display: block;
-        border: 3px solid ${bgcolor};
-        background-color: ${V.draculaLight};
+        // border: 3px solid ${bgcolor};
+        background-color: ${bgcolor};
         border-radius: 3px;
         padding: 10px;
         margin-bottom: 30px;

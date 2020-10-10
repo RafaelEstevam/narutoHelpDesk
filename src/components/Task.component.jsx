@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
+import PlayButton from './PlayButton.component';
 
 function Task({task}){
 
     const TaskItemStatus = task.status == 'done' ? V.draculaSuccess : task.status == 'blocked' ? V.draculaDanger : task.status == 'in-progress' ? V.draculaWarning : V.draculaPrimary;
+    const TaskItemAlert = task.scheduleAlert ? V.draculaSecondary : 'transparent';
 
     const TaskItem = styled('div')`
         display: flex;
         justify-content: space-between;
         align-items: start;
         padding: 10px 15px;
-        // border: 1px solid ${V.draculaDark};
+        border-right: 6px solid transparent;
+        border-right-color: ${TaskItemAlert};
         border-left: 6px solid transparent;
         border-left-color: ${TaskItemStatus};
         border-radius: 3px;
@@ -25,6 +28,10 @@ function Task({task}){
         :hover{
             background: ${V.draculaInverse};
         }
+    `
+
+    const TaskItemWrapper = styled('div')`
+        width: 100%;
     `
 
     const TaskDetails = styled('p')`
@@ -44,6 +51,7 @@ function Task({task}){
         height: 15px;
         width: 15px;
         border-radius: 100px;
+        position: absolute;
     `
 
     const TaskTitle = styled('h3')`
@@ -62,17 +70,25 @@ function Task({task}){
         text-decoration: none !important;
     `
 
+    const TaskWrapper = styled('div')`
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    `
+
     return (
         <TaskItem >
-            <div>
+            <TaskItemWrapper>
                 <TaskLink href={task.url} >
                     <TaskTitle>{task.title}</TaskTitle> 
                     <TaskDescription>{task.description}</TaskDescription>
                 </TaskLink>
-                <TaskDetails>{task.clientName}</TaskDetails>
-            </div>
-
-            {task.scheduleAlert && <TaskAlert />}
+                <TaskWrapper>
+                    <TaskDetails>{task.clientName}</TaskDetails>
+                    <PlayButton />
+                </TaskWrapper>
+            </TaskItemWrapper>
         </TaskItem>
     )
 }

@@ -23,8 +23,16 @@ function Calendar({events, title}){
 
     const CalendarCard = styled('div')`
         background-color: ${V.draculaLight};
-        padding: 15px;
         border-radius: 3px;
+        height: 800px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 800px;
+
+        .fc-toolbar-title, .fc-theme-bootstrap a:not([href]){
+            color: ${V.whiteColor};
+        }
+
     `
 
     const CalendarTitle = styled('h3')`
@@ -33,11 +41,23 @@ function Calendar({events, title}){
         font-size: 24px;
     `
 
+    const CalendarHeader = styled('div')`
+        padding: 15px;
+        background: ${V.draculaDark};
+
+    `
+
+    const CalendarWrapper = styled('div')`
+        padding: 15px;
+    `
+
     return(
 
         <CalendarCard>
-            <div class="card-body">
+            <CalendarHeader>
                 <CalendarTitle>{title}</CalendarTitle>
+            </CalendarHeader>
+            <CalendarWrapper>
                 <FullCalendar
                     plugins={[ dayGridPlugin, interactionPlugin, listPlugin, timeGridPlugin, bootstrapPlugin ]}
                     initialView="dayGridMonth"
@@ -53,7 +73,7 @@ function Calendar({events, title}){
                     // eventClick={e => handleEventClick(e)}
                     locale={localePtBr}
                 />
-            </div>
+            </CalendarWrapper>
         </CalendarCard>
     )
 }

@@ -29,9 +29,9 @@ function TaskList({tasks, title}){
 
     const TaskListFilterButtons = styled('button')`
         border: 0px solid transparent;
-        border-radius: 1000px;
+        border-radius: 3px;
         margin: 10px;
-        padding: 0px 10px;
+        padding: 5px 10px;
         font-size: 12px;
         font-weight: bold;
 

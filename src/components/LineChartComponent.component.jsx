@@ -27,11 +27,11 @@ function LineChartComponent({data, title, stroke, dataKey}){
     const renderContent = () =>{
         return(
             <div>
-                <ChartHeaderComponent title={title} color={stroke} />
+                <ChartHeaderComponent title={title} color={V.whiteColor} />
                 <div style={{ width: '100%', height: 150 }}>
                     <ResponsiveContainer>
                         <LineChart width={300} height={100} data={data}>
-                            <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} />
+                            <Line type="monotone" dataKey={dataKey} stroke={V.whiteColor} strokeWidth={2} />
                             <Legend fill={'#000'}/>
                             <Tooltip content={<CustomTooltip />}/>
                         </LineChart>

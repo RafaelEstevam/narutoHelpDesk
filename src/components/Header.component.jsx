@@ -38,17 +38,6 @@ function Header(){
                 <button className="btn btn-warning"><i className="fa fa-user"></i></button>
             </div> */}
 
-            <div className="d-flex justify-content-between align-items-center">
-                <div>
-                    <h2>Tarefa em execuxão</h2>
-                </div>
-                <div className="d-flex justify-content-between align-items-center">
-                    <h2>00:00</h2>
-                    <button class="btn btn-rounded"><i class="fa fa-play"></i></button>
-                    <button class="btn btn-rounded"><i class="fa fa-pause"></i></button>
-                </div>
-            </div>
-
             <div style={{display: 'flex'}}>
                 <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
             </div>
