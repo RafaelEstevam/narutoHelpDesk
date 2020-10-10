@@ -5,9 +5,10 @@ import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
 import { Row, Col } from 'react-bootstrap';
 import * as V from '../../styles/variables';
-import Task from '../../components/Task.component.jsx';
+import TaskList from '../../components/TaskList.component.jsx';
 import Calendar from '../../components/Calendar.component';
 import BarChartComponent from '../../components/BarChartComponent.component';
+import LineChartComponent from '../../components/LineChartComponent.component';
 
 function DashboardView(){
 
@@ -22,10 +23,13 @@ function DashboardView(){
     ];
 
     const tasks = [
-        {id: 3, title: 'ticket 1', description: 'Tarefa x', date: '2020-09-05', url: '/tickets/3', status: 'done'},
-        {id: 4, title: 'ticket 2', description: 'Tarefa x', date: '2020-09-10', url: '/tickets/4', status: 'blocked'},
-        {id: 5, title: 'ticket 2', description: 'Tarefa x', date: '2020-09-10', url: '/tickets/4', status: 'in-progress'},
-        {id: 6, title: 'ticket 2', description: 'Tarefa x', date: '2020-09-10', url: '/tickets/4', status: 'to-do'},
+        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '1', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
+        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
+        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
+        {id: 4, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '1', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'blocked'},
+        {id: 5, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'in-progress'},
+        {id: 6, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '2', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'to-do'},
+        {id: 6, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '2', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'to-do'},
     ]
 
     const renderContent = () =>{
@@ -41,57 +45,39 @@ function DashboardView(){
                     <Col md="9">
                         <Row>
                             <Col md="4">
-                                <BarChartComponent
+                                <LineChartComponent
                                     data={data}
-                                    title={"Horas trabalhadas"}
-                                    bgColor={V.bgLightPurple2}
-                                    fill={'rgba(0,0,0,0.1)'}
                                     dataKey={'horas'}
-                                ></BarChartComponent>
+                                    title={"Horas trabalhadas"}
+                                    stroke={V.draculaPrimary}
+                                ></LineChartComponent>
                             </Col>
                             <Col md="4">
-                                <BarChartComponent
+                                <LineChartComponent
                                     data={data}
-                                    title={"Nº de chamados"}
-                                    bgColor={V.lightOrange}
-                                    fill={'rgba(0,0,0,0.1)'}
                                     dataKey={'chamados'}
-                                ></BarChartComponent>
+                                    title={"Nº de chamados"}
+                                    stroke={V.draculaInfo}
+
+                                ></LineChartComponent>
                             </Col>
                             <Col md="4">
-                                <BarChartComponent
+                                <LineChartComponent
                                     data={data}
-                                    title={"Ganhos (R$)"}
-                                    bgColor={V.lightGreen}
-                                    fill={'rgba(0,0,0,0.1)'}
                                     dataKey={'reais'}
-                                ></BarChartComponent>
+                                    title={'Ganhos'}
+                                    stroke={V.draculaSuccess}
+                                ></LineChartComponent>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="12">
-                                <div className="card">
-                                    <div class="card-body">
-                                        <h5 className="card-title">Calendário de entregas</h5>
-                                        <Calendar events={tasks} />
-                                    </div>
-                                </div>
+                                <Calendar title={"Calendário de entregas"} events={tasks}/>
                             </Col>
                         </Row>
                     </Col>
                     <Col md="3">
-                        <div className="card">
-                            <div class="card-body">
-                                <h5 className="card-title">Tarefas recentes</h5>
-
-                                {tasks.map((item) =>{
-                                    return (
-                                        <Task task={item} />
-                                    )
-                                })}
-
-                            </div>
-                        </div>
+                        <TaskList title={'Tarefas recentes'} tasks={tasks} />
                     </Col>
                 </Row>
             </ChildContentWrapper>

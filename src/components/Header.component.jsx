@@ -11,7 +11,7 @@ function Header(){
     const Header = styled('div')`
         padding: 0px 15px;
         height: 60px;
-        background: ${V.whiteColor};
+        background: ${V.draculaLight};
         display: flex;
         justify-content: space-between;
         align-items: center;

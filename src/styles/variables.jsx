@@ -2,7 +2,7 @@
 const mainWrapperSize = '1200px';
 const mainColor = '#d1cfea';
 const mainLightColor = '#ffede1';
-const bgLightColor = '#faf8fb';
+const bgLightColor = '#1d182b';
 const bgDarkColor = '#584475';
 const whiteColor = '#ffffff';
 const borderHoverColor = '#796dff';
@@ -11,6 +11,18 @@ const bgLightPurple2 = '#a386ce';
 const orange = '#f1804f';
 const lightOrange = '#c5817e';
 const lightGreen = '#7ec59d';
+const bgHeader = '#352d4c';
+const bgCard = '#352d4c';
+
+const draculaPrimary = '#7077f9';
+const draculaDark = '#21222c';
+const draculaSuccess = '#32d97b';
+const draculaDanger = '#c76dc6';
+const draculaWarning = '#e4fa81';
+const draculaInfo = '#8be9fd';
+const draculaSecondary = '#dc6d36';
+const draculaInverse = '#282a36';
+const draculaLight = '#3c415a'
 
 const viewXs = '360px';
 const viewSm = '767px';
@@ -20,6 +32,8 @@ const viewLg = '1200px';
 export {
     mainWrapperSize,
     mainColor,
+    bgHeader,
+    bgCard,
     mainLightColor,
     bgLightColor,
     bgDarkColor,
@@ -33,5 +47,14 @@ export {
     viewXs,
     viewSm,
     viewMd,
-    viewLg
+    viewLg,
+    draculaPrimary,
+    draculaDark,
+    draculaSuccess,
+    draculaDanger,
+    draculaWarning,
+    draculaInfo,
+    draculaSecondary,
+    draculaInverse,
+    draculaLight
 }

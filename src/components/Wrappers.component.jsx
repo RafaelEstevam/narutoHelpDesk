@@ -19,8 +19,7 @@ const ContentWrapper = styled('div')`
 `
 
 const MainContentWrapper = styled('div')`
-    background-color: ${V.bgLightColor};
-    box-shadow: 0px 0px 10px inset ${V.bgLightPurple};
+    background-color: ${V.draculaInverse};
 `
 
 const ChildContentWrapper = styled('div')`
@@ -45,7 +44,7 @@ const BetweenWrapper = styled('div')`
 `
 
 const ToolBarWrapper = styled(FullHeightWrapper)`
-    background : ${V.bgDarkColor};
+    background : ${V.draculaDark};
     width: 300px;
 
     @media(max-width: ${V.viewSm}){

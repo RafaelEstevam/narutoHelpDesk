@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import {LineChart, Line, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import ChartHeaderComponent from './ChartsHeader.component';
 import ChartWrapperComponent from './ChartsWrapper.component';
-import {Bar, BarChart, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import * as V from '../styles/variables';
 
-function BarChartComponent({data, title, bgColor, fill, dataKey}){
+function LineChartComponent({data, title, stroke, dataKey}){
 
     const BarChartToolTipWrapper = styled('div')`
         background-color: ${V.whiteColor};
@@ -27,14 +27,14 @@ function BarChartComponent({data, title, bgColor, fill, dataKey}){
     const renderContent = () =>{
         return(
             <div>
-                <ChartHeaderComponent title={title} />
+                <ChartHeaderComponent title={title} color={stroke} />
                 <div style={{ width: '100%', height: 150 }}>
                     <ResponsiveContainer>
-                        <BarChart data={data}>
-                            <Bar dataKey={dataKey} fill={fill} />
+                        <LineChart width={300} height={100} data={data}>
+                            <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} />
                             <Legend fill={'#000'}/>
                             <Tooltip content={<CustomTooltip />}/>
-                        </BarChart>
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
@@ -42,8 +42,8 @@ function BarChartComponent({data, title, bgColor, fill, dataKey}){
     }
 
     return(
-        <ChartWrapperComponent content={renderContent()}></ChartWrapperComponent>
+        <ChartWrapperComponent bgcolor={stroke} content={renderContent()}></ChartWrapperComponent>
     )
 }
 
-export default BarChartComponent;
+export default LineChartComponent;
