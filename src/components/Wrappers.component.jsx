@@ -15,7 +15,6 @@ const ContentWrapper = styled('div')`
     overflow: hidden;
     height: 100vh;
     flex: 100%;
-    
 `
 
 const MainContentWrapper = styled('div')`
@@ -25,7 +24,7 @@ const MainContentWrapper = styled('div')`
 const ChildContentWrapper = styled('div')`
     overflow-y: auto;
     height: 100vh;
-    padding: 15px 15px 75px;
+    padding: 0px 15px 75px;
 `
 
 const FlexWrapper = styled('div')`
@@ -52,6 +51,12 @@ const ToolBarWrapper = styled(FullHeightWrapper)`
     }
 `
 
+const FormWrapper = styled('div')`
+    background-color: ${V.draculaLight};
+    border-radius: 3px;
+    padding: 15px;
+`
+
 export {
     MainWrapper,
     CenterWrapper,
@@ -61,5 +66,6 @@ export {
     ContentWrapper,
     ChildContentWrapper,
     ToolBarWrapper,
-    MainContentWrapper
+    MainContentWrapper,
+    FormWrapper
 };

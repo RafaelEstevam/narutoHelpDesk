@@ -2,13 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
+import ViewTitle from '../../components/ViewTitle.component';
+
 
 function TicketView(){
 
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <h1>Ticket</h1>
+                <ViewTitle title="Ticket" />
             </ChildContentWrapper>
         )
     }

@@ -13,16 +13,16 @@ function Header(){
         height: 60px;
         background: ${V.draculaLight};
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
     `;
 
     const HeaderButton = styled('button')`
-        border: 3px solid ${V.mainLightColor};
         border-radius: 100px;
         padding: 5px 10px;
-        background: ${V.bgDarkColor};
+        background: ${V.draculaPrimary};
         color: ${V.whiteColor};
+        border: 0px solid transparent;
     `
 
     function handleLogout(){
@@ -32,16 +32,7 @@ function Header(){
 
     return (
         <Header>
-            
-            {/* <div style={{display: 'flex'}}>
-                <p className="pr-3 text-white">Nome do usuário</p>
-                <button className="btn btn-warning"><i className="fa fa-user"></i></button>
-            </div> */}
-
-            <div style={{display: 'flex'}}>
-                <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
-            </div>
-            
+            <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
         </Header>
     )
 }

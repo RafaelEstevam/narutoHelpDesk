@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
 import DataTable from 'react-data-table-component';
+import ViewTitle from '../../components/ViewTitle.component';
+
 
 function TicketsView(){
 
@@ -14,7 +16,7 @@ function TicketsView(){
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <h1>Ticket Category</h1>
+                <ViewTitle title="Admin Dashboard" />
             </ChildContentWrapper>
         )
     }

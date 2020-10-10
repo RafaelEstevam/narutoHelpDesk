@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 import * as V from '../../styles/variables';
 import TaskList from '../../components/TaskList.component.jsx';
 import Calendar from '../../components/Calendar.component';
-import BarChartComponent from '../../components/BarChartComponent.component';
+import ViewTitle from '../../components/ViewTitle.component';
 import LineChartComponent from '../../components/LineChartComponent.component';
 import TaskDoing from '../../components/TaskDoing.component';
 
@@ -15,12 +15,12 @@ function DashboardView(){
 
     const data = [
         {name: 'Segunda', reais: 200, horas: 4, chamados: 1},
-        {name: 'Terça', reais: 100, horas: 2, chamados: 2,},
-        {name: 'Quarta', reais: 50, horas: 1, chamados: 1,},
-        {name: 'Quinta', reais: 300, horas: 6, chamados: 1,},
-        {name: 'Sexta', reais: 400, horas: 8, chamados: 4,},
-        {name: 'Sábado', reais: 100, horas: 2, chamados: 2,},
-        {name: 'Domingo', reais: 0, horas: 0, chamados: 0,},
+        {name: 'Terça', reais: 100, horas: 2, chamados: 2},
+        {name: 'Quarta', reais: 50, horas: 1, chamados: 1},
+        {name: 'Quinta', reais: 300, horas: 6, chamados: 1},
+        {name: 'Sexta', reais: 400, horas: 8, chamados: 4},
+        {name: 'Sábado', reais: 100, horas: 2, chamados: 2},
+        {name: 'Domingo', reais: 0, horas: 0, chamados: 0},
     ];
 
     const tasks = [
@@ -36,12 +36,7 @@ function DashboardView(){
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <Row>
-                    <Col md="12 d-flex justify-content-between align-items-center">
-                        <h1>Manager <span class="font-weight-light">Dashboard</span></h1>
-                        <p> 20 de outubro de 2019 </p>
-                    </Col>
-                </Row>
+                <ViewTitle title="Admin Dashboard" />
                 <Row>
                     <Col md="3">
                         <TaskDoing task={tasks[0]}></TaskDoing>
@@ -56,7 +51,6 @@ function DashboardView(){
                             dataKey={'chamados'}
                             title={"Nº de chamados"}
                             stroke={V.draculaInfo}
-
                         ></LineChartComponent>
                         <LineChartComponent
                             data={data}

@@ -45,15 +45,6 @@ function Task({task}){
         margin: 0px;
     `
 
-    const TaskAlert = styled('div')`
-        background-color: ${V.draculaSecondary};
-        display: block;
-        height: 15px;
-        width: 15px;
-        border-radius: 100px;
-        position: absolute;
-    `
-
     const TaskTitle = styled('h3')`
         font-size: 20px;
         color: ${V.whiteColor};
