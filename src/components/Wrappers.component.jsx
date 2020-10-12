@@ -57,6 +57,10 @@ const FormWrapper = styled('div')`
     padding: 15px;
 `
 
+const CardWrapper = styled(FormWrapper)`
+    padding: 0px;
+`
+
 export {
     MainWrapper,
     CenterWrapper,
@@ -67,5 +71,6 @@ export {
     ChildContentWrapper,
     ToolBarWrapper,
     MainContentWrapper,
-    FormWrapper
+    FormWrapper,
+    CardWrapper
 };

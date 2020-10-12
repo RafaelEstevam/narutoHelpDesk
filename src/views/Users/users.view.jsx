@@ -1,14 +1,19 @@
   
 import React, { useEffect, useState } from 'react';
-import DefaultWrapper from '../../components/DefaultWrapper.component';
+import {useHistory} from 'react-router-dom';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
+
+import DefaultWrapper from '../../components/DefaultWrapper.component';
 import DataTable from 'react-data-table-component';
 import ViewTitle from '../../components/ViewTitle.component';
 
 function UserView(){
 
-    const handleClick = (id) =>{
-        console.log('clicked ' + id);
+    const history = useHistory();
+
+    function handleTableClick (id){
+        const path = `/users/${id}`;
+        history.push(path);
     }
 
     const columns = [
@@ -30,8 +35,8 @@ function UserView(){
             right: true,
         },
         {
-            cell: (row) => <button class="btn btn-outline-danger btn-sm" onClick={() => handleClick(row.id)} key={row.id}>Delete</button>,
-            ignoreRowClick: true,
+            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.id)} key={row.id}>Edit</button>,
+            ignoreRowClick: false,
             allowOverflow: true,
             button: true,
         },
