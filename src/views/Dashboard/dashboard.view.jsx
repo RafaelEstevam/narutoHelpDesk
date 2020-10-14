@@ -39,7 +39,7 @@ function DashboardView(){
                 <ViewTitle title="Admin Dashboard" />
                 <Row>
                     <Col md="3">
-                        <TaskDoing task={tasks[0]}></TaskDoing>
+                        {/* <TaskDoing task={tasks[0]}></TaskDoing> */}
                         <LineChartComponent
                             data={data}
                             dataKey={'horas'}

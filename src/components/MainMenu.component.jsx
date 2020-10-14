@@ -12,7 +12,7 @@ function MainMenu(){
     return(
         <MainMenu>
             <MenuItem key={1} icon={'fa fa-search'} label={'Dashboard'} link={'/dashboard'} />
-            <MenuItem key={1} icon={'fa fa-search'} label={'Projects'} link={'/projects'} />
+            {/* <MenuItem key={1} icon={'fa fa-search'} label={'Projects'} link={'/projects'} /> */}
             <MenuItem key={2} icon={'fa fa-search'} label={'Tickets'} link={'/tickets'} />
             <MenuItem key={3} icon={'fa fa-search'} label={'Tickets Categories'} link={'/tickets-categories'} />
             <MenuItem key={4} icon={'fa fa-search'} label={'Users'} link={'/users'} />

@@ -50,7 +50,7 @@ function ProfileView(){
                 setConfirm(data.confirm);
 
             } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
+                //alert("Ocorreu um erro ao buscar os items");
             }
         }
 

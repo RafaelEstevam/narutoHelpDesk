@@ -22,7 +22,11 @@ const draculaWarning = '#e4fa81';
 const draculaInfo = '#00abd0';
 const draculaSecondary = '#dc6d36';
 const draculaInverse = '#282a36';
-const draculaLight = '#3c415a'
+const draculaLight = '#3c415a';
+const draculaBootstrapPrimary = '#007bff';
+const draculaBootstrapInfo = '#17a2b8';
+const draculaBootstrapDanger = '#dc3545';
+const draculaWhite = '#c9cee4';
 
 const viewXs = '360px';
 const viewSm = '767px';
@@ -56,5 +60,9 @@ export {
     draculaInfo,
     draculaSecondary,
     draculaInverse,
-    draculaLight
+    draculaLight,
+    draculaBootstrapPrimary,
+    draculaBootstrapInfo,
+    draculaBootstrapDanger,
+    draculaWhite,
 }

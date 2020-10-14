@@ -77,7 +77,7 @@ function Task({task}){
                 </TaskLink>
                 <TaskWrapper>
                     <TaskDetails>{task.clientName}</TaskDetails>
-                    <PlayButton />
+                    {/* <PlayButton /> */}
                 </TaskWrapper>
             </TaskItemWrapper>
         </TaskItem>

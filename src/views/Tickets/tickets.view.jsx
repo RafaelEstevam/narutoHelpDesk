@@ -1,5 +1,7 @@
   
 import React, { useEffect, useState } from 'react';
+import {useHistory} from 'react-router-dom';
+
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
 import DataTable from 'react-data-table-component';
@@ -7,8 +9,11 @@ import ViewTitle from '../../components/ViewTitle.component';
 
 function TicketsView(){
 
-    const handleClick = (id) =>{
-        console.log('clicked ' + id);
+    const history = useHistory();
+
+    function handleTableClick (id){
+        const path = `/tickets/${id}`;
+        history.push(path);
     }
 
     const columns = [
@@ -19,13 +24,25 @@ function TicketsView(){
             sortable: true,
         },
         {
-            name: 'Name',
-            selector: 'name',
+            name: 'Título',
+            selector: 'title',
             sortable: true,
         },
         {
-            name: 'Email',
-            selector: 'email',
+            name: 'Descrição',
+            selector: 'description',
+            sortable: true,
+            right: true,
+        },
+        {
+            name: 'Cliente',
+            selector: 'client',
+            sortable: true,
+            right: true,
+        },
+        {
+            name: 'Status',
+            selector: 'status',
             sortable: true,
             right: true,
         },
@@ -36,7 +53,7 @@ function TicketsView(){
             right: true,
         },
         {
-            cell: (row) => <button class="btn btn-outline-danger btn-sm" onClick={() => handleClick(row.id)} key={row.id}>Delete</button>,
+            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.id)} key={row.id}>Visualizar</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,

@@ -52,8 +52,8 @@ function Routes(){
                 <PrivateRoutes path="/tickets/:id" exact component={TicketView} />
                 <PrivateRoutes path="/tickets-categories" exact component={TicketsCategoriesView} />
                 <PrivateRoutes path="/tickets-categories/:id" exact component={TicketsCategoryView} />
-                <PrivateRoutes path="/projects" exact component={TicketsView} />
-                <PrivateRoutes path="/projects/:id" exact component={TicketsView} />
+                {/* <PrivateRoutes path="/projects" exact component={TicketsView} />
+                <PrivateRoutes path="/projects/:id" exact component={TicketsView} /> */}
                 <PrivateRoutes path="/reports" exact component={ReportView} />
                 <PrivateRoutes path="/plans" exact component={PlansView} />
                 <Route path="*" exact component={NoMatchView} />
