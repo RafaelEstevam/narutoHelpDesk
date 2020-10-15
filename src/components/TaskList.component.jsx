@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import * as V from '../styles/variables';
 import Task from './Task.component.jsx';
 
-
-function TaskList({tasks, title}){
-
-    const TaskListCard = styled('div')`
+const TaskListCard = styled('div')`
         background-color: ${V.draculaLight};
         border-radius: 3px;
         padding: 10px 15px;
@@ -15,43 +12,45 @@ function TaskList({tasks, title}){
         overflow-x: hidden;
     `
 
-    const TaskListCardTitle = styled('h3')`
-        font-size: 20px;
-        color: ${V.whiteColor}
-    `
+const TaskListCardTitle = styled('h3')`
+    font-size: 20px;
+    color: ${V.whiteColor}
+`
 
-    const TaskListFilterWrapper = styled('div')`
-        padding: 15px 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `
+const TaskListFilterWrapper = styled('div')`
+    padding: 15px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
-    const TaskListFilterButtons = styled('button')`
-        border: 0px solid transparent;
-        border-radius: 3px;
-        margin: 10px;
-        padding: 5px 10px;
-        font-size: 12px;
-        font-weight: bold;
+const TaskListFilterButtons = styled('button')`
+    border: 0px solid transparent;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
 
-        &.danger{
-            background-color: ${V.draculaDanger};
-        }
+    &.danger{
+        background-color: ${V.draculaDanger};
+    }
 
-        &.success{
-            background-color: ${V.draculaSuccess};
-        }
+    &.success{
+        background-color: ${V.draculaSuccess};
+    }
 
-        &.warning{
-            background-color: ${V.draculaWarning};
-        }
+    &.warning{
+        background-color: ${V.draculaWarning};
+    }
 
-        &.primary{
-            background-color: ${V.draculaPrimary};
-        }
+    &.primary{
+        background-color: ${V.draculaPrimary};
+    }
 
-    `
+`
+
+function TaskList({tasks, title}){
 
     return (
         <TaskListCard>

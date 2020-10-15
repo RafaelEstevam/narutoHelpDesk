@@ -5,13 +5,13 @@ import ChartWrapperComponent from './ChartsWrapper.component';
 import {Bar, BarChart, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import * as V from '../styles/variables';
 
-function BarChartComponent({data, title, bgColor, fill, dataKey}){
+const BarChartToolTipWrapper = styled('div')`
+    background-color: ${V.whiteColor};
+    padding: 10px;
+    max-width: 100px;
+`
 
-    const BarChartToolTipWrapper = styled('div')`
-        background-color: ${V.whiteColor};
-        padding: 10px;
-        max-width: 100px;
-    `
+function BarChartComponent({data, title, bgColor, fill, dataKey}){
 
     const CustomTooltip = ({ active, payload, label }) => {
         if (active) {

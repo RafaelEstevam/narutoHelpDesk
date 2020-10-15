@@ -5,13 +5,13 @@ import ChartHeaderComponent from './ChartsHeader.component';
 import ChartWrapperComponent from './ChartsWrapper.component';
 import * as V from '../styles/variables';
 
-function LineChartComponent({data, title, stroke, dataKey}){
+const BarChartToolTipWrapper = styled('div')`
+    background-color: ${V.whiteColor};
+    padding: 10px;
+    max-width: 100px;
+`
 
-    const BarChartToolTipWrapper = styled('div')`
-        background-color: ${V.whiteColor};
-        padding: 10px;
-        max-width: 100px;
-    `
+function LineChartComponent({data, title, stroke, dataKey}){
 
     const CustomTooltip = ({ active, payload, label }) => {
         if (active) {

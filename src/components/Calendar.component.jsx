@@ -11,6 +11,36 @@ import {useHistory} from 'react-router-dom';
 
 import * as V from '../styles/variables';
 
+const CalendarCard = styled('div')`
+    background-color: ${V.draculaLight};
+    border-radius: 3px;
+    height: 800px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 800px;
+
+    .fc-toolbar-title, .fc-theme-bootstrap a:not([href]){
+        color: ${V.whiteColor};
+    }
+
+`
+
+const CalendarTitle = styled('h3')`
+    color: ${V.whiteColor};
+    font-weight: 100;
+    font-size: 24px;
+`
+
+const CalendarHeader = styled('div')`
+    padding: 15px;
+    background: ${V.draculaDark};
+
+`
+
+const CalendarWrapper = styled('div')`
+    padding: 15px;
+`
+
 function Calendar({events, title}){
 
     // const history = useHistory();
@@ -20,36 +50,6 @@ function Calendar({events, title}){
     //     const path = `/ticked/${ticketId}`;
     //     history.push(path);
     // }
-
-    const CalendarCard = styled('div')`
-        background-color: ${V.draculaLight};
-        border-radius: 3px;
-        height: 800px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        max-height: 800px;
-
-        .fc-toolbar-title, .fc-theme-bootstrap a:not([href]){
-            color: ${V.whiteColor};
-        }
-
-    `
-
-    const CalendarTitle = styled('h3')`
-        color: ${V.whiteColor};
-        font-weight: 100;
-        font-size: 24px;
-    `
-
-    const CalendarHeader = styled('div')`
-        padding: 15px;
-        background: ${V.draculaDark};
-
-    `
-
-    const CalendarWrapper = styled('div')`
-        padding: 15px;
-    `
 
     return(
 

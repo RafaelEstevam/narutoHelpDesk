@@ -4,15 +4,14 @@ import * as V from '../styles/variables';
 import { Row, Col } from 'react-bootstrap';
 import Date from './Date.component';
 
+const Title = styled('h2')`
+    font-size: 24px;
+    color: ${V.whiteColor};
+    padding: 20px 0px;
+    margin-bottom: 15px;
+`
 
 function ViewTitle({title}){
-
-    const Title = styled('h2')`
-        font-size: 24px;
-        color: ${V.whiteColor};
-        padding: 20px 0px;
-        margin-bottom: 15px;
-    `
 
     const date = '20 de novembro de 2019';
 

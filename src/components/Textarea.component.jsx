@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
 
+const TextAreaComponent = styled('textarea')`
+    background-color: ${props => props.readonly == 'readonly' ? V.draculaWhite : ''};
+`
+
 function Textarea({placeholder, onChange, value, readonly, height}){
-
-    const TextAreaComponent = styled('textarea')`
-        background-color: ${readonly == 'readonly' ? V.draculaWhite : ''};
-    `
-
     return(
         <div>
             <TextAreaComponent 
