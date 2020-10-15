@@ -1,6 +1,5 @@
 import React from 'react';
 import {ToolBarWrapper, FlexWrapper, ContentWrapper, MainContentWrapper} from './Wrappers.component';
-
 import Header from './Header.component';
 import MainMenu from './MainMenu.component';
 

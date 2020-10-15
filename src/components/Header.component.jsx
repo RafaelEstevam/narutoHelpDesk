@@ -8,7 +8,7 @@ function Header(){
 
     const history = useHistory();
     
-    const Header = styled('div')`
+    const HeaderComponent = styled('div')`
         padding: 0px 15px;
         height: 60px;
         background: ${V.draculaLight};
@@ -31,9 +31,9 @@ function Header(){
     }
 
     return (
-        <Header>
+        <HeaderComponent>
             <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
-        </Header>
+        </HeaderComponent>
     )
 }
 

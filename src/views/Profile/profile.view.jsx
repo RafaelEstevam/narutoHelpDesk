@@ -1,7 +1,7 @@
   
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
 import api from '../../services/api.service';
@@ -27,35 +27,34 @@ function ProfileView(){
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
 
-    // com Async Await
-    // useEffect(() => {
-    //     async function getItems() {
+    useEffect(() => {
+        async function getItems() {
 
-    //         try {
+            try {
                 
-    //             const { data } = await api.get("/profiles/" + userId);
+                const { data } = await api.get("/profiles/" + userId);
 
-    //             setName(data.name);
-    //             setLastName(data.lastName);
-    //             setDoc(data.doc);
-    //             setZipCode(data.zipCode);
-    //             setAddress(data.address);
-    //             setNumber(data.number);
-    //             setComplement(data.complement);
-    //             setNeighborhood(data.neighborhood);
-    //             setCity(data.state);
-    //             setState(data.state);
-    //             setEmail(data.email);
-    //             setPassword(data.password);
-    //             setConfirm(data.confirm);
+                setName(data.name);
+                setLastName(data.lastName);
+                setDoc(data.doc);
+                setZipCode(data.zipCode);
+                setAddress(data.address);
+                setNumber(data.number);
+                setComplement(data.complement);
+                setNeighborhood(data.neighborhood);
+                setCity(data.state);
+                setState(data.state);
+                setEmail(data.email);
+                setPassword(data.password);
+                setConfirm(data.confirm);
 
-    //         } catch (error) {
-    //             //alert("Ocorreu um erro ao buscar os items");
-    //         }
-    //     }
+            } catch (error) {
+                //alert("Ocorreu um erro ao buscar os items");
+            }
+        }
 
-    //     getItems();
-    // }, []);
+        getItems();
+    }, []);
 
 
     const handleSubmit = async e =>{
@@ -73,52 +72,52 @@ function ProfileView(){
                                 <FormTitle title="Dados" />
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="Nome" value={name} onChange={setName} />
-                                        <input placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+                                        <Input placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+                                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Sobrenome" value={lastName} onChange={setLastName} />
+                                        <Input placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="CPF/CNPJ" value={doc} onChange={setDoc} />
+                                        <Input placeholder="CPF/CNPJ" value={doc} onChange={e => setDoc(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <FormTitle title="Endereço" />
                                 <Row>
                                     <Col md='2'>
-                                        <Input placeholder="CEP" value={zipCode} onChange={setZipCode} />
+                                        <Input placeholder="CEP" value={zipCode} onChange={e => setZipCode(e.target.value)} />
                                     </Col>
                                     <Col md='8'>
-                                        <Input placeholder="Logradouro" value={address} onChange={setAddress} />
+                                        <Input placeholder="Logradouro" value={address} onChange={e => setAddress(e.target.value)} />
                                     </Col>
                                     <Col md='2'>
-                                        <Input placeholder="Nº" value={number} onChange={setNumber} />
+                                        <Input placeholder="Nº" value={number} onChange={e => setNumber(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col md='2'>
-                                        <Input placeholder="Complemento" value={complement} onChange={setComplement} />
+                                        <Input placeholder="Complemento" value={complement} onChange={e => setComplement(e.target.value)} />
                                     </Col>
                                     <Col md='2'>
-                                        <Input placeholder="Bairro" value={neighborhood} onChange={setNeighborhood} />
+                                        <Input placeholder="Bairro" value={neighborhood} onChange={e => setNeighborhood(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
-                                        <Input placeholder="Cidade" value={city} onChange={setCity} />
+                                        <Input placeholder="Cidade" value={city} onChange={e => setCity(e.target.value)} />
                                     </Col>
                                     <Col md='2'>
-                                        <Input placeholder="Estado" value={state} onChange={setState} />
+                                        <Input placeholder="Estado" value={state} onChange={e => setState(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <FormTitle title="Acesso" />
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="Email" value={email} onChange={setEmail} />
+                                        <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Senha" type="password" value={password} onChange={setPassword} />
+                                        <Input placeholder="Senha" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Confirmação" type="password" value={confirm} onChange={setConfirm} />
+                                        <Input placeholder="Confirmação" type="password" value={confirm} onChange={e => setConfirm(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <hr/>

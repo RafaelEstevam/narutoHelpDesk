@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
 
-function Textarea({placeholder, type, onChange, value, readonly, height}){
+function Textarea({placeholder, onChange, value, readonly, height}){
 
     const TextAreaComponent = styled('textarea')`
         background-color: ${readonly == 'readonly' ? V.draculaWhite : ''};
@@ -14,7 +14,7 @@ function Textarea({placeholder, type, onChange, value, readonly, height}){
                 className="form-control mb-3"
                 readonly={readonly}
                 placeholder={placeholder}
-                onChange={e => onChange(e.target.value)}
+                onChange={onChange}
                 style={{height: height + 'px' }}
             >
                 {value}
