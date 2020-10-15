@@ -12,13 +12,12 @@ function Textarea({placeholder, onChange, value, readonly, height}){
         <div>
             <TextAreaComponent 
                 className="form-control mb-3"
-                readonly={readonly}
+                readOnly={readonly}
                 placeholder={placeholder}
                 onChange={onChange}
                 style={{height: height + 'px' }}
-            >
-                {value}
-            </TextAreaComponent>
+                defaultValue={value}
+            />
         </div>
     )
 }

@@ -8,7 +8,7 @@ function Input({placeholder, type, onChange, value, readonly}){
         background-color: ${readonly == 'readonly' ? V.draculaWhite : ''};
     `
     return(
-        <input Component className="form-control mb-3" readonly={readonly} placeholder={placeholder} value={value} onChange={onChange} type={type} />
+        <input Component className="form-control mb-3" readOnly={readonly} placeholder={placeholder} value={value} onChange={onChange} type={type} />
     )
 }
 

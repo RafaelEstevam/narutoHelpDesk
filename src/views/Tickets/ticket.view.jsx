@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
 import api from '../../services/api.service';
@@ -29,28 +29,30 @@ function TicketView(){
     const [talkText, setTalkText] = useState('');
 
     useEffect(() => {
-        async function getItems() {
+        // async function getItems() {
 
-            try {
+        //     try {
                 
-                const { data } = await api.get("/tickets/" + ticketId);
+        //         const { data } = await api.get("/tickets/" + ticketId);
 
-                setClientId(data.clientId);
-                setCategoryId(data.categotyId);
-                setStatus(data.status);
-                setTitle(data.title);
-                setCreatedAt(data.created_at);
-                setDeadline(data.deadline);
-                setFinishedAt(data.finished_at);
-                setDescription(data.description);
-                setTalkHistory(data.talkHistory);
+        //         setClientId(data.clientId);
+        //         setCategoryId(data.categotyId);
+        //         setStatus(data.status);
+        //         setTitle(data.title);
+        //         setCreatedAt(data.created_at);
+        //         setDeadline(data.deadline);
+        //         setFinishedAt(data.finished_at);
+        //         setDescription(data.description);
+        //         setTalkHistory(data.talkHistory);
 
-            } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
-            }
-        }
+        //     } catch (error) {
+        //         alert("Ocorreu um erro ao buscar os items");
+        //     }
+        // }
 
-        getItems();
+        // getItems();
+
+        console.log("teste");
     }, []);
 
 
@@ -72,7 +74,7 @@ function TicketView(){
                                         <Input placeholder="ticketId" value={ticketId} onChange={e => setTicketId(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
-                                        <select class="form-control" value={status} onChange={e => setStatus(e.target.value)}>
+                                        <select className="form-control" value={status} onChange={e => setStatus(e.target.value)}>
                                             <option value="">Selecione</option>
                                             <option value="to-do">To do</option>
                                             <option value="in-progress">In progress</option>
@@ -127,8 +129,8 @@ function TicketView(){
                                     <FormTitle title="Chat do ticket" />
                                 </Col>
                                 <Col md='12'>
-                                    <div class="chatWrapper mb-3" style={{backgroundColor: V.draculaDark, height: '500px', maxHeight: '500px', overflowY: 'auto', borderRadius: '3px'}}>
-                                        <div class="chat" style={{backgroundColor: V.draculaDark, height: 'auto', borderRadius: '3px', padding: '15px'}}>
+                                    <div className="chatWrapper mb-3" style={{backgroundColor: V.draculaDark, height: '500px', maxHeight: '500px', overflowY: 'auto', borderRadius: '3px'}}>
+                                        <div className="chat" style={{backgroundColor: V.draculaDark, height: 'auto', borderRadius: '3px', padding: '15px'}}>
                                             {talkHistory.length > 0 && 
                                                 talkHistory.map((item) => {
                                                     return (

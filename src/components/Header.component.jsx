@@ -32,7 +32,7 @@ function Header(){
 
     return (
         <HeaderComponent>
-            <HeaderButton onClick={() => handleLogout()}><i class="fa fa-power-off"></i></HeaderButton>
+            <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
         </HeaderComponent>
     )
 }
