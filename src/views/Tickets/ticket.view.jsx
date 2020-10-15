@@ -29,30 +29,29 @@ function TicketView(){
     const [talkText, setTalkText] = useState('');
 
     useEffect(() => {
-        // async function getItems() {
+        async function getItems() {
 
-        //     try {
+            try {
                 
-        //         const { data } = await api.get("/tickets/" + ticketId);
+                const { data } = await api.get("/tickets/" + ticketId);
 
-        //         setClientId(data.clientId);
-        //         setCategoryId(data.categotyId);
-        //         setStatus(data.status);
-        //         setTitle(data.title);
-        //         setCreatedAt(data.created_at);
-        //         setDeadline(data.deadline);
-        //         setFinishedAt(data.finished_at);
-        //         setDescription(data.description);
-        //         setTalkHistory(data.talkHistory);
+                setClientId(data.clientId);
+                setCategoryId(data.categotyId);
+                setStatus(data.status);
+                setTitle(data.title);
+                setCreatedAt(data.created_at);
+                setDeadline(data.deadline);
+                setFinishedAt(data.finished_at);
+                setDescription(data.description);
+                setTalkHistory(data.talkHistory);
 
-        //     } catch (error) {
-        //         alert("Ocorreu um erro ao buscar os items");
-        //     }
-        // }
+            } catch (error) {
+                alert("Ocorreu um erro ao buscar os items");
+            }
+        }
 
-        // getItems();
+        getItems();
 
-        console.log("teste");
     }, []);
 
 
@@ -71,7 +70,7 @@ function TicketView(){
                                 <FormTitle title="Dados" />
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="ticketId" value={ticketId} onChange={e => setTicketId(e.target.value)} />
+                                        <Input placeholder="ticketId" readonly={'readonly'} value={ticketId} onChange={e => setTicketId(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
                                         <select className="form-control" value={status} onChange={e => setStatus(e.target.value)}>
@@ -86,18 +85,18 @@ function TicketView(){
                                 <Row>
                                     
                                     <Col md='6'>
-                                        <Input placeholder="Título do ticket" onChange={e => setTitle(e.target.value)} />
+                                        <Input placeholder="Título do ticket" readonly={'readonly'} value={title} onChange={e => setTitle(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Cliente" value={clientId} onChange={e => setClientId(e.target.value)} />
+                                        <Input placeholder="Cliente" readonly={'readonly'} value={clientId} onChange={e => setClientId(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Categoria" value={categotyId} onChange={e => setCategoryId(e.target.value)} />
+                                        <Input placeholder="Categoria" readonly={'readonly'} value={categotyId} onChange={e => setCategoryId(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="Data de abertura" type={'date'} value={created_at} onChange={e => setCreatedAt(e.target.value)} />
+                                        <Input placeholder="Data de abertura" readonly={'readonly'} type={'date'} value={created_at} onChange={e => setCreatedAt(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
                                         <Input placeholder="Prazo" type={'date'} value={deadline} onChange={e => setDeadline(e.target.value)} />
@@ -109,7 +108,7 @@ function TicketView(){
                                 <FormTitle title="Detalhes do ticket" />
                                 <Row>
                                     <Col md='12'>
-                                        <Textarea placeholder="Detalhes do ticket" height={400} value={description} onChange={e => setDescription(e.target.value)} />
+                                        <Textarea placeholder="Detalhes do ticket" readonly={'readonly'} height={400} value={description} onChange={e => setDescription(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <Row>
@@ -134,7 +133,7 @@ function TicketView(){
                                             {talkHistory.length > 0 && 
                                                 talkHistory.map((item) => {
                                                     return (
-                                                        <Talk content={item.content} date={item.date} hour={item.hourtelient} userId={userId} clentId={clientId} image={item.image} />
+                                                        <Talk content={item.content} date={item.date} hour={item.hourtelient} userId={userId} talkUserId={item.userId} image={item.image} />
                                                     )
                                                 })
                                             }

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import * as V from '../styles/variables';
 
 const TextAreaComponent = styled('textarea')`
-    background-color: ${props => props.readonly == 'readonly' ? V.draculaWhite : ''};
+    &[readonly]{
+        background-color: ${V.draculaWhite};
+    }
 `
 
 function Textarea({placeholder, onChange, value, readonly, height}){

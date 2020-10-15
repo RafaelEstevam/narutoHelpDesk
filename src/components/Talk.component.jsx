@@ -22,9 +22,9 @@ const TalkComponent = styled('div')`
     margin-left: ${ props => !props.clientType ? '50px' : '0px' } ;
 `
 
-function Talk({content, date, hour, userId, clientId, image}){
+function Talk({content, date, hour, userId, talkUserId, image}){
 
-    const isClientTalk = userId == clientId ? true : false;
+    const isClientTalk = userId == talkUserId ? false : true;
 
     return(
 
