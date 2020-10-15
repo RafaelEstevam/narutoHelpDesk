@@ -28,34 +28,34 @@ function ProfileView(){
     const [confirm, setConfirm] = useState('');
 
     // com Async Await
-    useEffect(() => {
-        async function getItems() {
+    // useEffect(() => {
+    //     async function getItems() {
 
-            try {
+    //         try {
                 
-                const { data } = await api.get("/profiles/" + userId);
+    //             const { data } = await api.get("/profiles/" + userId);
 
-                setName(data.name);
-                setLastName(data.lastName);
-                setDoc(data.doc);
-                setZipCode(data.zipCode);
-                setAddress(data.address);
-                setNumber(data.number);
-                setComplement(data.complement);
-                setNeighborhood(data.neighborhood);
-                setCity(data.state);
-                setState(data.state);
-                setEmail(data.email);
-                setPassword(data.password);
-                setConfirm(data.confirm);
+    //             setName(data.name);
+    //             setLastName(data.lastName);
+    //             setDoc(data.doc);
+    //             setZipCode(data.zipCode);
+    //             setAddress(data.address);
+    //             setNumber(data.number);
+    //             setComplement(data.complement);
+    //             setNeighborhood(data.neighborhood);
+    //             setCity(data.state);
+    //             setState(data.state);
+    //             setEmail(data.email);
+    //             setPassword(data.password);
+    //             setConfirm(data.confirm);
 
-            } catch (error) {
-                //alert("Ocorreu um erro ao buscar os items");
-            }
-        }
+    //         } catch (error) {
+    //             //alert("Ocorreu um erro ao buscar os items");
+    //         }
+    //     }
 
-        getItems();
-    }, []);
+    //     getItems();
+    // }, []);
 
 
     const handleSubmit = async e =>{
@@ -74,6 +74,7 @@ function ProfileView(){
                                 <Row>
                                     <Col md='6'>
                                         <Input placeholder="Nome" value={name} onChange={setName} />
+                                        <input placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
                                         <Input placeholder="Sobrenome" value={lastName} onChange={setLastName} />
