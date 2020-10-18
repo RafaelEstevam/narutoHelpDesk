@@ -32,7 +32,7 @@ function ProfileView(){
 
             try {
                 
-                const { data } = await api.get("/profiles/" + userId);
+                const { data } = await api.get("/users/" + userId);
 
                 setName(data.name);
                 setLastName(data.lastName);
@@ -73,7 +73,6 @@ function ProfileView(){
                                 <Row>
                                     <Col md='6'>
                                         <Input placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
-                                        <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
                                         <Input placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />

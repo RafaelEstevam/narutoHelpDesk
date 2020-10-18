@@ -7,14 +7,30 @@ import DefaultWrapper from '../../components/DefaultWrapper.component';
 import DataTable from 'react-data-table-component';
 import ViewTitle from '../../components/ViewTitle.component';
 
+import api from '../../services/api.service';
+
 function UserView(){
 
+    const [dataTable, setDataTable] = useState('');
     const history = useHistory();
 
     function handleTableClick (id){
         const path = `/users/${id}`;
         history.push(path);
     }
+
+    useEffect(() => {
+        async function getTicket() {
+            try {
+                const { data } = await api.get("/users/");
+                setDataTable(data);
+                
+            } catch (error) {
+                alert("Ocorreu um erro ao buscar os items");
+            }
+        }
+        getTicket();
+    }, []);
 
     const columns = [
         {
@@ -29,8 +45,8 @@ function UserView(){
             right: true,
         },
         {
-            name: 'Function',
-            selector: 'function',
+            name: 'User type',
+            selector: 'userType',
             sortable: true,
             right: true,
         },
@@ -42,32 +58,6 @@ function UserView(){
         },
     ];
 
-    const data = [
-        {id: 1, name: 'Rafael', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 2, name: 'Estevam', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 3, name: 'de', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 4, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 5, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 6, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 7, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 8, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 9, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 11, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 22, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 33, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 44, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 55, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 66, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 77, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 88, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 99, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 111, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 222, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 333, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 444, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-        {id: 555, name: 'Oliveira', email: 'rafael@eestevam.com', function: 'Admin'},
-    ];
-
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
@@ -75,7 +65,7 @@ function UserView(){
                 <DataTable
                     title="Users"
                     columns={columns}
-                    data={data}
+                    data={dataTable}
                     keyField={'id'}
                     highlightOnHover
                     pagination

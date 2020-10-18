@@ -7,8 +7,11 @@ import { ChildContentWrapper } from '../../components/Wrappers.component';
 import DataTable from 'react-data-table-component';
 import ViewTitle from '../../components/ViewTitle.component';
 
+import api from '../../services/api.service';
+
 function TicketsView(){
 
+    const [dataTable, setDataTable] = useState('');
     const history = useHistory();
 
     function handleTableClick (id){
@@ -16,11 +19,25 @@ function TicketsView(){
         history.push(path);
     }
 
+    useEffect(() => {
+        async function getTicket() {
+            try {
+                const { data } = await api.get("/tickets/");
+                setDataTable(data);
+                
+            } catch (error) {
+                alert("Ocorreu um erro ao buscar os items");
+            }
+        }
+        getTicket();
+    }, []);
+
+
     const columns = [
         
         {
             name: 'Ticket Id',
-            selector: 'ticket_id',
+            selector: 'ticketId',
             sortable: true,
         },
         {
@@ -36,7 +53,7 @@ function TicketsView(){
         },
         {
             name: 'Cliente',
-            selector: 'client',
+            selector: 'clientId',
             sortable: true,
             right: true,
         },
@@ -53,37 +70,11 @@ function TicketsView(){
             right: true,
         },
         {
-            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.id)} key={row.id}>Visualizar</button>,
+            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.ticketId)} key={row.ticketId}>Visualizar</button>,
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
-    ];
-
-    const data = [
-        {ticket_id: 'INC00901', id: 1, name: 'Rafael', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 2, name: 'Estevam', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 3, name: 'de', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 4, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1991'},
-        {ticket_id: 'INC00901', id: 5, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 6, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 7, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 8, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 9, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 11, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 22, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 33, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 44, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 55, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 66, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 77, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 88, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 99, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 111, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 222, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 333, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 444, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
-        {ticket_id: 'INC00901', id: 555, name: 'Oliveira', email: 'rafael@eestevam.com', created_at: '20/06/1992'},
     ];
 
     const renderContent = () =>{
@@ -93,7 +84,7 @@ function TicketsView(){
                 <DataTable
                     title="Tickets"
                     columns={columns}
-                    data={data}
+                    data={dataTable}
                     keyField={'id'}
                     highlightOnHover
                     pagination

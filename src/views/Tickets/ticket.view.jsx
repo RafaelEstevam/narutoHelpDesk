@@ -94,7 +94,7 @@ function TicketView(){
                                         <Input placeholder="Categoria" readonly={readonly} value={categotyId} onChange={e => setCategoryId(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Cliente" readonly={!readonly} value={clientId} onChange={e => setClientId(e.target.value)} />
+                                        <Input placeholder="Cliente" readonly={'readonly'} value={clientId} onChange={e => setClientId(e.target.value)} />
                                     </Col>
                                 </Row>
 
