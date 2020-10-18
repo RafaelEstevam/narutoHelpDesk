@@ -13,6 +13,7 @@ import TicketsView from './views/Tickets/tickets.view'
 import TicketsCategoriesView from './views/Tickets/ticketCategories.view'
 import TicketsCategoryView from './views/Tickets/ticketCategory.view'
 import DashboardView from './views/Dashboard/dashboard.view'
+import ClientDashboard from './views/ClenteDashboard/dashboard.view'
 import ReportView from './views/Report/report.view'
 import PlansView from './views/Plans/plans.view'
 
@@ -46,9 +47,11 @@ function Routes(){
                 <Route path="/" exact component={LoginView} />
                 <Route path="/register" exact component={RegisterView} />
                 <PrivateRoutes path="/dashboard" exact component={DashboardView} />
+                <PrivateRoutes path="/client-dashboard" exact component={ClientDashboard} />
                 <PrivateRoutes path="/users" exact component={UsersView} />
                 <PrivateRoutes path="/users/:id" exact component={ProfileView} />
                 <PrivateRoutes path="/tickets" exact component={TicketsView} />
+                <PrivateRoutes path="/tickets/new" exact component={TicketView} />
                 <PrivateRoutes path="/tickets/:id" exact component={TicketView} />
                 <PrivateRoutes path="/tickets-categories" exact component={TicketsCategoriesView} />
                 <PrivateRoutes path="/tickets-categories/:id" exact component={TicketsCategoryView} />

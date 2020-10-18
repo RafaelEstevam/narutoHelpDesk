@@ -8,6 +8,7 @@ const TaskListCard = styled('div')`
         border-radius: 3px;
         padding: 10px 15px;
         max-height: 800px;
+        height: 800px;
         overflow-y: scroll;
         overflow-x: hidden;
     `
@@ -62,7 +63,7 @@ function TaskList({tasks, title}){
                     <TaskListFilterButtons className="warning">In Progress</TaskListFilterButtons>
                     <TaskListFilterButtons className="danger">Blocked</TaskListFilterButtons>
                 </TaskListFilterWrapper>
-                {tasks.map((item) =>{
+                {tasks.length > 0 && tasks.map((item) =>{
                     return (
                         <Task task={item} />
                     )

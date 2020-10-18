@@ -1,4 +1,6 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
+
 import styled from 'styled-components';
 import * as V from '../styles/variables';
 import PlayButton from './PlayButton.component';
@@ -43,6 +45,7 @@ const TaskWrapper = styled('div')`
 
 const TaskItem = styled('div')`
     display: flex;
+    cursor: pointer;
     justify-content: space-between;
     align-items: start;
     padding: 10px 15px;
@@ -65,20 +68,25 @@ const TaskItem = styled('div')`
 
 function Task({task}){
 
+    const history = useHistory();
+
+    function handleGoToTicketPage(task){
+        history.push(`/tickets/${task.ticketId}`);
+    }
+
     const TaskItemStatus = task.status == 'done' ? V.draculaSuccess : task.status == 'blocked' ? V.draculaDanger : task.status == 'in-progress' ? V.draculaWarning : V.draculaPrimary;
     const TaskItemAlert = task.scheduleAlert ? V.draculaSecondary : 'transparent';
 
     return (
-        <TaskItem TaskItemStatus={TaskItemStatus} TaskItemAlert={TaskItemStatus}>
+        <TaskItem TaskItemStatus={TaskItemStatus} TaskItemAlert={TaskItemStatus} onClick={ e => handleGoToTicketPage(task)}>
             <TaskItemWrapper>
-                <TaskLink href={task.url} >
+                <TaskLink >
                     <TaskTitle>{task.title}</TaskTitle> 
                     <TaskDescription>{task.description}</TaskDescription>
                 </TaskLink>
-                <TaskWrapper>
+                {/* <TaskWrapper>
                     <TaskDetails>{task.clientName}</TaskDetails>
-                    {/* <PlayButton /> */}
-                </TaskWrapper>
+                </TaskWrapper> */}
             </TaskItemWrapper>
         </TaskItem>
     )

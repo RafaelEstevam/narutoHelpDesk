@@ -1,5 +1,5 @@
   
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
@@ -10,6 +10,8 @@ import Calendar from '../../components/Calendar.component';
 import ViewTitle from '../../components/ViewTitle.component';
 import LineChartComponent from '../../components/LineChartComponent.component';
 import TaskDoing from '../../components/TaskDoing.component';
+import api from '../../services/api.service';
+
 
 function DashboardView(){
 
@@ -23,15 +25,20 @@ function DashboardView(){
         {name: 'Domingo', reais: 0, horas: 0, chamados: 0},
     ];
 
-    const tasks = [
-        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '1', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
-        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
-        {id: 3, title: 'ticket 1', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-05', startDate: '2020-09-05', url: '/tickets/3', status: 'done'},
-        {id: 4, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '1', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'blocked'},
-        {id: 5, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '3', scheduleAlert: true, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'in-progress'},
-        {id: 6, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '2', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'to-do'},
-        {id: 6, title: 'ticket 2', description: 'Tarefa x', clientName: 'Cliente teste', clientId: '2', scheduleAlert: null, deliveryDate: '2020-09-05' , date: '2020-09-10', startDate: '2020-09-05', url: '/tickets/4', status: 'to-do'},
-    ]
+    const [tickets, setTickets] = useState('');
+
+    useEffect(() => {
+        async function getTasks() {
+            try {
+                const { data } = await api.get("/tickets/");
+                setTickets(data);
+            } catch (error) {
+                // alert("Ocorreu um erro ao buscar os items");
+            }
+        }
+        getTasks();
+    }, []);
+
 
     const renderContent = () =>{
         return (
@@ -60,10 +67,10 @@ function DashboardView(){
                         ></LineChartComponent>
                     </Col>
                     <Col md="6">
-                        <Calendar title={"Calendário de entregas"} events={tasks}/>
+                        <Calendar title={"Calendário de entregas"} events={tickets}/>
                     </Col>
                     <Col md="3">
-                        <TaskList title={'Tarefas recentes'} tasks={tasks} />
+                        <TaskList title={'Tarefas recentes'} tasks={tickets} />
                     </Col>
                 </Row>
             </ChildContentWrapper>

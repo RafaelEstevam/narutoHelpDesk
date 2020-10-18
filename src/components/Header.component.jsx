@@ -9,7 +9,7 @@ const HeaderComponent = styled('div')`
     height: 60px;
     background: ${V.draculaLight};
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 `;
 
@@ -21,9 +21,30 @@ const HeaderButton = styled('button')`
     border: 0px solid transparent;
 `
 
+const NewTaskButton = styled('a')`
+    padding: 5px 10px;
+    background: ${V.draculaPrimary};
+    color: ${V.whiteColor};
+    border: 0px solid transparent;
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+    :hover{
+        text-decoration: none;
+        color: ${V.whiteColor};
+        opacity: 1;
+    }
+`
+
 function Header(){
 
     const history = useHistory();
+    const isClient = true;
+
+    function handleNewTicket(){
+        history.push('/tickets/new');
+    }
 
     function handleLogout(){
         removeStorageLogin();
@@ -31,7 +52,10 @@ function Header(){
     }
 
     return (
-        <HeaderComponent>
+        <HeaderComponent onClick={() => handleNewTicket()}>
+            {isClient && 
+                <NewTaskButton>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
+            }
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
         </HeaderComponent>
     )
