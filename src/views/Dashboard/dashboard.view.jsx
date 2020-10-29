@@ -1,19 +1,26 @@
   
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
-import { Row, Col } from 'react-bootstrap';
-import * as V from '../../styles/variables';
+
 import TaskList from '../../components/TaskList.component.jsx';
 import Calendar from '../../components/Calendar.component';
 import ViewTitle from '../../components/ViewTitle.component';
 import LineChartComponent from '../../components/LineChartComponent.component';
 import TaskDoing from '../../components/TaskDoing.component';
+
+import * as V from '../../styles/variables';
+
 import api from '../../services/api.service';
+import userContext from '../../services/useContext.service';
+
 
 
 function DashboardView(){
+
+    const currentlyUser = useContext(userContext);
 
     const data = [
         {name: 'Segunda', reais: 200, horas: 4, chamados: 1},
@@ -41,6 +48,9 @@ function DashboardView(){
 
 
     const renderContent = () =>{
+
+        console.log(currentlyUser);
+
         return (
             <ChildContentWrapper>
                 <ViewTitle title="Admin Dashboard" />

@@ -17,6 +17,8 @@ import ClientDashboard from './views/ClenteDashboard/dashboard.view'
 import ReportView from './views/Report/report.view'
 import PlansView from './views/Plans/plans.view'
 
+
+
 function Routes(){
 
     function isAllow(userType, route){
