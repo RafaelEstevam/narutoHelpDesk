@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const loginValidation = yup.object().shape({
     email: yup.string().email().required(),
-    password: yup.string().required()
+    senha: yup.string().required()
 });
 
 const userValidation = yup.object().shape({
@@ -15,7 +15,7 @@ const taskValidation = yup.object().shape({
     userId:yup.string().required(),
     clientId:yup.string().required(),
     taskId:yup.string().required(),
-    description: yup.string() 
+    description: yup.string()
 });
 
 const taskTalkValidation = yup.object().shape({

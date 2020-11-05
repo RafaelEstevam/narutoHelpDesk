@@ -6,6 +6,7 @@ import * as S from "./styled";
 import { BetweenWrapper } from '../../components/Wrappers.component';
 import {ShadowCard} from '../../components/Cards.component';
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
+import Space from '../../components/Space.component';
 
 import {loginValidation} from '../../validations/validations';
 import * as V from "../../styles/variables";
@@ -57,6 +58,8 @@ function LoginView(){
                                         </div>
                                     </Col>
                                 </Row>
+
+                                <Space height={'40px'}/>
                                 
                                 <Row>
                                     <Col md="12">
@@ -90,6 +93,8 @@ function LoginView(){
                                     </Col>
                                 </Row>
 
+                                <Space height={'40px'}/>
+
                                 <Row>
                                     <Col md="12">
                                         <div className="d-flex justify-content-center">
@@ -100,24 +105,26 @@ function LoginView(){
                                     </Col>
                                 </Row>
 
+                                <Space height={'20px'}/>
+
                                 <Row>
                                     <Col md="4">
                                         <SelectPlanButton icon={StartIcon} title={'Start'} number={5} />
                                     </Col>
                                     <Col md="4">
-                                        <SelectPlanButton icon={ProIcon} title={'Pro'} number={8} />
+                                        <SelectPlanButton icon={ProIcon} title={'Pro'} number={10} />
                                     </Col>
                                     <Col md="4">
-                                        <SelectPlanButton icon={BusinessIcon} title={'Business'} number={10} />
+                                        <SelectPlanButton icon={BusinessIcon} title={'Business'} number={15} />
                                     </Col>
                                 </Row>
+
+                                <Space height={'40px'}/>
                                     
                                 <Row>
                                     <Col md="12">
-                                        <BetweenWrapper>
-                                            <Button variant="primary" type="submit">Cadastre-se</Button>
-                                            <button className="btn btn-outline-dark">Fazer login</button>
-                                        </BetweenWrapper>
+                                        <button className="btn btn-primary">Cadastre-se</button>
+                                        <button className="btn btn-outline-dark">Fazer login</button>
                                     </Col>
                                 </Row>
                             </Form>

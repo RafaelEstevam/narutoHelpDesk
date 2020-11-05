@@ -52,9 +52,9 @@ function Header(){
     }
 
     return (
-        <HeaderComponent onClick={() => handleNewTicket()}>
+        <HeaderComponent>
             {isClient && 
-                <NewTaskButton>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
+                <NewTaskButton onClick={() => handleNewTicket()}>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
             }
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
         </HeaderComponent>

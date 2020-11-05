@@ -46,7 +46,7 @@ function SelectPlanButton({icon, title, number}){
             <img src={icon} />
             <h2>{title}</h2>
             <h3>{number}</h3>
-            <p>Chamados <br/> semanais</p>
+            <p>Chamados <br/> simultâneos</p>
         </SelectPlanBtn>
     )
 }

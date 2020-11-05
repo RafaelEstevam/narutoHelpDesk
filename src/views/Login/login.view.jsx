@@ -1,5 +1,5 @@
   
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import {useHistory} from 'react-router-dom';
 
@@ -12,32 +12,34 @@ import {setStorageLogin} from '../../services/auth.service';
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
 
+import userContext from '../../services/useContext.service';
 import api from '../../services/api.service';
+import {auth} from '../../services/auth.service';
 
 function LoginView(){
 
+    const currentlyUser = useContext(userContext);
+
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setPassword] = useState('');
     const history = useHistory();
 
     const handleSubmit = async e =>{
         e.preventDefault();
-        const loginData = { email, password };
+        const loginData = { email, senha };
         const formData = await loginValidation.isValid(loginData).then( valid =>{
             return valid
         });
 
         if(formData){
             try {
-                const loggedUser = await api.post('/sessions', loginData);
-                setStorageLogin(loggedUser);
+                const loggedUser = await api.post('/login', loginData);
+                currentlyUser.handleSetUserData(loggedUser.data);
 
-                if(loggedUser.data.userType == 'manager'){
-                    history.push('/dashboard');
-                }else if(loggedUser.data.userType == 'employee'){
+                if(loggedUser.data.tipoUsuario == 1 || loggedUser.data.tipoUsuario == 2){
                     history.push('/dashboard');
                 }else{
-                    history.push('/tickets');
+                    history.push('/client-dashboard');
                 }
 
             }catch(err){
@@ -57,7 +59,7 @@ function LoginView(){
                                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                                    <Form.Control type="password" placeholder="Senha" value={senha} onChange={e => setPassword(e.target.value)} />
                                 </Form.Group>
                                 <BetweenWrapper>
                                     <Button variant="primary" type="submit">Login</Button>

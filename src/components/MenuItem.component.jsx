@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
+import {Link} from 'react-router-dom';
 
 const ItemMenu = styled('li')`
     display: block;
@@ -28,10 +29,9 @@ const ItemMenu = styled('li')`
 `
 
 function MenuItem({icon, label, link}){
-
     return(
         <ItemMenu>
-            <a href={link}> <i className={icon}></i> {label}</a>
+            <Link to={link}> <i className={icon}></i> {label}</Link>
         </ItemMenu>
     )
 }

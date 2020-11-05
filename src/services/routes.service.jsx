@@ -18,14 +18,16 @@ const employeeRoutes = [
 
 const clientRoutes = [
     "/tickets",
+    "/tickets/new",
     "/tickets/:id",
-    "/users/:id"
+    "/users/:id",
+    "/client-dashboard"
 ];
 
 const searchRoute = (userType, route) => {
     let searchedRoute = undefined;
 
-    if(userType == 'manager'){
+    if(userType == '1'){ //manager
         managerRoutes.forEach((i) => {
             if(i == route){
                 searchedRoute = true;
@@ -33,7 +35,7 @@ const searchRoute = (userType, route) => {
         })
     }
 
-    if(userType == 'employee'){
+    if(userType == '2'){ //employee
         employeeRoutes.forEach((i) => {
             if(i == route){
                 searchedRoute = true;
@@ -41,7 +43,7 @@ const searchRoute = (userType, route) => {
         })
     }
 
-    if(userType == 'client'){
+    if(userType == '3'){ //client
         clientRoutes.forEach((i) => {
             if(i == route){
                 searchedRoute = true;

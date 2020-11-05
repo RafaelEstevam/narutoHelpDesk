@@ -18,12 +18,10 @@ import ReportView from './views/Report/report.view'
 import PlansView from './views/Plans/plans.view'
 
 
-
 function Routes(){
 
     function isAllow(userType, route){
-        // return searchRoute(userType, route);
-        return true;
+        return searchRoute(userType, route);
     }
 
     function PrivateRoutes({ component: Component, ...rest }){
@@ -57,10 +55,8 @@ function Routes(){
                 <PrivateRoutes path="/tickets/:id" exact component={TicketView} />
                 <PrivateRoutes path="/tickets-categories" exact component={TicketsCategoriesView} />
                 <PrivateRoutes path="/tickets-categories/:id" exact component={TicketsCategoryView} />
-                {/* <PrivateRoutes path="/projects" exact component={TicketsView} />
-                <PrivateRoutes path="/projects/:id" exact component={TicketsView} /> */}
-                <PrivateRoutes path="/reports" exact component={ReportView} />
-                <PrivateRoutes path="/plans" exact component={PlansView} />
+                {/* <PrivateRoutes path="/reports" exact component={ReportView} /> */}
+                {/* <PrivateRoutes path="/plans" exact component={PlansView} /> */}
                 <Route path="*" exact component={NoMatchView} />
             </Switch>
         </BrowserRouter>
