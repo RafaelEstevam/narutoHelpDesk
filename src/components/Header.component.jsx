@@ -51,12 +51,17 @@ function Header(){
         history.push('/');
     }
 
+    function handleProfile(){
+        history.push(`/profile`);
+    }
+
     return (
         <HeaderComponent>
             {isClient && 
                 <NewTaskButton onClick={() => handleNewTicket()}>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
             }
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
+            <HeaderButton onClick={() => handleProfile()}><i className="fa fa-user"></i></HeaderButton>
         </HeaderComponent>
     )
 }

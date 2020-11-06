@@ -14,20 +14,15 @@ function App() {
     setStorageLogin(user);
   }
 
-  const handleRemoveUserData = () => {
-    removeStorageLogin();
-  }
-
   const handleGetUserData = () => {
-    getStorageLogin();
+    return 'teste';
   }
 
   useEffect(() => {
     setContextValue({
       user: userData,
       handleSetUserData,
-      handleRemoveUserData,
-      handleGetUserData,
+      handleGetUserData
     });
   }, [userData]);
 

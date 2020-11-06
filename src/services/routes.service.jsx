@@ -6,21 +6,21 @@ const managerRoutes = [
     "/tickets/:id", 
     "/tickets-categories",
     "/tickets-categories/:id",
-    "/users/:id"
+    "/profile"
 ];
 
 const employeeRoutes = [
     "/dashboard",
     "/tickets",
     "/tickets/:id",
-    "/users/:id"
+    "/profile"
 ];
 
 const clientRoutes = [
     "/tickets",
     "/tickets/new",
     "/tickets/:id",
-    "/users/:id",
+    "/profile",
     "/client-dashboard"
 ];
 

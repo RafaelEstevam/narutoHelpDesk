@@ -49,8 +49,6 @@ function DashboardView(){
 
     const renderContent = () =>{
 
-        console.log(currentlyUser);
-
         return (
             <ChildContentWrapper>
                 <ViewTitle title="Admin Dashboard" />

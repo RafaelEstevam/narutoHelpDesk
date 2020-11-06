@@ -7,7 +7,6 @@ import {BetweenWrapper} from '../../components/Wrappers.component';
 import * as S from "./styled";
 import {loginValidation} from '../../validations/validations';
 import {mainLightColor} from '../../styles/variables';
-import {setStorageLogin} from '../../services/auth.service';
 
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
@@ -43,7 +42,7 @@ function LoginView(){
                 }
 
             }catch(err){
-                console.log(err);
+                alert('Não foi possível fazer o login.');
             }
         }
     }

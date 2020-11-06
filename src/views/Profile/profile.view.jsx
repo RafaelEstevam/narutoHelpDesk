@@ -1,20 +1,25 @@
   
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import { useParams } from 'react-router-dom';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
-import api from '../../services/api.service';
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import ViewTitle from '../../components/ViewTitle.component';
 import FormTitle from '../../components/FormTitle.component';
 import Input from '../../components/Input.component';
 
+import api from '../../services/api.service';
+import {getStorageLogin} from '../../services/auth.service';
+
 function ProfileView(){
 
-    const [userId, setUserId] = useState(useParams().id);
+    const [userId, setUserId] = useState(getStorageLogin().userId)
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [userType, setUserType] = useState('');
+    const [businessName, setBusinessName] = useState('');
+    const [plan, setPlan] = useState('');
     const [doc, setDoc] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [address, setAddress] = useState('');
@@ -29,27 +34,34 @@ function ProfileView(){
 
     useEffect(() => {
         async function getItems() {
-
             try {
-                
-                const { data } = await api.get("/users/" + userId);
 
-                setName(data.name);
-                setLastName(data.lastName);
-                setDoc(data.doc);
-                setZipCode(data.zipCode);
-                setAddress(data.address);
-                setNumber(data.number);
-                setComplement(data.complement);
-                setNeighborhood(data.neighborhood);
-                setCity(data.state);
-                setState(data.state);
-                setEmail(data.email);
-                setPassword(data.password);
-                setConfirm(data.confirm);
+                await api.get("/usuario/id/" + userId).then((response) => {
+                    const userData = response.data;
+                    handleGetBusinessData(userData);
+
+                    setName(userData.nome);
+                    setLastName(userData.sobrenome);
+                    setEmail(userData.email);
+                    setUserType(userData.tipoUsuario);
+
+                });
+
+                
+                // setPassword(userData.password);
+                // setConfirm(userData.confirm);
+                // setDoc(data.doc);
+                // setZipCode(data.zipCode);
+                // setAddress(data.address);
+                // setNumber(data.number);
+                // setComplement(data.complement);
+                // setNeighborhood(data.neighborhood);
+                // setCity(data.cicy);
+                // setState(data.state);
+                
 
             } catch (error) {
-                //alert("Ocorreu um erro ao buscar os items");
+                alert("Ocorreu um erro ao buscar os items");
             }
         }
 
@@ -59,6 +71,12 @@ function ProfileView(){
 
     const handleSubmit = async e =>{
         e.preventDefault();
+    }
+
+    const handleGetBusinessData = async (user) => {
+        const businessData = await api.get("/empresa/id/" + user.empresa);
+        setBusinessName(businessData.data.nome);
+        setPlan(businessData.data.plano);
     }
 
     const renderContent = () =>{
@@ -78,10 +96,22 @@ function ProfileView(){
                                         <Input placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="CPF/CNPJ" value={doc} onChange={e => setDoc(e.target.value)} />
+                                        <Input placeholder="Tipo de usuário" readonly value={userType} onChange={e => setUserType(e.target.value)} />
                                     </Col>
                                 </Row>
-                                <FormTitle title="Endereço" />
+                                <FormTitle title="Dados da empresa" />
+                                <Row>
+                                    <Col md='3'>
+                                        <Input placeholder="CPF/CNPJ" readonly value={doc} onChange={e => setDoc(e.target.value)} />
+                                    </Col>
+                                    <Col md='6'>
+                                        <Input placeholder="Nome da empresa" value={businessName} onChange={e => setBusinessName(e.target.value)} />
+                                    </Col>
+                                    <Col md='3'>
+                                        <Input placeholder="Plano" readonly value={plan} onChange={e => setPlan(e.target.value)} />
+                                    </Col>
+                                </Row>
+                                {/* <FormTitle title="Endereço" />
                                 <Row>
                                     <Col md='2'>
                                         <Input placeholder="CEP" value={zipCode} onChange={e => setZipCode(e.target.value)} />
@@ -106,7 +136,7 @@ function ProfileView(){
                                     <Col md='2'>
                                         <Input placeholder="Estado" value={state} onChange={e => setState(e.target.value)} />
                                     </Col>
-                                </Row>
+                                </Row> */}
                                 <FormTitle title="Acesso" />
                                 <Row>
                                     <Col md='6'>
@@ -124,7 +154,7 @@ function ProfileView(){
                                     <Col md='12'>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <button className="btn btn-primary">Salvar</button>
-                                            <button className="btn btn-outline-danger">Apagar usuário</button>
+                                            <button className="btn btn-outline-danger">Voltar</button>
                                         </div>
                                     </Col>
                                 </Row>
