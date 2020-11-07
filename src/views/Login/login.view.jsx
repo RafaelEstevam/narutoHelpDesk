@@ -4,10 +4,11 @@ import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import {useHistory} from 'react-router-dom';
 
 import {BetweenWrapper} from '../../components/Wrappers.component';
+import Application from '../../components/ApplicationName.component';
+
 import * as S from "./styled";
 import {loginValidation} from '../../validations/validations';
 import * as V from "../../styles/variables";
-
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
 
@@ -53,6 +54,7 @@ function LoginView(){
                 <Row>
                     <S.ColFullHeight md="4">
                         <div className="p-3" style={{width: '100%', maxWidth: '400px'}}>
+                            <Application/>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />

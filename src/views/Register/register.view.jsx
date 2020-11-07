@@ -8,6 +8,7 @@ import {ShadowCard} from '../../components/Cards.component';
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
 import Space from '../../components/Space.component';
 import FormTitle from '../../components/FormTitle.component';
+import Application from '../../components/ApplicationName.component';
 
 import {registerValidation} from '../../validations/validations';
 import * as V from "../../styles/variables";
@@ -89,22 +90,12 @@ function LoginView(){
         });
     }
     return(
-        <S.DivFullHeight style={{backgroundColor: V.draculaPrimary}}>
-            <Container fluid>
+            <Container fluid style={{backgroundColor: V.draculaPrimary}}>
                 <Row>
                     <S.ColFullHeight md="12">
                         <ShadowCard>
                             <Form onSubmit={handleSubmit}>
-                                <Row>
-                                    <Col md="12">
-                                        <div className="d-flex justify-content-center">
-                                            <div className="text-center">
-                                                <span>Bem-vindo ao </span>
-                                                <h3 className="font-weight-bold"> Naruto Help Desk</h3>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                <Application />
 
                                 <Space height={'40px'}/>
                                 
@@ -190,7 +181,6 @@ function LoginView(){
                     </S.ColFullHeight>
                 </Row>
             </Container>
-        </S.DivFullHeight>
     )
 }
 
