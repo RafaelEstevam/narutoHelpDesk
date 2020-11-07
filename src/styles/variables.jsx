@@ -27,6 +27,7 @@ const draculaBootstrapPrimary = '#007bff';
 const draculaBootstrapInfo = '#17a2b8';
 const draculaBootstrapDanger = '#dc3545';
 const draculaWhite = '#c9cee4';
+const draculaLightPurple = '#565ca9';
 
 const viewXs = '360px';
 const viewSm = '767px';
@@ -65,4 +66,5 @@ export {
     draculaBootstrapInfo,
     draculaBootstrapDanger,
     draculaWhite,
+    draculaLightPurple
 }

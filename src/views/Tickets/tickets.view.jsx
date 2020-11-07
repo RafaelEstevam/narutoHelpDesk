@@ -22,7 +22,7 @@ function TicketsView(){
     useEffect(() => {
         async function getTicket() {
             try {
-                const { data } = await api.get("/tickets/");
+                const { data } = await api.get("/chamado/listar/");
                 setDataTable(data);
                 
             } catch (error) {

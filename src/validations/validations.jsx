@@ -5,6 +5,16 @@ const loginValidation = yup.object().shape({
     senha: yup.string().required()
 });
 
+const registerValidation = yup.object().shape({
+    email: yup.string().email().required(),
+    senha: yup.string().required(),
+    nome: yup.string().required(),
+    sobrenome: yup.string().required(),
+    empresa: yup.string().required(),
+    cnpj: yup.string().required(),
+    plano: yup.string().required(),
+});
+
 const userValidation = yup.object().shape({
     name:yup.string().required(),
     email:yup.string().email().required(),
@@ -45,5 +55,6 @@ export {
     clientValidation,
     taskValidation,
     profileValidation,
-    taskTalkValidation
+    taskTalkValidation,
+    registerValidation
 };

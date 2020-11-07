@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom';
 import {BetweenWrapper} from '../../components/Wrappers.component';
 import * as S from "./styled";
 import {loginValidation} from '../../validations/validations';
-import {mainLightColor} from '../../styles/variables';
+import * as V from "../../styles/variables";
 
 
 import mainImage from '../../assets/undraw_Done_checking_re_6vyx.svg'
@@ -68,7 +68,7 @@ function LoginView(){
                         </div>
                     </S.ColFullHeight>
 
-                    <S.ColFullHeight md="8" style={{background: mainLightColor}}>
+                    <S.ColFullHeight md="8" style={{background: V.draculaPrimary}}>
                         <Row style={{justifyContent: 'center'}}>
                             <Col md="9">
                                 <img src={mainImage} className="img-fluid" />

@@ -1,27 +1,27 @@
 const managerRoutes = [
-    "/users",
-    "/dashboard",
-    "/report",
-    "/tickets",
-    "/tickets/:id", 
-    "/tickets-categories",
-    "/tickets-categories/:id",
-    "/profile"
+    {label: 'Dashboard', icon: 'fa fa-dashboard', route: "/dashboard", render: true},
+    {label: 'Tickets', icon: 'fa fa-tasks', route: "/tickets", render: true},
+    {label: 'Tickets Category', icon: 'fa fa-tag', route: "/tickets-categories", render: true},
+    {label: 'Users', icon: 'fa fa-user', route: "/users", render: true},
+    {label: 'Report', icon: '', route: "/report", render: false},
+    {label: 'Ticket', icon: '', route: "/tickets/:id", render: false},
+    {label: 'Ticket Category', icon: '', route: "/tickets-categories/:id", render: false},
+    {label: 'Profile', icon: '', route: "/profile", render: false}
 ];
 
 const employeeRoutes = [
-    "/dashboard",
-    "/tickets",
-    "/tickets/:id",
-    "/profile"
+    {label: 'Dashboard', icon: 'fa fa-dashboard', route: "/dashboard", render: true},
+    {label: 'Tickets', icon: 'fa fa-tasks', route: "/tickets", render: true},
+    {label: 'Ticket', icon: '', route: "/tickets/:id", render: false},
+    {label: 'Profile', icon: '', route: "/profile", render: false}
 ];
 
 const clientRoutes = [
-    "/tickets",
-    "/tickets/new",
-    "/tickets/:id",
-    "/profile",
-    "/client-dashboard"
+    {label: 'Dashboard', icon: 'fa fa-dashboard', route: "/client-dashboard", render: true},
+    {label: 'Tickets', icon: 'fa fa-tasks', route: "/tickets", render: true},
+    {label: 'New Ticket', icon: '', route: "/tickets/new", render: false},
+    {label: 'Ticket', icon: '', route: "/tickets/:id", render: false},
+    {label: 'Profile', icon: '', route: "/profile", render: false},
 ];
 
 const searchRoute = (userType, route) => {
@@ -29,7 +29,7 @@ const searchRoute = (userType, route) => {
 
     if(userType == '1'){ //manager
         managerRoutes.forEach((i) => {
-            if(i == route){
+            if(i.route == route){
                 searchedRoute = true;
             }
         })
@@ -37,7 +37,7 @@ const searchRoute = (userType, route) => {
 
     if(userType == '2'){ //employee
         employeeRoutes.forEach((i) => {
-            if(i == route){
+            if(i.route == route){
                 searchedRoute = true;
             }
         })
@@ -45,7 +45,7 @@ const searchRoute = (userType, route) => {
 
     if(userType == '3'){ //client
         clientRoutes.forEach((i) => {
-            if(i == route){
+            if(i.route == route){
                 searchedRoute = true;
             }
         })
@@ -55,4 +55,4 @@ const searchRoute = (userType, route) => {
 
 }
 
-export { searchRoute };
+export { searchRoute, managerRoutes, employeeRoutes, clientRoutes };

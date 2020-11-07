@@ -1,14 +1,15 @@
   
 import React, { useEffect, useState } from 'react';
+import {useHistory} from 'react-router-dom';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import * as S from "./styled";
 
-import { BetweenWrapper } from '../../components/Wrappers.component';
 import {ShadowCard} from '../../components/Cards.component';
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
 import Space from '../../components/Space.component';
+import FormTitle from '../../components/FormTitle.component';
 
-import {loginValidation} from '../../validations/validations';
+import {registerValidation} from '../../validations/validations';
 import * as V from "../../styles/variables";
 
 import StartIcon from '../../assets/001-startup.svg';
@@ -19,28 +20,74 @@ import api from '../../services/api.service';
 
 function LoginView(){
 
+    const history = useHistory();
+
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [businessName, setBusinessName] = useState('');
+    const [plan, setPlan] = useState('');
+    const [userType, setUserType] = useState(3);
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleSetPlan = (plan) =>{
+        setPlan(plan);
+    }
+
     const handleSubmit = async e =>{
         e.preventDefault();
 
-        const loginData = { email, password }
-        console.log(loginData);
+        const registerData = {
+            empresa: businessName,
+            cnpj: doc,
+            plano: plan,
+            nome: name,
+            sobrenome: lastName,
+            email: email,
+            senha: password,
+            tipoUsuario: userType
+        }
 
-        await loginValidation.isValid(loginData).then( valid =>{
-            try{
-                const logedUser = api.post('/sessions');
-            }catch(err){
-                console.log(err);
+        const businessData = {
+            nome: businessName,
+            cnpj: doc,
+            plano: plan,
+            status: true
+        }
+
+        await registerValidation.isValid(registerData).then( valid =>{
+
+            if(valid){
+                try{
+                    api.post('/empresa', businessData).then((response) => {
+                        handleUserSubmit(response.data);
+                    });
+                }catch(err){
+                    alert("Tente novamente");
+                }
             }
-        })
-
+        });
     }
 
+    const handleUserSubmit = async (newBusinessData) => {
+
+        const userData = {
+            nome: name,
+            sobrenome: lastName,
+            email: email,
+            senha: password,
+            tipoUsuario: userType,
+            empresa: newBusinessData.id,
+            status: true,
+            setor: 0,
+        }
+
+        api.post('/usuario', userData).then((response) => {
+            // console.log(response);
+            history.push('/');
+        });
+    }
     return(
         <S.DivFullHeight style={{backgroundColor: V.draculaPrimary}}>
             <Container fluid>
@@ -62,31 +109,42 @@ function LoginView(){
                                 <Space height={'40px'}/>
                                 
                                 <Row>
-                                    <Col md="12">
+                                    <Col md="4">
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Control placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
                                         </Form.Group>
                                     </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col md="6">
+                                    <Col md="8">
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Control placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />
                                         </Form.Group>
                                     </Col>
-                                    <Col md="6">
+                                </Row>
+
+                                <FormTitle title="Dados da empresa" color="#000" align="center"/>
+
+                                <Row>
+                                    <Col md="4">
                                         <Form.Group controlId="formBasicEmail">
-                                            <Form.Control placeholder="CPF/CNPJ" value={doc} onChange={e => setDoc(e.target.value)} />
+                                            <Form.Control placeholder="CNPJ" value={doc} onChange={e => setDoc(e.target.value)} />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md="8">
+                                        <Form.Group controlId="formBasicEmail">
+                                            <Form.Control placeholder="Nome da empresa" value={businessName} onChange={e => setBusinessName(e.target.value)} />
                                         </Form.Group>
                                     </Col>
                                 </Row>
+
+                                <FormTitle title="Dados de acesso" color="#000" align="center"/>
                                 
                                 <Row>
-                                    <Col md="12">
+                                    <Col md="6">
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                         </Form.Group>
+                                    </Col>
+                                    <Col md="6">
                                         <Form.Group controlId="formBasicPassword">
                                             <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                                         </Form.Group>
@@ -109,20 +167,20 @@ function LoginView(){
 
                                 <Row>
                                     <Col md="4">
-                                        <SelectPlanButton icon={StartIcon} title={'Start'} number={5} />
+                                        <SelectPlanButton icon={StartIcon} title={'Start'} onClick={() => handleSetPlan(1)} active={plan == 1 ? 'active' : ''} number={5} />
                                     </Col>
                                     <Col md="4">
-                                        <SelectPlanButton icon={ProIcon} title={'Pro'} number={10} />
+                                        <SelectPlanButton icon={ProIcon} title={'Pro'} onClick={() => handleSetPlan(2)} active={plan == 2 ? 'active' : ''} number={10} />
                                     </Col>
                                     <Col md="4">
-                                        <SelectPlanButton icon={BusinessIcon} title={'Business'} number={15} />
+                                        <SelectPlanButton icon={BusinessIcon} title={'Business'} onClick={() => handleSetPlan(3)} active={plan == 3 ? 'active' : ''} number={15} />
                                     </Col>
                                 </Row>
 
                                 <Space height={'40px'}/>
                                     
                                 <Row>
-                                    <Col md="12">
+                                    <Col md="12" className="d-flex justify-content-between">
                                         <button className="btn btn-primary">Cadastre-se</button>
                                         <button className="btn btn-outline-dark">Fazer login</button>
                                     </Col>

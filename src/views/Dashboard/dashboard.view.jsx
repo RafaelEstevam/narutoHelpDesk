@@ -65,13 +65,13 @@ function DashboardView(){
                             data={data}
                             dataKey={'chamados'}
                             title={"Nº de chamados"}
-                            stroke={V.draculaInfo}
+                            stroke={V.draculaLightPurple}
                         ></LineChartComponent>
                         <LineChartComponent
                             data={data}
                             dataKey={'reais'}
                             title={'Ganhos'}
-                            stroke={V.draculaSuccess}
+                            stroke={V.draculaLight}
                         ></LineChartComponent>
                     </Col>
                     <Col md="6">

@@ -6,16 +6,18 @@ import Date from './Date.component';
 
 const Title = styled('h3')`
     font-size: 20px;
-    color: ${V.whiteColor};
+    color: ${props => props && props.color ? props.color : V.whiteColor};
     padding: 20px 0px;
     margin-top: 15px;
+    width: 100%;
+    ${props => props && props.align ? 'text-align:' + props.align : '' };
 `
 
-function FormTitle({title}){
+function FormTitle({title, color, align}){
     return(
         <Row>
             <Col md="12 d-flex justify-content-between align-items-center">
-                <Title>{title}</Title>
+                <Title color={color} align={align}>{title}</Title>
             </Col>
         </Row>
     )

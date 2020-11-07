@@ -2,7 +2,7 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
-import { removeStorageLogin } from '../services/auth.service';
+import { removeStorageLogin, getStorageLogin } from '../services/auth.service';
 
 const HeaderComponent = styled('div')`
     padding: 0px 15px;
@@ -40,7 +40,8 @@ const NewTaskButton = styled('a')`
 function Header(){
 
     const history = useHistory();
-    const isClient = true;
+    const {userType} = getStorageLogin();
+    const isClient = userType == 3 ? true : false;
 
     function handleNewTicket(){
         history.push('/tickets/new');
@@ -51,17 +52,12 @@ function Header(){
         history.push('/');
     }
 
-    function handleProfile(){
-        history.push(`/profile`);
-    }
-
     return (
-        <HeaderComponent>
+        <HeaderComponent className={!isClient ? 'justify-content-end' : ''}>
             {isClient && 
                 <NewTaskButton onClick={() => handleNewTicket()}>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
             }
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
-            <HeaderButton onClick={() => handleProfile()}><i className="fa fa-user"></i></HeaderButton>
         </HeaderComponent>
     )
 }

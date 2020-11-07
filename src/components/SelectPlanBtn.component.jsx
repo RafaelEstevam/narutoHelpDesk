@@ -15,7 +15,7 @@ const SelectPlanBtn = styled('div')`
     cursor: pointer;
     padding: 10px;
 
-    :hover{
+    :hover, &&.active{
         border-color: ${V.draculaPrimary};
         transition: linear all 0.2s;
         background: ${V.draculaPrimary};
@@ -40,9 +40,9 @@ const SelectPlanBtn = styled('div')`
     }
 `
 
-function SelectPlanButton({icon, title, number}){
+function SelectPlanButton({icon, title, number, onClick, active}){
     return(
-        <SelectPlanBtn>
+        <SelectPlanBtn onClick={onClick} className={active}>
             <img src={icon} />
             <h2>{title}</h2>
             <h3>{number}</h3>
