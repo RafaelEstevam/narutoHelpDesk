@@ -7,7 +7,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 import localePtBr from '@fullcalendar/core/locales/pt-br';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import listPlugin from '@fullcalendar/list';
-import {useHistory} from 'react-router-dom';
 
 import * as V from '../styles/variables';
 
