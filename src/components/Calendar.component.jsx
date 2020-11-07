@@ -14,7 +14,7 @@ import * as V from '../styles/variables';
 const CalendarCard = styled('div')`
     background-color: ${V.draculaLight};
     border-radius: 3px;
-    height: 800px;
+    height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 800px;

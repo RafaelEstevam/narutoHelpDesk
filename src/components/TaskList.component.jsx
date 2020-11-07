@@ -8,7 +8,7 @@ const TaskListCard = styled('div')`
         border-radius: 3px;
         padding: 10px 15px;
         max-height: 800px;
-        height: 800px;
+        height: 600px;
         overflow-y: scroll;
         overflow-x: hidden;
     `

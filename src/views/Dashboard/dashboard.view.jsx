@@ -52,21 +52,59 @@ function DashboardView(){
         return (
             <ChildContentWrapper>
                 <ViewTitle title="Admin Dashboard" />
-                <Row>
+                {/* <Row>
+                    <Col md="12">
+                        <Row>
+                            <Col md="4">
+                                <LineChartComponent
+                                    data={data}
+                                    dataKey={'horas'}
+                                    title={"Horas trabalhadas"}
+                                    stroke={V.draculaPrimary}
+                                ></LineChartComponent>
+                            </Col>
+                            <Col md="4">
+                                <LineChartComponent
+                                    data={data}
+                                    dataKey={'chamados'}
+                                    title={"Nº de chamados"}
+                                    stroke={V.draculaLightPurple}
+                                ></LineChartComponent>
+                            </Col>
+                            <Col md="4">
+                                <LineChartComponent
+                                    data={data}
+                                    dataKey={'reais'}
+                                    title={'Ganhos'}
+                                    stroke={V.draculaLight}
+                                ></LineChartComponent>
+                            </Col>
+                        </Row>
+                        <Calendar title={"Calendário de entregas"} events={tickets}/>
+                    </Col>
                     <Col md="3">
-                        {/* <TaskDoing task={tasks[0]}></TaskDoing> */}
+                        <TaskList title={'Tarefas recentes'} tasks={tickets} />
+                    </Col>
+                </Row> */}
+
+                <Row>
+                    <Col md="4">
                         <LineChartComponent
                             data={data}
                             dataKey={'horas'}
                             title={"Horas trabalhadas"}
                             stroke={V.draculaPrimary}
                         ></LineChartComponent>
+                    </Col>
+                    <Col md="4">
                         <LineChartComponent
                             data={data}
                             dataKey={'chamados'}
                             title={"Nº de chamados"}
                             stroke={V.draculaLightPurple}
                         ></LineChartComponent>
+                    </Col>
+                    <Col md="4">
                         <LineChartComponent
                             data={data}
                             dataKey={'reais'}
@@ -74,10 +112,12 @@ function DashboardView(){
                             stroke={V.draculaLight}
                         ></LineChartComponent>
                     </Col>
+                </Row>
+                <Row>
                     <Col md="6">
                         <Calendar title={"Calendário de entregas"} events={tickets}/>
                     </Col>
-                    <Col md="3">
+                    <Col md="6">
                         <TaskList title={'Tarefas recentes'} tasks={tickets} />
                     </Col>
                 </Row>
