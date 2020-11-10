@@ -10,18 +10,23 @@ const SelectPlanBtn = styled('div')`
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 3px solid #ccc;
+    border: 3px solid ${V.whiteColor};
     border-radius: 5px;
     cursor: pointer;
     padding: 10px;
+    margin-bottom: 15px;
+    color: ${V.whiteColor};
+    img{
+        filter: invert(1);
+    }
 
     :hover, &&.active{
-        border-color: ${V.draculaPrimary};
+        border-color: ${V.draculaLightPurple};
         transition: linear all 0.2s;
-        background: ${V.draculaPrimary};
-        color: ${V.whiteColor};
+        background: ${V.whiteColor};
+        color: ${V.draculaLightPurple};
         img{
-            filter: invert(1);
+            filter: invert(0);
         }
     }
 

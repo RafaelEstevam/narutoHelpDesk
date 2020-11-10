@@ -2,13 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
+import { Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import * as S from "./styled";
 
-import {ShadowCard} from '../../components/Cards.component';
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
 import Space from '../../components/Space.component';
 import FormTitle from '../../components/FormTitle.component';
 import Application from '../../components/ApplicationName.component';
+import {FullHeightWrapper, CenterWrapper} from '../../components/Wrappers.component';
 
 import {registerValidation} from '../../validations/validations';
 import * as V from "../../styles/variables";
@@ -31,6 +33,19 @@ function LoginView(){
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [listPlan, setListPlan] = useState([]);
+
+    useEffect(() => {
+        async function getTasks() {
+            try {
+                const { data } = await api.get("/plano/listar/");
+                setListPlan(data);
+            } catch (error) {
+                // alert("Ocorreu um erro ao buscar os items");
+            }
+        }
+        getTasks();
+    }, []);
 
     const handleSetPlan = (plan) =>{
         setPlan(plan);
@@ -79,106 +94,107 @@ function LoginView(){
             email: email,
             senha: password,
             tipoUsuario: userType,
-            empresa: newBusinessData.id,
+            empresa: newBusinessData.idEmpresa,
             status: true,
             setor: 0,
         }
 
         api.post('/usuario', userData).then((response) => {
-            // console.log(response);
-            history.push('/');
+            console.log(response);
+            // history.push('/');
         });
     }
     return(
             <Container fluid style={{backgroundColor: V.draculaPrimary}}>
+                
                 <Row>
-                    <S.ColFullHeight md="12">
-                        <ShadowCard>
-                            <Form onSubmit={handleSubmit}>
-                                <Application />
+                    <Col md="6">
+                        <FullHeightWrapper style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Application color={V.whiteColor} titleSize={'60px'} labelSize={'30px'} />
+                        </FullHeightWrapper>
+                    </Col>
+                    <Col md="6">
+                        <FullHeightWrapper style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Form onSubmit={handleSubmit} style={{width: '50%'}}>
+                                <Tabs>
+                                    <TabList style={{display: 'flex', justifyContent: 'center',  border: '0px solid transparent'}}>
+                                        <S.STab><i className="fa fa-user-circle-o" title="Dados do usuário"></i><small>Dados do usuário</small></S.STab>
+                                        <S.STab><i className="fa fa-bank" title="Dados da empresa"></i><small>Dados da empresa</small></S.STab>
+                                        <S.STab><i className="fa fa-handshake-o" title="Dados da empresa"></i><small>Plano</small></S.STab>
+                                    </TabList>
+                                    <TabPanel>
+                                        <Row className="mt-4">
+                                            <Col md="12">
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Control placeholder="Nome" required value={name} onChange={e => setName(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md="12">
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Control placeholder="Sobrenome" required value={lastName} onChange={e => setLastName(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md="6">
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Control type="email" required placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md="6">
+                                                <Form.Group controlId="formBasicPassword">
+                                                    <Form.Control type="password" required placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <Row className="mt-4">
+                                            <Col md="12">
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Control placeholder="CNPJ" required value={doc} onChange={e => setDoc(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col md="12">
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Control placeholder="Nome da empresa" required value={businessName} onChange={e => setBusinessName(e.target.value)} />
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <Row className="mt-4">
+                                            {listPlan && listPlan.length > 0 &&
+                                                listPlan.map((item) => {
 
-                                <Space height={'40px'}/>
-                                
-                                <Row>
-                                    <Col md="4">
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Control placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md="8">
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Control placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
+                                                    console.log(item);
 
-                                <FormTitle title="Dados da empresa" color="#000" align="center"/>
-
-                                <Row>
-                                    <Col md="4">
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Control placeholder="CNPJ" value={doc} onChange={e => setDoc(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md="8">
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Control placeholder="Nome da empresa" value={businessName} onChange={e => setBusinessName(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-
-                                <FormTitle title="Dados de acesso" color="#000" align="center"/>
-                                
-                                <Row>
-                                    <Col md="6">
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md="6">
-                                        <Form.Group controlId="formBasicPassword">
-                                            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-
-                                <Space height={'40px'}/>
-
-                                <Row>
+                                                    return(
+                                                        <Col md="4">
+                                                            <SelectPlanButton
+                                                                icon={item.idPlano == 1 ? StartIcon : item.idPlano == 2 ? ProIcon : BusinessIcon}
+                                                                value={item.valor}
+                                                                title={item.nome}
+                                                                onClick={() => handleSetPlan(item.idPlano)}
+                                                                active={plan == item.idPlano ? 'active' : ''}
+                                                                number={item.quantidadeChamadoMes}
+                                                            />
+                                                        </Col>
+                                                    )
+                                                })
+                                            }
+                                        </Row>
+                                    </TabPanel>
+                                </Tabs>
+                                <Row className="mt-4">
                                     <Col md="12">
-                                        <div className="d-flex justify-content-center">
-                                            <div className="text-center">
-                                                <h5 className="font-weight-bold"> Selecione um plano</h5>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
-
-                                <Space height={'20px'}/>
-
-                                <Row>
-                                    <Col md="4">
-                                        <SelectPlanButton icon={StartIcon} title={'Start'} onClick={() => handleSetPlan(1)} active={plan == 1 ? 'active' : ''} number={5} />
-                                    </Col>
-                                    <Col md="4">
-                                        <SelectPlanButton icon={ProIcon} title={'Pro'} onClick={() => handleSetPlan(2)} active={plan == 2 ? 'active' : ''} number={10} />
-                                    </Col>
-                                    <Col md="4">
-                                        <SelectPlanButton icon={BusinessIcon} title={'Business'} onClick={() => handleSetPlan(3)} active={plan == 3 ? 'active' : ''} number={15} />
-                                    </Col>
-                                </Row>
-
-                                <Space height={'40px'}/>
-                                    
-                                <Row>
-                                    <Col md="12" className="d-flex justify-content-between">
-                                        <button className="btn btn-primary">Cadastre-se</button>
-                                        <button className="btn btn-outline-dark">Fazer login</button>
+                                        <button className="btn btn-primary btn-block">Cadastre-se</button>
+                                        <button className="btn btn-outline-dark btn-block">Fazer login</button>
                                     </Col>
                                 </Row>
                             </Form>
-                        </ShadowCard>
-                    </S.ColFullHeight>
+                        </FullHeightWrapper>
+                    </Col>
                 </Row>
             </Container>
     )
