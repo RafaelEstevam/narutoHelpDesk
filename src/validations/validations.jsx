@@ -21,11 +21,10 @@ const userValidation = yup.object().shape({
     password:yup.string().required(),
 });
 
-const taskValidation = yup.object().shape({
-    userId:yup.string().required(),
-    clientId:yup.string().required(),
-    taskId:yup.string().required(),
-    description: yup.string()
+const ticketValidation = yup.object().shape({
+    titulo: yup.string().required(),
+    descricao: yup.string().required(),
+    setor: yup.string().required(),
 });
 
 const taskTalkValidation = yup.object().shape({
@@ -53,7 +52,7 @@ export {
     loginValidation,
     userValidation,
     clientValidation,
-    taskValidation,
+    ticketValidation,
     profileValidation,
     taskTalkValidation,
     registerValidation

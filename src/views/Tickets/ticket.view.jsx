@@ -6,6 +6,11 @@ import { Row, Col, Form } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
 import api from '../../services/api.service';
+import {getStorageLogin} from '../../services/auth.service';
+import {getCurrentDate, getDateTime} from '../../services/date.service';
+
+import {ticketValidation} from '../../validations/validations';
+
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import ViewTitle from '../../components/ViewTitle.component';
 import FormTitle from '../../components/FormTitle.component';
@@ -24,52 +29,91 @@ function TicketView(){
     const [status, setStatus] = useState('');
     const [title, setTitle] = useState('');
     const [created_at, setCreatedAt] = useState('');
-    const [deadline, setDeadline] = useState('');
     const [finished_at, setFinishedAt] = useState('');
     const [description, setDescription] = useState('');
     const [talkHistory, setTalkHistory] = useState('');
     const [talkText, setTalkText] = useState('');
     const [readonly, setReadOnly] = useState('');
+    const [listCategory, setListCategory] = useState([]);
 
     useEffect(() => {
-        async function getTicket() {
-            try {
-                const { data } = await api.get("/tickets/" + ticketId);
-                setClientId(data.clientId);
-                setCategoryId(data.categotyId);
-                setStatus(data.status);
-                setTitle(data.title);
-                setCreatedAt(data.created_at);
-                setDeadline(data.deadline);
-                setFinishedAt(data.finished_at);
-                setDescription(data.description);
-            } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
-            }
-        }
 
-        async function getTalkTicket(){
-            try {
-                const { data } = await api.get("/tickets/" + ticketId + "/talk");
-                setTalkHistory(data.talkHistory)
+        const {businessId} = getStorageLogin();
 
-            } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
-            }
-        }
+        setClientId(businessId);
+        setCreatedAt(getCurrentDate('-'));
+
+        getCategory();
 
         if(ticketId){
             getTicket();
             getTalkTicket();
             setReadOnly(true);
-        }else{
-            setTicketId(uuidv4());
         }
         
     }, []);
 
+    async function getCategory() {
+        try {
+            const {data} = await api.get("/setor/listar/");
+            setListCategory(data);
+        } catch (error) {
+            alert("Ocorreu um erro ao buscar os items");
+        }
+    }
+
+
+    async function getTicket() {
+        try {
+            const { data } = await api.get("/tickets/" + ticketId);
+            setClientId(data.clientId);
+            setCategoryId(data.categotyId);
+            setStatus(data.status);
+            setTitle(data.title);
+            setCreatedAt(data.created_at);
+            setDeadline(data.deadline);
+            setFinishedAt(data.finished_at);
+            setDescription(data.description);
+        } catch (error) {
+            alert("Ocorreu um erro ao buscar os items");
+        }
+    }
+
+    async function getTalkTicket(){
+        try {
+            const { data } = await api.get("/tickets/" + ticketId + "/talk");
+            setTalkHistory(data.talkHistory)
+
+        } catch (error) {
+            alert("Ocorreu um erro ao buscar os items");
+        }
+    }
+
     const handleSubmit = async e =>{
         e.preventDefault();
+
+        const ticketData = {
+            atendente: 0,
+            cliente: clientId,
+            dataInicio: getDateTime(),
+            dataTermino: finished_at,
+            descricao: description,
+            setor: categotyId,
+            status: status,
+            titulo: title
+        }
+
+        await ticketValidation.isValid(ticketData).then( valid =>{
+            if(valid){
+                try{
+                    api.post('/chamado/', ticketData).then((response) => {
+                        console.log(response);
+                    });
+                }catch(err){
+                    alert("Tente novamente");
+                }
+            }
+        });
     }
 
     const handleChatSubmit = async e =>{
@@ -90,40 +134,41 @@ function TicketView(){
                                     <Col md='6'>
                                         <Input placeholder="Título do ticket" readonly={readonly} value={title} onChange={e => setTitle(e.target.value)} />
                                     </Col>
-                                    <Col md='3'>
-                                        <Input placeholder="Categoria" readonly={readonly} value={categotyId} onChange={e => setCategoryId(e.target.value)} />
-                                    </Col>
-                                    <Col md='3'>
-                                        <Input placeholder="Cliente" readonly={'readonly'} value={clientId} onChange={e => setClientId(e.target.value)} />
+                                    <Col md='6'>
+                                        <select className="form-control" value={categotyId} onChange={e => setCategoryId(e.target.value)}>
+                                        <option value="">Selecione</option>
+                                            {listCategory && listCategory.length > 0 && 
+                                                listCategory.map((item)=>{
+                                                    return(
+                                                        <option value={item.idSetor}>{item.nome}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
                                     </Col>
                                 </Row>
 
                                 <Row>
-                                    <Col md='6'>
-                                        <Input placeholder="ticketId" readonly={'readonly'} value={ticketId} onChange={e => setTicketId(e.target.value)} />
-                                    </Col>
-                                    <Col md='6'>
-                                        <select className="form-control" value={status} disabled={!readonly} onChange={e => setStatus(e.target.value)}>
-                                            <option value="">Selecione</option>
-                                            <option value="to-do">To do</option>
-                                            <option value="in-progress">In progress</option>
-                                            <option value="blocked">Blocked</option>
-                                            <option value="done">Done</option>
-                                        </select>
-                                    </Col>
-                                </Row>
-                                
-                                <Row>
-                                    <Col md='6'>
-                                        <Input placeholder="Data de abertura" readonly={'readonly'} type={'date'} value={created_at} onChange={e => setCreatedAt(e.target.value)} />
+                                    <Col md='3'>
+                                        <Input placeholder="Cliente" readonly={'readonly'} value={clientId} onChange={e => setClientId(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Prazo" type={'date'} value={deadline} readonly={!readonly} onChange={e => setDeadline(e.target.value)} />
+                                        <select className="form-control" value={status} disabled={!readonly} onChange={e => setStatus(e.target.value)}>
+                                            <option value="">Selecione</option>
+                                            <option value="1">Aberto</option>
+                                            <option value="2">Em atendimento</option>
+                                            <option value="3">Finalizado</option>
+                                            <option value="4">Bloqueado</option>
+                                        </select>
+                                    </Col>
+                                    <Col md='3'>
+                                        <Input placeholder="Data de abertura" readonly={'readonly'} type={'date'} value={created_at} onChange={e => setCreatedAt(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
                                         <Input placeholder="Data de conclusão" type={'date'} value={finished_at} readonly={!readonly} onChange={e => setFinishedAt(e.target.value)} />
                                     </Col>
                                 </Row>
+                                
                                 <FormTitle title="Detalhes do ticket" />
                                 <Row>
                                     <Col md='12'>
