@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, Redirect, Link } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
 import api from '../../services/api.service';
 import {getStorageLogin} from '../../services/auth.service';
 import {getCurrentDate, getDateTime} from '../../services/date.service';
+import {millisecondsToDateDefault} from '../../services/date.service';
 
 import {ticketValidation} from '../../validations/validations';
 
@@ -22,6 +23,8 @@ import * as V from '../../styles/variables';
 
 function TicketView(){
 
+    const history = useHistory();
+
     const [userId, setUserId] = useState(0);
     const [ticketId, setTicketId] = useState(useParams().id);
     const [clientId, setClientId] = useState('');
@@ -33,22 +36,25 @@ function TicketView(){
     const [description, setDescription] = useState('');
     const [talkHistory, setTalkHistory] = useState('');
     const [talkText, setTalkText] = useState('');
-    const [readonly, setReadOnly] = useState('');
     const [listCategory, setListCategory] = useState([]);
+    const [clientReadyOnly, setClientReadyOnly] = useState(true)
+    const [managerReadyOnly, setManagerReadyOnly] = useState(true)
+    const [taskReadyOnly, setTaskReadyOnly] = useState(true)
 
     useEffect(() => {
 
-        const {businessId} = getStorageLogin();
-
+        const {businessId, userType} = getStorageLogin();
         setClientId(businessId);
         setCreatedAt(getCurrentDate('-'));
-
         getCategory();
+
+        const clientOnly = userType != 3 ? setClientReadyOnly(false) : setClientReadyOnly(true);
+        const managerOnly = userType == 1 ? setManagerReadyOnly(true) : setManagerReadyOnly(false);
+        const ticketOnly = ticketId || userType != 3 ? setTaskReadyOnly(false) : setTaskReadyOnly(true);
 
         if(ticketId){
             getTicket();
             getTalkTicket();
-            setReadOnly(true);
         }
         
     }, []);
@@ -58,24 +64,25 @@ function TicketView(){
             const {data} = await api.get("/setor/listar/");
             setListCategory(data);
         } catch (error) {
-            alert("Ocorreu um erro ao buscar os items");
+            // alert("Ocorreu um erro ao buscar os items");
         }
     }
 
 
     async function getTicket() {
         try {
-            const { data } = await api.get("/tickets/" + ticketId);
-            setClientId(data.clientId);
-            setCategoryId(data.categotyId);
+
+            const { data } = await api.get("/chamado/id/" + ticketId);
+            
+            setClientId(data.idChamado);
+            setCategoryId(data.setor);
             setStatus(data.status);
-            setTitle(data.title);
-            setCreatedAt(data.created_at);
-            setDeadline(data.deadline);
-            setFinishedAt(data.finished_at);
-            setDescription(data.description);
+            setTitle(data.titulo);
+            setCreatedAt(millisecondsToDateDefault(data.dataInicio));
+            setDescription(data.descricao);
+
         } catch (error) {
-            alert("Ocorreu um erro ao buscar os items");
+            // alert("Ocorreu um erro ao buscar os items");
         }
     }
 
@@ -85,7 +92,7 @@ function TicketView(){
             setTalkHistory(data.talkHistory)
 
         } catch (error) {
-            alert("Ocorreu um erro ao buscar os items");
+            // alert("Ocorreu um erro ao buscar os items");
         }
     }
 
@@ -110,7 +117,7 @@ function TicketView(){
                         console.log(response);
                     });
                 }catch(err){
-                    alert("Tente novamente");
+                    // alert("Tente novamente");
                 }
             }
         });
@@ -132,11 +139,11 @@ function TicketView(){
 
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="Título do ticket" readonly={readonly} value={title} onChange={e => setTitle(e.target.value)} />
+                                        <Input placeholder="Título do ticket" value={title} readonly={ticketId} onChange={e => setTitle(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
-                                        <select className="form-control" value={categotyId} onChange={e => setCategoryId(e.target.value)}>
-                                        <option value="">Selecione</option>
+                                        <select className="form-control" value={categotyId} disabled={taskReadyOnly} onChange={e => setCategoryId(e.target.value)}>
+                                        <option value="">Selecione o status</option>
                                             {listCategory && listCategory.length > 0 && 
                                                 listCategory.map((item)=>{
                                                     return(
@@ -149,12 +156,12 @@ function TicketView(){
                                 </Row>
 
                                 <Row>
-                                    <Col md='3'>
-                                        <Input placeholder="Cliente" readonly={'readonly'} value={clientId} onChange={e => setClientId(e.target.value)} />
-                                    </Col>
-                                    <Col md='3'>
-                                        <select className="form-control" value={status} disabled={!readonly} onChange={e => setStatus(e.target.value)}>
-                                            <option value="">Selecione</option>
+                                    {/* <Col md='3'>
+                                        <Input placeholder="Cliente" value={clientId} onChange={e => setClientId(e.target.value)} />
+                                    </Col> */}
+                                    <Col md='6'>
+                                        <select className="form-control" value={status} disabled={clientReadyOnly} onChange={e => setStatus(e.target.value)}>
+                                            <option value="">Selecione uma categoria</option>
                                             <option value="1">Aberto</option>
                                             <option value="2">Em atendimento</option>
                                             <option value="3">Finalizado</option>
@@ -162,26 +169,31 @@ function TicketView(){
                                         </select>
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Data de abertura" readonly={'readonly'} type={'date'} value={created_at} onChange={e => setCreatedAt(e.target.value)} />
+                                        <Input placeholder="Data de abertura" type={'date'} value={created_at} readonly={true} onChange={e => setCreatedAt(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Data de conclusão" type={'date'} value={finished_at} readonly={!readonly} onChange={e => setFinishedAt(e.target.value)} />
+                                        <Input placeholder="Data de conclusão" type={'date'} value={finished_at} readonly={clientReadyOnly} onChange={e => setFinishedAt(e.target.value)} />
                                     </Col>
                                 </Row>
                                 
                                 <FormTitle title="Detalhes do ticket" />
                                 <Row>
                                     <Col md='12'>
-                                        <Textarea placeholder="Detalhes do ticket" readonly={readonly} height={400} value={description} onChange={e => setDescription(e.target.value)} />
+                                        <Textarea placeholder="Detalhes do ticket" height={400} readonly={ticketId} value={description} onChange={e => setDescription(e.target.value)} />
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col md='12'>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <button className="btn btn-primary">Salvar ticket</button>
-                                        </div>
-                                    </Col>
-                                </Row>
+
+                                {
+                                    !ticketId &&
+                                    <Row>
+                                        <Col md='12'>
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <button className="btn btn-primary">Salvar ticket</button>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                }
+                                
                             </form>
                         </FormWrapper>
                     </Col>

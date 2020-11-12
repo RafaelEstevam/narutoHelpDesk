@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Redirect, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
 import { removeStorageLogin, getStorageLogin } from '../services/auth.service';
@@ -45,6 +45,7 @@ function Header(){
 
     function handleNewTicket(){
         history.push('/tickets/new');
+        // return (<Link to="/tickets/new'" />teste</Link>)
     }
 
     function handleLogout(){
@@ -54,9 +55,6 @@ function Header(){
 
     return (
         <HeaderComponent className={!isClient ? 'justify-content-end' : ''}>
-            {isClient && 
-                <NewTaskButton onClick={() => handleNewTicket()}>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
-            }
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
         </HeaderComponent>
     )

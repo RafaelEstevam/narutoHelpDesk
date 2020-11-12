@@ -29,7 +29,7 @@ function LoginView(){
     const [lastName, setLastName] = useState('');
     const [businessName, setBusinessName] = useState('');
     const [plan, setPlan] = useState('');
-    const [userType, setUserType] = useState(3);
+    const [userType, setUserType] = useState(1);
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
