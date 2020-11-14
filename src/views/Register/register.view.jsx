@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { Tabs, TabList, TabPanel } from 'react-tabs';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import 'react-tabs/style/react-tabs.css';
 import * as S from "./styled";
 
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
-import Space from '../../components/Space.component';
-import FormTitle from '../../components/FormTitle.component';
+// import Space from '../../components/Space.component';
+// import FormTitle from '../../components/FormTitle.component';
 import Application from '../../components/ApplicationName.component';
 import {FullHeightWrapper, CenterWrapper} from '../../components/Wrappers.component';
 
@@ -41,7 +45,7 @@ function LoginView(){
                 const { data } = await api.get("/plano/listar/");
                 setListPlan(data);
             } catch (error) {
-                // alert("Ocorreu um erro ao buscar os items");
+                toast.error("Ocorreu um erro ao buscar os items");
             }
         }
         getTasks();
@@ -80,7 +84,6 @@ function LoginView(){
                         handleUserSubmit(response.data);
                     });
                 }catch(err){
-                    alert("Tente novamente");
                 }
             }
         });
@@ -99,14 +102,20 @@ function LoginView(){
             setor: 0,
         }
 
-        api.post('/usuario', userData).then((response) => {
-            console.log(response);
-            // history.push('/');
-        });
+        try{
+            await api.post('/usuario', userData).then((response) => {
+            });
+        }catch(err){
+        }
+
     }
+
+    const handleRedirect = async e =>{
+        history.push('/');
+    }
+
     return(
             <Container fluid style={{backgroundColor: V.draculaPrimary}}>
-                
                 <Row>
                     <Col md="6">
                         <FullHeightWrapper style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -166,9 +175,6 @@ function LoginView(){
                                         <Row className="mt-4">
                                             {listPlan && listPlan.length > 0 &&
                                                 listPlan.map((item) => {
-
-                                                    console.log(item);
-
                                                     return(
                                                         <Col md="4">
                                                             <SelectPlanButton
@@ -188,8 +194,8 @@ function LoginView(){
                                 </Tabs>
                                 <Row className="mt-4">
                                     <Col md="12">
-                                        <button className="btn btn-primary btn-block">Cadastre-se</button>
-                                        <button className="btn btn-outline-dark btn-block">Fazer login</button>
+                                        <button className="btn btn-dark btn-block">Cadastre-se</button>
+                                        <a onClick={() => handleRedirect()} className="btn btn-outline-light btn-block">Fazer login</a>
                                     </Col>
                                 </Row>
                             </Form>

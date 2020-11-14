@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useParams, useHistory, Redirect, Link } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
 import api from '../../services/api.service';
 import {getStorageLogin} from '../../services/auth.service';
-import {getCurrentDate, getDateTime} from '../../services/date.service';
-import {millisecondsToDateDefault} from '../../services/date.service';
+import {getCurrentDate, getDateTime, getDate} from '../../services/date.service';
+import {getBase64} from '../../services/img.service';
 
-import {ticketValidation} from '../../validations/validations';
+import {ticketValidation, chatValidation} from '../../validations/validations';
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import ViewTitle from '../../components/ViewTitle.component';
@@ -25,7 +28,8 @@ function TicketView(){
 
     const history = useHistory();
 
-    const [userId, setUserId] = useState(0);
+    const [userId, setUserId] = useState(getStorageLogin().userId);
+    const [currentUserType, setCurrentUserType] = useState(getStorageLogin().userType);
     const [ticketId, setTicketId] = useState(useParams().id);
     const [clientId, setClientId] = useState('');
     const [categotyId, setCategoryId] = useState('');
@@ -37,24 +41,31 @@ function TicketView(){
     const [talkHistory, setTalkHistory] = useState('');
     const [talkText, setTalkText] = useState('');
     const [listCategory, setListCategory] = useState([]);
-    const [clientReadyOnly, setClientReadyOnly] = useState(true)
-    const [managerReadyOnly, setManagerReadyOnly] = useState(true)
-    const [taskReadyOnly, setTaskReadyOnly] = useState(true)
+    const [clientReadyOnly, setClientReadyOnly] = useState(true);
+    const [managerReadyOnly, setManagerReadyOnly] = useState(true);
+    const [taskReadyOnly, setTaskReadyOnly] = useState(true);
+    const [chatDate, setChatDate] = useState('');
+    const [chatImage, setChatImage] = useState('');
 
     useEffect(() => {
 
         const {businessId, userType} = getStorageLogin();
-        setClientId(businessId);
-        setCreatedAt(getCurrentDate('-'));
         getCategory();
 
         const clientOnly = userType != 3 ? setClientReadyOnly(false) : setClientReadyOnly(true);
         const managerOnly = userType == 1 ? setManagerReadyOnly(true) : setManagerReadyOnly(false);
-        const ticketOnly = ticketId || userType != 3 ? setTaskReadyOnly(false) : setTaskReadyOnly(true);
+        const ticketOnly = ticketId && userType == 3 ? setTaskReadyOnly(true) : setTaskReadyOnly(false);
+
+        setChatDate(getCurrentDate('-'));
 
         if(ticketId){
             getTicket();
             getTalkTicket();
+        }
+
+        if(!ticketId){
+            setClientId(businessId);
+            setCreatedAt(getCurrentDate('-'));
         }
         
     }, []);
@@ -64,60 +75,65 @@ function TicketView(){
             const {data} = await api.get("/setor/listar/");
             setListCategory(data);
         } catch (error) {
-            // alert("Ocorreu um erro ao buscar os items");
+            toast.error("Não foi possível carregar a lista de categorias", {position: "top-center"});
         }
     }
-
 
     async function getTicket() {
         try {
 
             const { data } = await api.get("/chamado/id/" + ticketId);
             
-            setClientId(data.idChamado);
+            setClientId(data.cliente);
             setCategoryId(data.setor);
             setStatus(data.status);
             setTitle(data.titulo);
-            setCreatedAt(millisecondsToDateDefault(data.dataInicio));
+            setCreatedAt(data.dataInicio);
+
+            if(data.dataTermino){
+                setFinishedAt(data.dataTermino);
+            }
+            
             setDescription(data.descricao);
 
         } catch (error) {
-            // alert("Ocorreu um erro ao buscar os items");
+            toast.error("Não foi possível carregar o chamado.", {position: "top-center"});
         }
     }
 
     async function getTalkTicket(){
         try {
-            const { data } = await api.get("/tickets/" + ticketId + "/talk");
-            setTalkHistory(data.talkHistory)
+            const { data } = await api.get("/chat_chamado/listar/" + ticketId);
+            setTalkHistory(data);
 
         } catch (error) {
-            // alert("Ocorreu um erro ao buscar os items");
+            toast.error("Não foi possível carregar a conversa.", {position: "top-center"});
         }
     }
 
     const handleSubmit = async e =>{
         e.preventDefault();
 
+        const currentUser = currentUserType == 1 ? userId : "";
+        
         const ticketData = {
-            atendente: 0,
+            idChamado: ticketId,
+            atendente: currentUser,
             cliente: clientId,
-            dataInicio: getDateTime(),
+            dataInicio: created_at,
             dataTermino: finished_at,
             descricao: description,
             setor: categotyId,
             status: status,
             titulo: title
         }
-
+        
         await ticketValidation.isValid(ticketData).then( valid =>{
             if(valid){
                 try{
-                    api.post('/chamado/', ticketData).then((response) => {
-                        console.log(response);
-                    });
+                    api.post('/chamado/', ticketData);
                 }catch(err){
-                    // alert("Tente novamente");
+                    toast.error("Não foi possível salvar o chamado.", {position: "top-center"});
                 }
             }
         });
@@ -125,6 +141,34 @@ function TicketView(){
 
     const handleChatSubmit = async e =>{
         e.preventDefault();
+
+        let imgData = '';
+
+        if(chatImage){
+            const imgFormData = new FormData();
+            imgFormData.append('file', chatImage);
+            imgData = await api.post('/file/upload/', imgFormData);
+            imgData = imgData.data.fileName;
+        }
+
+        const chatData = {
+            chamado: ticketId,
+            conteudo: talkText,
+            dataChat: chatDate,
+            imagem: imgData,
+            usuario: userId
+        }
+
+        await chatValidation.isValid(chatData).then( valid =>{
+            if(valid){
+                try{
+                    api.post('chat_chamado/', chatData);
+                }catch(err){
+                    toast.error("Não foi possível salvar o chamado.", {position: "top-center"});
+                }
+            }
+        });
+
     }
 
     const renderContent = () =>{
@@ -143,7 +187,7 @@ function TicketView(){
                                     </Col>
                                     <Col md='6'>
                                         <select className="form-control" value={categotyId} disabled={taskReadyOnly} onChange={e => setCategoryId(e.target.value)}>
-                                        <option value="">Selecione o status</option>
+                                        <option value="">Selecione uma categoria</option>
                                             {listCategory && listCategory.length > 0 && 
                                                 listCategory.map((item)=>{
                                                     return(
@@ -156,16 +200,13 @@ function TicketView(){
                                 </Row>
 
                                 <Row>
-                                    {/* <Col md='3'>
-                                        <Input placeholder="Cliente" value={clientId} onChange={e => setClientId(e.target.value)} />
-                                    </Col> */}
                                     <Col md='6'>
                                         <select className="form-control" value={status} disabled={clientReadyOnly} onChange={e => setStatus(e.target.value)}>
-                                            <option value="">Selecione uma categoria</option>
+                                            <option value="">Selecione um status</option>
                                             <option value="1">Aberto</option>
                                             <option value="2">Em atendimento</option>
-                                            <option value="3">Finalizado</option>
-                                            <option value="4">Bloqueado</option>
+                                            <option value="4">Finalizado</option>
+                                            <option value="3">Bloqueado</option>
                                         </select>
                                     </Col>
                                     <Col md='3'>
@@ -184,7 +225,7 @@ function TicketView(){
                                 </Row>
 
                                 {
-                                    !ticketId &&
+                                    !taskReadyOnly &&
                                     <Row>
                                         <Col md='12'>
                                             <div className="d-flex justify-content-between align-items-center">
@@ -203,25 +244,30 @@ function TicketView(){
                                 <FormTitle title="Chat do ticket" />
                                 <Row>
                                     <Col md='12'>
-                                        <div className="chatWrapper mb-3" style={{backgroundColor: V.draculaDark, height: '500px', maxHeight: '500px', overflowY: 'auto', borderRadius: '3px'}}>
+                                        <div className="chatWrapper mb-3" style={{backgroundColor: V.draculaDark, height: '400px', maxHeight: '400px', overflowY: 'auto', borderRadius: '3px'}}>
                                             <div className="chat" style={{backgroundColor: V.draculaDark, height: 'auto', borderRadius: '3px', padding: '15px'}}>
                                                 {talkHistory && talkHistory.length > 0 && 
                                                     talkHistory.map((item) => {
                                                         return (
-                                                            <Talk content={item.content} date={item.date} hour={item.hourtelient} userId={userId} talkUserId={item.userId} image={item.image} />
+                                                            <Talk key={item.idChatChamado} content={item.conteudo} date={item.dataChat} userId={userId} talkUserId={item.usuario} image={item.imagem} />
                                                         )
                                                     })
                                                 }
                                             </div>
                                         </div>
                                     </Col>
+                                    <Col md='12' className="d-none">
+                                        <Input placeholder="Data" type={'date'} value={chatDate} readonly={true} onChange={e => setChatDate(e.target.value)} />
+                                    </Col>
                                     <Col md='12'>
                                         <Textarea placeholder="Texto" height={130} value={talkText} onChange={e => setTalkText(e.target.value)} />
                                     </Col>
                                     <Col md='12'>
+                                        <input type='file' accept="image/png, image/jpeg" onChange={e => setChatImage(e.target.files[0])} />
+                                    </Col>
+                                    <Col md='12' className="mt-3">
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <input type='file' />
-                                            <button className="btn btn-outline-primary">Mensagem <i className="fa fa-comments-o"></i></button>
+                                            <button className="btn btn-outline-light btn-block">Mensagem <i className="fa fa-comments-o"></i></button>
                                         </div>
                                     </Col>
                                 </Row>

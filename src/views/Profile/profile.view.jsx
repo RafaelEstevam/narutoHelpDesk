@@ -1,6 +1,10 @@
   
 import React, { useEffect, useState, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import { ChildContentWrapper, FormWrapper, CardWrapper } from '../../components/Wrappers.component';
 
@@ -10,58 +14,36 @@ import FormTitle from '../../components/FormTitle.component';
 import Input from '../../components/Input.component';
 
 import api from '../../services/api.service';
-import {getStorageLogin} from '../../services/auth.service';
 
 function ProfileView(){
 
-    const [userId, setUserId] = useState(getStorageLogin().userId)
+    const [userId, setUserId] = useState(useParams().id);
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [userType, setUserType] = useState('');
     const [businessName, setBusinessName] = useState('');
     const [plan, setPlan] = useState('');
     const [doc, setDoc] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [address, setAddress] = useState('');
-    const [number, setNumber] = useState('');
-    const [complement, setComplement] = useState('');
-    const [neighborhood, setNeighborhood] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
 
     useEffect(() => {
+
         async function getItems() {
             try {
 
                 await api.get("/usuario/id/" + userId).then((response) => {
                     const userData = response.data;
                     handleGetBusinessData(userData);
-
                     setName(userData.nome);
                     setLastName(userData.sobrenome);
                     setEmail(userData.email);
                     setUserType(userData.tipoUsuario);
-
                 });
 
-                
-                // setPassword(userData.password);
-                // setConfirm(userData.confirm);
-                // setDoc(data.doc);
-                // setZipCode(data.zipCode);
-                // setAddress(data.address);
-                // setNumber(data.number);
-                // setComplement(data.complement);
-                // setNeighborhood(data.neighborhood);
-                // setCity(data.cicy);
-                // setState(data.state);
-                
-
             } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
+                toast.error("Não foi possível carregar o usuário.", {position: "top-center"});
             }
         }
 
@@ -111,32 +93,7 @@ function ProfileView(){
                                         <Input placeholder="Plano" readonly value={plan} onChange={e => setPlan(e.target.value)} />
                                     </Col>
                                 </Row>
-                                {/* <FormTitle title="Endereço" />
-                                <Row>
-                                    <Col md='2'>
-                                        <Input placeholder="CEP" value={zipCode} onChange={e => setZipCode(e.target.value)} />
-                                    </Col>
-                                    <Col md='8'>
-                                        <Input placeholder="Logradouro" value={address} onChange={e => setAddress(e.target.value)} />
-                                    </Col>
-                                    <Col md='2'>
-                                        <Input placeholder="Nº" value={number} onChange={e => setNumber(e.target.value)} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md='2'>
-                                        <Input placeholder="Complemento" value={complement} onChange={e => setComplement(e.target.value)} />
-                                    </Col>
-                                    <Col md='2'>
-                                        <Input placeholder="Bairro" value={neighborhood} onChange={e => setNeighborhood(e.target.value)} />
-                                    </Col>
-                                    <Col md='6'>
-                                        <Input placeholder="Cidade" value={city} onChange={e => setCity(e.target.value)} />
-                                    </Col>
-                                    <Col md='2'>
-                                        <Input placeholder="Estado" value={state} onChange={e => setState(e.target.value)} />
-                                    </Col>
-                                </Row> */}
+                                
                                 <FormTitle title="Acesso" />
                                 <Row>
                                     <Col md='6'>

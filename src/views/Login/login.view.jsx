@@ -3,6 +3,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Col, Row, Form, Button, Container } from 'react-bootstrap';
 import {useHistory} from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {BetweenWrapper} from '../../components/Wrappers.component';
 import Application from '../../components/ApplicationName.component';
 
@@ -43,9 +46,13 @@ function LoginView(){
                 }
 
             }catch(err){
-                alert('Não foi possível fazer o login.');
+                toast.error("Não foi possível fazer o login.", {position: "top-left"});
             }
         }
+    }
+
+    const handleRedirect = async e =>{
+        history.push('/register');
     }
 
     return(
@@ -57,14 +64,14 @@ function LoginView(){
                             <Application/>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="formBasicEmail">
-                                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+                                    <Form.Control type="email" required="required" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
                                 </Form.Group>
                                 <Form.Group controlId="formBasicPassword">
-                                    <Form.Control type="password" placeholder="Senha" value={senha} onChange={e => setPassword(e.target.value)} />
+                                    <Form.Control type="password" required="required" placeholder="Senha" value={senha} onChange={e => setPassword(e.target.value)} />
                                 </Form.Group>
                                 <BetweenWrapper>
-                                    <Button variant="primary" type="submit">Login</Button>
-                                    <a className="btn btn-outline-dark">Sign Up</a>
+                                    <Button variant="dark" type="submit">Login</Button>
+                                    <a onClick={() => handleRedirect()} className="btn btn-outline-dark">Cadastre-se</a>
                                 </BetweenWrapper>
                             </Form>
                         </div>

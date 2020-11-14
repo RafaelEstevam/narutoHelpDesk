@@ -1,6 +1,10 @@
   
 import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { ChildContentWrapper } from '../../components/Wrappers.component';
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
@@ -22,20 +26,24 @@ function UserView(){
     useEffect(() => {
         async function getTicket() {
             try {
-                const { data } = await api.get("/users/");
+                const { data } = await api.get("/usuario/listar/");
                 setDataTable(data);
                 
             } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
+                toast.error("Não foi possível carregar a lista.", {position: "top-center"});
             }
         }
         getTicket();
     }, []);
 
+    function setUserType(tipoUsuario){
+        return tipoUsuario == 1 ? 'Administrador' : tipoUsuario == 2 ? 'Funcionário' : 'Cliente';
+    }
+
     const columns = [
         {
             name: 'Name',
-            selector: 'name',
+            selector: 'nome',
             sortable: true,
         },
         {
@@ -45,13 +53,14 @@ function UserView(){
             right: true,
         },
         {
-            name: 'User type',
-            selector: 'userType',
+            name: 'Tipo de usuário',
+            selector: 'tipoUsuario',
             sortable: true,
             right: true,
+            cell: (row) =>  setUserType(row.tipoUsuario)
         },
         {
-            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.id)} key={row.id}>Edit</button>,
+            cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.idUsuario)} key={row.idUsuario}>Edit</button>,
             ignoreRowClick: false,
             allowOverflow: true,
             button: true,

@@ -2,6 +2,8 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
+import { getStorageLogin } from '../services/auth.service';
+
 
 const UserHeader = styled('div')`
     display: flex;
@@ -68,9 +70,10 @@ const UserHeaderDetails = styled('div')`
 function SelectPlanButton({name}){
 
     const history = useHistory();
+    const { userId } = getStorageLogin();
 
     function handleProfile(){
-        history.push(`/profile`);
+        history.push(`/users/${userId}`);
     }
 
     return(

@@ -27,6 +27,12 @@ const ticketValidation = yup.object().shape({
     setor: yup.string().required(),
 });
 
+//chatValidation
+
+const chatValidation = yup.object().shape({
+    conteudo: yup.string().required(),
+});
+
 const taskTalkValidation = yup.object().shape({
     userId:yup.string().required(),
     clientId:yup.string().required(),
@@ -55,5 +61,6 @@ export {
     ticketValidation,
     profileValidation,
     taskTalkValidation,
-    registerValidation
+    registerValidation,
+    chatValidation
 };

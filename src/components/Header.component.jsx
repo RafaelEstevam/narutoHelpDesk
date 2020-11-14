@@ -54,7 +54,7 @@ function Header(){
     }
 
     return (
-        <HeaderComponent className={!isClient ? 'justify-content-end' : ''}>
+        <HeaderComponent className="justify-content-end">
             <HeaderButton onClick={() => handleLogout()}><i className="fa fa-power-off"></i></HeaderButton>
         </HeaderComponent>
     )

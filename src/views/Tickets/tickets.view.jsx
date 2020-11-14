@@ -2,12 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
 import DataTable from 'react-data-table-component';
 import ViewTitle from '../../components/ViewTitle.component';
 import Space from '../../components/Space.component';
-import {millisecondsToDate} from '../../services/date.service';
+import {reformatDate} from '../../services/date.service';
 
 import {getStorageLogin} from '../../services/auth.service';
 
@@ -52,7 +55,7 @@ function TicketsView(){
                 setDataTable(data);
                 
             } catch (error) {
-                alert("Ocorreu um erro ao buscar os items");
+                toast.error("Não foi possível carregar a lista.", {position: "top-center"});
             }
         }
         getTicket();
@@ -63,7 +66,7 @@ function TicketsView(){
     }
 
     function setDateTicket(date){
-        return millisecondsToDate(date);
+        return reformatDate(date);
     }
 
     const columns = [
@@ -99,10 +102,17 @@ function TicketsView(){
         },
         {
             name: 'Data de criação',
-            selector: 'created_at',
+            selector: 'dataInicio',
             sortable: true,
             right: true,
             cell: (row) =>  setDateTicket(row.dataInicio)
+        },
+        {
+            name: 'Prazo',
+            selector: 'dataTermino',
+            sortable: true,
+            right: true,
+            cell: (row) =>  setDateTicket(row.dataTermino)
         },
         {
             cell: (row) => <button class="btn btn-outline-primary btn-sm" onClick={() => handleTableClick(row.idChamado)} key={row.idChamado}>Visualizar</button>,

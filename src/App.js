@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Routes from './routes';
-import {getStorageLogin, setStorageLogin, removeStorageLogin} from './services/auth.service'
+import {getStorageLogin, setStorageLogin, removeStorageLogin} from './services/auth.service';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import useContext from './services/useContext.service';
 
@@ -29,6 +31,7 @@ function App() {
   return (
       <useContext.Provider value={contextValue}>
         <Routes/>
+        <ToastContainer />
       </useContext.Provider>
   );
 }

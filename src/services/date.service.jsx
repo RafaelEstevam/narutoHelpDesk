@@ -28,6 +28,10 @@ export function getDateTime(){
     return new Date().getTime();
 }
 
+export function getDate(){
+    return new Date().getTime();
+}
+
 export function millisecondsToDate(milliseconds){
     let date = new Date(milliseconds);
     return convertDate('/', date);
@@ -36,4 +40,11 @@ export function millisecondsToDate(milliseconds){
 export function millisecondsToDateDefault(milliseconds){
     let date = new Date(milliseconds);
     return convertDateDefault('-', date);
+}
+
+export function reformatDate(dateStr){
+    if(dateStr){
+        let dArr = dateStr.split("-"); 
+        return dArr[2]+ "-" +dArr[1]+ "-" +dArr[0];
+    }
 }

@@ -49,6 +49,7 @@ function Routes(){
                 <PrivateRoutes path="/dashboard" exact component={DashboardView} />
                 <PrivateRoutes path="/client-dashboard" exact component={ClientDashboard} />
                 <PrivateRoutes path="/users" exact component={UsersView} />
+                <PrivateRoutes path="/users/:id" exact component={ProfileView} />
                 <PrivateRoutes path="/profile" exact component={ProfileView} />
                 <PrivateRoutes path="/tickets" exact component={TicketsView} />
                 <PrivateRoutes path="/tickets/new" exact component={TicketView} />

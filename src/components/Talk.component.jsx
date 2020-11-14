@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
 
+const urlImg = process.env.REACT_APP_API + '/file/downloadFile/';
+
 const TalkImage = styled('img')`
     margin-top: 15px;
     width: 100%;
@@ -24,6 +26,8 @@ const TalkComponent = styled('div')`
 
 function Talk({content, date, hour, userId, talkUserId, image}){
 
+    console.log(urlImg);
+
     const isClientTalk = userId == talkUserId ? false : true;
 
     return(
@@ -33,7 +37,7 @@ function Talk({content, date, hour, userId, talkUserId, image}){
                 {date} - {hour}
             </TalkDetails>
             {content}
-            {image && image != '' && <TalkImage src={image} />}
+            {image && image != '' && <TalkImage src={urlImg + image} />}
         </TalkComponent>
     )
 }
