@@ -209,7 +209,7 @@ export function Calendar({events, title, simple, handleOnClick}){
           <CardCalendar TaskItemStatus={TaskItemStatus} >
                 <CardCalendarHeader>
                     <h4>{eventInfo.event.title}</h4>
-                    <p>{eventInfo.event.extendedProps.description}</p>
+                    {/* <p>{eventInfo.event.extendedProps.description}</p> */}
                 </CardCalendarHeader>
                 <CardCalendarWrapper>
                     <CardCalendarItem>{eventInfo.event.extendedProps.clientName}</CardCalendarItem>
