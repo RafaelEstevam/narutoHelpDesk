@@ -3,11 +3,15 @@ import {useHistory} from 'react-router-dom';
 
 import styled from 'styled-components';
 import * as V from '../styles/variables';
-import PlayButton from './PlayButton.component';
+
+import {convertTask} from '../services/task.service';
+import {reformatDate} from '../services/date.service';
 
 const TaskItemWrapper = styled('div')`
-        width: 100%;
-    `
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`
 
 const TaskDetails = styled('p')`
     border: 1px solid ${V.draculaLight};
@@ -21,26 +25,40 @@ const TaskDetails = styled('p')`
 `
 
 const TaskTitle = styled('h3')`
-    font-size: 20px;
+    font-size: 16px;
     color: ${V.whiteColor};
     margin: 0px;
 `
 
 const TaskDescription = styled('p')`
-    font-size: 14px;
+    font-size: 12px;
     color: ${V.whiteColor};
-    margin: 10px 0px;
+    margin: 10px 0px 0px;
 `
 
-const TaskLink = styled('a')`
-    text-decoration: none !important;
+const TaskHeader = styled('div')`
 `
 
 const TaskWrapper = styled('div')`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+`
+
+const TaskLabel = styled('div')`
+    justyfy-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 10px;
+
+    label{
+        color: ${V.whiteColor};
+        text-align: center;
+        font-size: 12px;
+        margin: 0px;
+        margin-bottom: 10px;
+    }
 `
 
 const TaskItem = styled('div')`
@@ -57,10 +75,6 @@ const TaskItem = styled('div')`
     margin-bottom: 10px;
     background: ${V.draculaDark};
 
-    // :nth-child(2n+1){
-    //     background: ${V.draculaDark};
-    // }
-
     :hover{
         background: ${V.draculaInverse};
     }
@@ -71,22 +85,28 @@ function Task({task}){
     const history = useHistory();
 
     function handleGoToTicketPage(task){
-        history.push(`/tickets/${task.ticketId}`);
+        history.push(`/tickets/${task.idChamado}`);
     }
 
-    const TaskItemStatus = task.status == 'done' ? V.draculaSuccess : task.status == 'blocked' ? V.draculaDanger : task.status == 'in-progress' ? V.draculaWarning : V.draculaPrimary;
-    const TaskItemAlert = task.scheduleAlert ? V.draculaSecondary : 'transparent';
+    const TaskItemStatus = convertTask(task.statusId) == 'Finalizado' ? V.draculaSuccess : convertTask(task.statusId) == 'Bloqueado' ? V.draculaDanger : convertTask(task.statusId) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
 
     return (
         <TaskItem TaskItemStatus={TaskItemStatus} TaskItemAlert={TaskItemStatus} onClick={ e => handleGoToTicketPage(task)}>
             <TaskItemWrapper>
-                <TaskLink >
-                    <TaskTitle>{task.title}</TaskTitle> 
-                    <TaskDescription>{task.description}</TaskDescription>
-                </TaskLink>
-                {/* <TaskWrapper>
-                    <TaskDetails>{task.clientName}</TaskDetails>
-                </TaskWrapper> */}
+                <TaskHeader>
+                    <TaskTitle>{task.titulo}</TaskTitle> 
+                    <TaskDescription>{task.descricao}</TaskDescription>
+                </TaskHeader>
+                <TaskWrapper>
+                    <TaskLabel>
+                        {/* <label>Cliente</label> */}
+                        <TaskDetails>{task.empresa.nome}</TaskDetails>
+                    </TaskLabel>
+                    <TaskLabel>
+                        {/* <label>Início</label> */}
+                        <TaskDetails>{reformatDate(task.dataInicio)}</TaskDetails>
+                    </TaskLabel>
+                </TaskWrapper>
             </TaskItemWrapper>
         </TaskItem>
     )

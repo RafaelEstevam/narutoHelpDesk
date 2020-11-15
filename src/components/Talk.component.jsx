@@ -26,8 +26,6 @@ const TalkComponent = styled('div')`
 
 function Talk({content, date, hour, userId, talkUserId, image}){
 
-    console.log(urlImg);
-
     const isClientTalk = userId == talkUserId ? false : true;
 
     return(

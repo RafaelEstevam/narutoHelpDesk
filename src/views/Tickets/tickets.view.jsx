@@ -13,6 +13,7 @@ import Space from '../../components/Space.component';
 import {reformatDate} from '../../services/date.service';
 
 import {getStorageLogin} from '../../services/auth.service';
+import {convertTask} from '../../services/task.service';
 
 import api from '../../services/api.service';
 
@@ -53,17 +54,12 @@ function TicketsView(){
             try {
                 const { data } = await api.get("/chamado/listar/");
                 setDataTable(data);
-                
             } catch (error) {
                 toast.error("Não foi possível carregar a lista.", {position: "top-center"});
             }
         }
         getTicket();
     }, []);
-    
-    function setStatusTicket(statusId){
-        return statusId == 1 ? 'Aberto' : statusId == 2 ? 'Em atendimento' : statusId == 4 ? 'Finalizado' : 'Bloqueado';
-    }
 
     function setDateTicket(date){
         return reformatDate(date);
@@ -98,7 +94,7 @@ function TicketsView(){
             selector: 'status',
             sortable: true,
             right: true,
-            cell: (row) =>  setStatusTicket(row.status)
+            cell: (row) =>  convertTask(row.statusId)
         },
         {
             name: 'Data de criação',

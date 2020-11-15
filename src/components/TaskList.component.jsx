@@ -3,35 +3,36 @@ import styled from 'styled-components';
 import * as V from '../styles/variables';
 import Task from './Task.component.jsx';
 
-const TaskListCard = styled('div')`
+export const TaskListCard = styled('div')`
         background-color: ${V.draculaLight};
         border-radius: 3px;
         padding: 10px 15px;
-        max-height: 800px;
+        max-height: 840px;
         height: 600px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
     `
 
-const TaskListCardTitle = styled('h3')`
+export const TaskListCardTitle = styled('h3')`
     font-size: 20px;
     color: ${V.whiteColor}
 `
 
-const TaskListFilterWrapper = styled('div')`
+export const TaskListFilterWrapper = styled('div')`
     padding: 15px 0px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 `
 
-const TaskListFilterButtons = styled('button')`
+export const TaskListFilterButtons = styled('button')`
     border: 0px solid transparent;
     border-radius: 3px;
-    margin: 10px;
+    // margin: 10px;
     padding: 5px 10px;
     font-size: 12px;
     font-weight: bold;
+    color: ${V.whiteColor};
 
     &.danger{
         background-color: ${V.draculaDanger};
@@ -49,19 +50,24 @@ const TaskListFilterButtons = styled('button')`
         background-color: ${V.draculaPrimary};
     }
 
+    &.dark{
+        background-color: ${V.draculaDark};
+    }
+
 `
 
-function TaskList({tasks, title}){
+export function TaskList({tasks, title, handleOnClick}){
 
     return (
         <TaskListCard>
             <div>
                 <TaskListCardTitle>{title}</TaskListCardTitle>
                 <TaskListFilterWrapper>
-                    <TaskListFilterButtons className="primary">To Do</TaskListFilterButtons>
-                    <TaskListFilterButtons className="success">Done</TaskListFilterButtons>
-                    <TaskListFilterButtons className="warning">In Progress</TaskListFilterButtons>
-                    <TaskListFilterButtons className="danger">Blocked</TaskListFilterButtons>
+                    <TaskListFilterButtons className="dark" onClick={() => handleOnClick('todos')}><i class="fa fa-list"></i> Todos</TaskListFilterButtons>
+                    <TaskListFilterButtons className="primary" onClick={() => handleOnClick('aberto')}><i class="fa fa-bullhorn" ></i> Aberto</TaskListFilterButtons>
+                    <TaskListFilterButtons className="success" onClick={() => handleOnClick('finalizado')}><i class="fa fa-check" ></i> Finalizado</TaskListFilterButtons>
+                    <TaskListFilterButtons className="warning" onClick={() => handleOnClick('em-atendimento')}><i class="fa fa-spinner" ></i> Em atendimento</TaskListFilterButtons>
+                    <TaskListFilterButtons className="danger" onClick={() => handleOnClick('bloqueado')}><i class="fa fa-close" ></i> Bloqueado</TaskListFilterButtons>
                 </TaskListFilterWrapper>
                 {tasks.length > 0 && tasks.map((item) =>{
                     return (
@@ -73,4 +79,4 @@ function TaskList({tasks, title}){
     )
 }
 
-export default TaskList;
+// export TaskList;

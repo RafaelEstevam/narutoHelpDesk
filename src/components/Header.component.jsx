@@ -45,7 +45,6 @@ function Header(){
 
     function handleNewTicket(){
         history.push('/tickets/new');
-        // return (<Link to="/tickets/new'" />teste</Link>)
     }
 
     function handleLogout(){
