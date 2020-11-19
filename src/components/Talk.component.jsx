@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import * as V from '../styles/variables';
+import {reformatDate} from '../services/date.service'
 
 const urlImg = process.env.REACT_APP_API + '/file/downloadFile/';
 
 const TalkImage = styled('img')`
     margin-top: 15px;
     width: 100%;
+    cursor: pointer;
 `
 
 const TalkDetails = styled('p')`
@@ -24,7 +26,7 @@ const TalkComponent = styled('div')`
     margin-left: ${ props => !props.clientType ? '50px' : '0px' } ;
 `
 
-function Talk({content, date, hour, userId, talkUserId, image}){
+function Talk({content, date, hour, userId, talkUserId, image, showImage}){
 
     const isClientTalk = userId == talkUserId ? false : true;
 
@@ -32,10 +34,10 @@ function Talk({content, date, hour, userId, talkUserId, image}){
 
         <TalkComponent clientType={isClientTalk}>
             <TalkDetails>
-                {date} - {hour}
+                {reformatDate(date)}
             </TalkDetails>
             {content}
-            {image && image != '' && <TalkImage src={urlImg + image} />}
+            {image && image != '' && <TalkImage src={urlImg + image} onClick={(e) => showImage(urlImg + image)} />}
         </TalkComponent>
     )
 }

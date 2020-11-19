@@ -22,8 +22,6 @@ export function convertDateDefault(separator, getDate){
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
 
-    console.log(month);
-    
     switch(month){
         case 1:
             month = 'Janeiro';

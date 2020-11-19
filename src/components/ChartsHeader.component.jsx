@@ -13,17 +13,6 @@ const BarChartTitle = styled('h3')`
     font-size: 20px;
 `
 
-const BarChartBtnContext = styled('button')`
-    border: 0px;
-    background: transparent;
-    border-radius: 1000px;
-    color: ${props=> props.color};
-    padding:5px 10px;
-    :hover{
-        background-color: rgba(0,0,0,0.2);
-    }
-`
-
 const BarChartTools = styled('div')`
     display: flex;
     align-items: center;
@@ -40,7 +29,7 @@ function ChartsHeader({title, color}){
             <BarChartTitle color={color}>{title}</BarChartTitle>
             <BarChartTools color={color}>
                 <small>Semanal</small>
-                <BarChartBtnContext color={color}><i class="fa fa-bars"></i></BarChartBtnContext>
+                {/* <BarChartBtnContext color={color}><i class="fa fa-bars"></i></BarChartBtnContext> */}
             </BarChartTools>
         </BarChartHeader>
         

@@ -3,7 +3,7 @@ export function convertTask(statusId){
 }
 
 export function convertTaskNumber(statusId){
-    return statusId == 'aberto' ? 1 : statusId == 'em-atendimento' ? 2 : statusId == 'finalizado' ? 4 : 3;
+    return statusId == 'Aberto' ? 1 : statusId == 'Em atendimento' ? 2 : statusId == 'Finalizado' ? 4 : 3;
 }
 
 export function convertTaskList(taskList){

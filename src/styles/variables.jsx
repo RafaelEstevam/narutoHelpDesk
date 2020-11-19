@@ -16,6 +16,7 @@ const bgCard = '#352d4c';
 
 const draculaPrimary = '#7077f9';
 const draculaDark = '#21222c';
+const draculaDarkTransparent = 'rgba(40, 42, 54, 0.86);';
 // const draculaSuccess = '#27b163';
 const draculaSuccess = '#007bff';
 // const draculaDanger = '#c76dc6';
@@ -69,5 +70,6 @@ export {
     draculaBootstrapInfo,
     draculaBootstrapDanger,
     draculaWhite,
-    draculaLightPurple
+    draculaLightPurple,
+    draculaDarkTransparent
 }

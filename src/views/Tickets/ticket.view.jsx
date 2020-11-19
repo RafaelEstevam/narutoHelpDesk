@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,6 +12,8 @@ import {getCurrentDate, getDateTime, getDate} from '../../services/date.service'
 import {getBase64} from '../../services/img.service';
 
 import {ticketValidation, chatValidation} from '../../validations/validations';
+
+import ImgTalk from '../../components/ImgTalk.component';
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import ViewTitle from '../../components/ViewTitle.component';
@@ -46,6 +46,7 @@ function TicketView(){
     const [taskReadyOnly, setTaskReadyOnly] = useState(true);
     const [chatDate, setChatDate] = useState('');
     const [chatImage, setChatImage] = useState('');
+    const [image, setImage] = useState('');
 
     useEffect(() => {
 
@@ -123,8 +124,8 @@ function TicketView(){
             dataInicio: created_at,
             dataTermino: finished_at,
             descricao: description,
-            setor: categotyId,
-            status: status,
+            setor: parseInt(categotyId),
+            status: parseInt(status),
             titulo: title
         }
         
@@ -137,6 +138,14 @@ function TicketView(){
                 }
             }
         });
+    }
+
+    const HandleShowImage = (imageSrc) =>{
+        setImage(imageSrc);
+    }
+
+    const HandleCloseImage = () =>{
+        setImage('');
     }
 
     const handleChatSubmit = async e =>{
@@ -162,7 +171,9 @@ function TicketView(){
         await chatValidation.isValid(chatData).then( valid =>{
             if(valid){
                 try{
-                    api.post('chat_chamado/', chatData);
+                    api.post('chat_chamado/', chatData).then((response) =>{
+                        getTalkTicket();
+                    });
                 }catch(err){
                     toast.error("Não foi possível salvar o chamado.", {position: "top-center"});
                 }
@@ -249,7 +260,7 @@ function TicketView(){
                                                 {talkHistory && talkHistory.length > 0 && 
                                                     talkHistory.map((item) => {
                                                         return (
-                                                            <Talk key={item.idChatChamado} content={item.conteudo} date={item.dataChat} userId={userId} talkUserId={item.usuario} image={item.imagem} />
+                                                            <Talk showImage={HandleShowImage} key={item.idChatChamado} content={item.conteudo} date={item.dataChat} userId={userId} talkUserId={item.usuario} image={item.imagem} />
                                                         )
                                                     })
                                                 }
@@ -275,7 +286,7 @@ function TicketView(){
                         </FormWrapper>
                     </Col>
                 </Row>
-                
+            <ImgTalk src={image} handleClose={HandleCloseImage} />
             </ChildContentWrapper>
         )
     }

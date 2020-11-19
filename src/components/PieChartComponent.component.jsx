@@ -7,13 +7,6 @@ import ChartWrapperComponent from './ChartsWrapper.component';
 import {TaskListFilterButtons, TaskListFilterWrapper} from './TaskList.component'
 import * as V from '../styles/variables';
 
-const data = [
-    { name: 'Abertos', value: 400 },
-    { name: 'Em andamento', value: 300 },
-    { name: 'Bloqueados', value: 300 },
-    { name: 'Finalizados', value: 200 },
-];
-  
 const COLORS = [V.draculaPrimary, V.draculaWarning, V.draculaDanger, V.draculaSuccess];
   
 const RADIAN = Math.PI / 180;
@@ -32,7 +25,9 @@ const renderCustomizedLabel = ({
     );
 };
 
-function PieChartComponent({title, stroke, dataKey}){
+function PieChartComponent({title, stroke, dataKe, data}){
+
+    // console.log(data);
 
     const renderContent = () =>{
         return(
@@ -41,25 +36,26 @@ function PieChartComponent({title, stroke, dataKey}){
                 <div style={{ width: '100%', height: 480}}>
                     <ResponsiveContainer>
                         <PieChart width={400} height={200} data={data}>
-                            
-                            <Pie
-                                data={data}
-                                cx={170}
-                                cy={240}
-                                labelLine={false}
-                                label={renderCustomizedLabel}
-                                outerRadius={100}
-                                fill="#8884d8"
-                                dataKey="value"
-                                paddingAngle={10}
-                                innerRadius={80}
-                                stroke={V.draculaLight}
-
-                            >
-                                {
-                                    data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-                                }
-                            </Pie>
+                            {data && data.length > 0 &&
+                                <Pie
+                                    data={data}
+                                    cx={170}
+                                    cy={240}
+                                    labelLine={false}
+                                    label={renderCustomizedLabel}
+                                    outerRadius={100}
+                                    fill="#8884d8"
+                                    dataKey="chamados"
+                                    paddingAngle={10}
+                                    innerRadius={60}
+                                    stroke={V.draculaLight}
+    
+                                >
+                                    {
+                                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                    }
+                                </Pie>
+                            }
                         </PieChart>
                     </ResponsiveContainer>
                     

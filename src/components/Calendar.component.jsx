@@ -204,7 +204,7 @@ export function Calendar({events, title, simple, handleOnClick}){
     }
 
     function renderEventContent(eventInfo) {
-        const TaskItemStatus = convertTask(eventInfo.event.extendedProps.statusId) == 'Finalizado' ? V.draculaSuccess : convertTask(eventInfo.event.extendedProps.statusId) == 'Bloqueado' ? V.draculaDanger : convertTask(eventInfo.event.extendedProps.statusId) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
+        const TaskItemStatus = convertTask(eventInfo.event.extendedProps.status) == 'Finalizado' ? V.draculaSuccess : convertTask(eventInfo.event.extendedProps.status) == 'Bloqueado' ? V.draculaDanger : convertTask(eventInfo.event.extendedProps.status) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
         return (
           <CardCalendar TaskItemStatus={TaskItemStatus} >
                 <CardCalendarHeader>
@@ -219,7 +219,7 @@ export function Calendar({events, title, simple, handleOnClick}){
     }
 
     function renderSimpleContent(eventInfo) {
-        const TaskItemStatus = convertTask(eventInfo.event.extendedProps.statusId) == 'Finalizado' ? V.draculaSuccess : convertTask(eventInfo.event.extendedProps.statusId) == 'Bloqueado' ? V.draculaDanger : convertTask(eventInfo.event.extendedProps.statusId) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
+        const TaskItemStatus = convertTask(eventInfo.event.extendedProps.status) == 'Finalizado' ? V.draculaSuccess : convertTask(eventInfo.event.extendedProps.status) == 'Bloqueado' ? V.draculaDanger : convertTask(eventInfo.event.extendedProps.status) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
         return (
             <SimpleCardCalendar TaskItemStatus={TaskItemStatus} >
                 <h4>{eventInfo.event.title}</h4>

@@ -94,7 +94,7 @@ function TicketsView(){
             selector: 'status',
             sortable: true,
             right: true,
-            cell: (row) =>  convertTask(row.statusId)
+            cell: (row) =>  convertTask(row.status)
         },
         {
             name: 'Data de criação',

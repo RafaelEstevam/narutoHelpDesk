@@ -17,7 +17,9 @@ function LineChartComponent({data, title, stroke, dataKey}){
         if (active) {
           return (
             <BarChartToolTipWrapper>
-              <p className="label">{`${payload[0].payload.name} : ${payload[0].value}`}</p>
+                {payload && payload[0] && payload[0].payload &&
+                    <p className="label">{`${payload[0].payload.name} : ${payload[0].value}`}</p>
+                }
             </BarChartToolTipWrapper>
           );
         }
