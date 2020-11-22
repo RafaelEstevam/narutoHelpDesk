@@ -11,7 +11,7 @@ const BarChartToolTipWrapper = styled('div')`
     max-width: 100px;
 `
 
-function LineChartComponent({data, title, stroke, dataKey}){
+function LineChartComponent({data, title, stroke, dataKey, showFlag}){
 
     const CustomTooltip = ({ active, payload, label }) => {
         if (active) {
@@ -29,7 +29,7 @@ function LineChartComponent({data, title, stroke, dataKey}){
     const renderContent = () =>{
         return(
             <div>
-                <ChartHeaderComponent title={title} color={V.whiteColor} />
+                <ChartHeaderComponent title={title} color={V.whiteColor} showFlag={showFlag} />
                 <div style={{ width: '100%', height: 150 }}>
                     <ResponsiveContainer>
                         <LineChart width={300} height={100} data={data}>

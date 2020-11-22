@@ -216,8 +216,8 @@ function TicketView(){
                                             <option value="">Selecione um status</option>
                                             <option value="1">Aberto</option>
                                             <option value="2">Em atendimento</option>
-                                            <option value="4">Finalizado</option>
-                                            <option value="3">Bloqueado</option>
+                                            <option value="3">Finalizado</option>
+                                            <option value="4">Bloqueado</option>
                                         </select>
                                     </Col>
                                     <Col md='3'>

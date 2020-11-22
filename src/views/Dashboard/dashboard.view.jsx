@@ -32,7 +32,6 @@ function DashboardView(){
     const [all, setAll] = useState(0);
 
     useEffect(() => {
-        getDataDashboard();
         getTasks('', true, true);
         getLineChart();
         getPieChart();
@@ -52,7 +51,6 @@ function DashboardView(){
         try {
             const { data } = await api.get(`/relatorio/qtd_status_chamado_dia_semana/`);
             setPieData(data);
-
         } catch (error) {
             toast.error("Não foi possível carregar o dashboard", {position: "top-center"});
         }
@@ -72,23 +70,6 @@ function DashboardView(){
 
         } catch (error) {
             toast.error("Não foi possível carregar o dashboard", {position: "top-center"});
-        }
-    }
-
-    async function getDataDashboard(){
-        try{
-            const { data } = await api.get("/chamado/listar");
-            setChartData(data);
-        }catch(error){
-            toast.error("Não foi possível carregar o dashboard", {position: "top-center"});
-        }
-    }
-
-    function handleLoadTasks (status){
-        if(status == 'todos'){
-            setAll(all + 1);
-        }else{
-            getTasks(convertTaskNumber(status), false, true);
         }
     }
 
@@ -116,11 +97,12 @@ function DashboardView(){
                             dataKey={'chamados'}
                             title={"Nº de chamados"}
                             stroke={V.draculaLightPurple}
+                            showFlag={true}
                         ></LineChartComponent>
 
                         <PieChartComponent
                             data={pieData}
-                            title={"Atendimento"}
+                            title={"% de Atendimento"}
                             stroke={V.draculaLight}
                         ></PieChartComponent>
 

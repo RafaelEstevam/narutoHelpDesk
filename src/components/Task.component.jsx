@@ -88,7 +88,7 @@ function Task({task}){
         history.push(`/tickets/${task.idChamado}`);
     }
 
-    const TaskItemStatus = convertTask(task.statusId) == 'Finalizado' ? V.draculaSuccess : convertTask(task.statusId) == 'Bloqueado' ? V.draculaDanger : convertTask(task.statusId) == 'Em atendimento' ? V.draculaWarning : V.draculaPrimary;
+    const TaskItemStatus = convertTask(task.statusId) == 'Finalizado' ? V.draculaSuccess : convertTask(task.statusId) == 'Bloqueado' ? V.draculaDanger : convertTask(task.statusId) == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
 
     return (
         <TaskItem TaskItemStatus={TaskItemStatus} TaskItemAlert={TaskItemStatus} onClick={ e => handleGoToTicketPage(task)}>

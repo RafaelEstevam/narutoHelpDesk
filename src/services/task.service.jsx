@@ -1,9 +1,9 @@
 export function convertTask(statusId){
-    return statusId == 1 ? 'Aberto' : statusId == 2 ? 'Em atendimento' : statusId == 4 ? 'Finalizado' : 'Bloqueado';
+    return statusId == 1 ? 'Aberto' : statusId == 2 ? 'Iniciado' : statusId == 3 ? 'Finalizado' : 'Bloqueado / Cancelado';
 }
 
 export function convertTaskNumber(statusId){
-    return statusId == 'Aberto' ? 1 : statusId == 'Em atendimento' ? 2 : statusId == 'Finalizado' ? 4 : 3;
+    return statusId == 'Aberto' ? 1 : statusId == 'Iniciado' ? 2 : statusId == 'Finalizado' ? 3 : 4;
 }
 
 export function convertTaskList(taskList){
@@ -19,6 +19,7 @@ export function convertTaskList(taskList){
             date: element.dataTermino,
             clientName: element.empresa.nome,
             statusId: element.statusId,
+            status: element.statusNome,
             description: element.descricao,
         }
 

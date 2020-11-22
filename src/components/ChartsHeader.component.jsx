@@ -22,15 +22,18 @@ const BarChartTools = styled('div')`
     }
 `
 
-function ChartsHeader({title, color}){
+function ChartsHeader({title, color, showFlag}){
     
     return(
         <BarChartHeader>
             <BarChartTitle color={color}>{title}</BarChartTitle>
-            <BarChartTools color={color}>
-                <small>Semanal</small>
-                {/* <BarChartBtnContext color={color}><i class="fa fa-bars"></i></BarChartBtnContext> */}
-            </BarChartTools>
+            {
+                showFlag &&
+                <BarChartTools color={color}>
+                    <small>Semanal</small>
+                    {/* <BarChartBtnContext color={color}><i class="fa fa-bars"></i></BarChartBtnContext> */}
+                </BarChartTools>
+            }
         </BarChartHeader>
         
     )

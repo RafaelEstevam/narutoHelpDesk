@@ -7,7 +7,7 @@ import ChartWrapperComponent from './ChartsWrapper.component';
 import {TaskListFilterButtons, TaskListFilterWrapper} from './TaskList.component'
 import * as V from '../styles/variables';
 
-const COLORS = [V.draculaPrimary, V.draculaWarning, V.draculaDanger, V.draculaSuccess];
+const COLORS = [ V.draculaSuccess, V.draculaDanger, V.draculaPrimary, V.draculaWarning ];
   
 const RADIAN = Math.PI / 180;
 
@@ -25,9 +25,24 @@ const renderCustomizedLabel = ({
     );
 };
 
-function PieChartComponent({title, stroke, dataKe, data}){
+function PieColor (status){
+    switch(status){
+        case "Aberto":
+            return V.draculaPrimary;
+            break;
+        case "Iniciado":
+            return V.draculaWarning
+            break;
+        case "Cancelado":
+            return V.draculaDanger
+            break;
+        case "Finalizado":
+            return V.draculaSuccess
+            break;
+    }
+}
 
-    // console.log(data);
+function PieChartComponent({title, stroke, dataKe, data}){
 
     const renderContent = () =>{
         return(
@@ -49,10 +64,16 @@ function PieChartComponent({title, stroke, dataKe, data}){
                                     paddingAngle={10}
                                     innerRadius={60}
                                     stroke={V.draculaLight}
-    
                                 >
                                     {
-                                        data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                        // data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                        data.map((entry, index) => {
+
+                                            console.log(entry);
+
+
+                                            return(<Cell key={`cell-${index}`} fill={PieColor(entry.name)} />)
+                                        })
                                     }
                                 </Pie>
                             }
