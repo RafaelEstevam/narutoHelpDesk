@@ -13,6 +13,7 @@ import listPlugin from '@fullcalendar/list';
 import * as V from '../styles/variables';
 
 import {convertTaskList, convertTask} from '../services/task.service';
+import {reformatDate} from '../services/date.service'
 
 export const CalendarCard = styled('div')`
     background-color: ${V.draculaLight};
@@ -97,7 +98,7 @@ export const CardCalendar = styled('div')`
         margin: 0px;
     }
 
-    p, i, span{
+    p, i{
         display: none;
         margin: 0px;
     }
@@ -107,12 +108,19 @@ export const CardCalendar = styled('div')`
     }
 
     :hover{
-        p, i, span{
+        p, i{
             display: block;
         }
     }
 
 `
+
+export const CardCalendar2 = styled(CardCalendar)`{
+    p, i{
+        display: block;
+        margin: 0px;
+    }
+}`
 
 export const SimpleCardCalendar = styled('div')`
 
@@ -150,10 +158,21 @@ export const CardCalendarWrapper = styled('div')`
         margin: 10px 0px;
     }
 `
+
+export const CardCalendarWrapper2 = styled(CardCalendarWrapper)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
 export const CalendarFilter = styled('div')`
     display: flex;
     align-items: center;
     justyfy-content: start;
+
+    p{
+        color: ${V.whiteColor};
+        margin: 0px;
+    }
 `
 
 export const CalendarFilterItem = styled('div')`
@@ -187,7 +206,52 @@ export const CalendarFilterItem = styled('div')`
     }
 
 `
-export const CardCalendarHeader = styled('div')``
+export const CardCalendarHeader = styled('div')`
+    color: ${V.whiteColor}
+`
+
+export const ListCardView = ({task, onClick}) => {
+
+    const TaskItemStatus = task.statusNome == 'Finalizado' ? V.draculaSuccess : task.statusNome == 'Bloqueado / Cancelado' ? V.draculaDanger : task.statusNome == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
+    return (
+      <CardCalendar2 TaskItemStatus={TaskItemStatus} onClick={onClick}>
+            <CardCalendarHeader>
+                <h4>{task.titulo}</h4>
+                <span style={{marginTop: '10px', marginBottom: '10px', display:'block'}}>{task.descricao}</span>
+            </CardCalendarHeader>
+            <CardCalendarWrapper2>
+                <CardCalendarItem>Abertura: {reformatDate(task.dataInicio)}</CardCalendarItem>
+                {
+                    task.dataTermino &&
+                    <CardCalendarItem>Prazo: {reformatDate(task.dataTermino)}</CardCalendarItem>
+                }
+            </CardCalendarWrapper2>
+      </CardCalendar2>
+    )
+}
+
+export const renderEventContent = (eventInfo) => {
+    const TaskItemStatus = eventInfo.event.extendedProps.status == 'Finalizado' ? V.draculaSuccess : eventInfo.event.extendedProps.status == 'Bloqueado / Cancelado' ? V.draculaDanger : eventInfo.event.extendedProps.status == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
+    return (
+      <CardCalendar TaskItemStatus={TaskItemStatus} >
+            <CardCalendarHeader>
+                <h4>{eventInfo.event.title}</h4>
+            </CardCalendarHeader>
+            <CardCalendarWrapper>
+                <CardCalendarItem>{eventInfo.event.extendedProps.clientName}</CardCalendarItem>
+            </CardCalendarWrapper>
+      </CardCalendar>
+    )
+}
+
+export const renderSimpleContent = (eventInfo) => {
+    const TaskItemStatus = eventInfo.event.extendedProps.status == 'Finalizado' ? V.draculaSuccess : eventInfo.event.extendedProps.status == 'Bloqueado / Cancelado' ? V.draculaDanger : eventInfo.event.extendedProps.status == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
+    return (
+        <SimpleCardCalendar TaskItemStatus={TaskItemStatus} >
+            <h4>{eventInfo.event.title}</h4>
+        </SimpleCardCalendar>
+    )
+}
 
 export function Calendar({events, title, simple, handleOnClick}){
 
@@ -203,41 +267,18 @@ export function Calendar({events, title, simple, handleOnClick}){
         events = convertTaskList(events);
     }
 
-    function renderEventContent(eventInfo) {
-        const TaskItemStatus = eventInfo.event.extendedProps.status == 'Finalizado' ? V.draculaSuccess : eventInfo.event.extendedProps.status == 'Bloqueado / Cancelado' ? V.draculaDanger : eventInfo.event.extendedProps.status == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
-        return (
-          <CardCalendar TaskItemStatus={TaskItemStatus} >
-                <CardCalendarHeader>
-                    <h4>{eventInfo.event.title}</h4>
-                    {/* <p>{eventInfo.event.extendedProps.description}</p> */}
-                </CardCalendarHeader>
-                <CardCalendarWrapper>
-                    <CardCalendarItem>{eventInfo.event.extendedProps.clientName}</CardCalendarItem>
-                </CardCalendarWrapper>
-          </CardCalendar>
-        )
-    }
-
-    function renderSimpleContent(eventInfo) {
-        const TaskItemStatus = eventInfo.event.extendedProps.status == 'Finalizado' ? V.draculaSuccess : eventInfo.event.extendedProps.status == 'Bloqueado / Cancelado' ? V.draculaDanger : eventInfo.event.extendedProps.status == 'Iniciado' ? V.draculaWarning : V.draculaPrimary;
-        return (
-            <SimpleCardCalendar TaskItemStatus={TaskItemStatus} >
-                <h4>{eventInfo.event.title}</h4>
-            </SimpleCardCalendar>
-        )
-    }
-
     return(
 
         <CalendarCard>
             <CalendarHeader>
                 <CalendarTitle>{title}</CalendarTitle>
                 <CalendarFilter>
-                    <CalendarFilterItem className="dark" onClick={() => handleOnClick('todos')}></CalendarFilterItem>
-                    <CalendarFilterItem className="primary" onClick={() => handleOnClick('aberto')}></CalendarFilterItem>
-                    <CalendarFilterItem className="success" onClick={() => handleOnClick('finalizado')}></CalendarFilterItem>
-                    <CalendarFilterItem className="warning" onClick={() => handleOnClick('em-atendimento')}></CalendarFilterItem>
-                    <CalendarFilterItem className="danger" onClick={() => handleOnClick('bloqueado')}></CalendarFilterItem>
+                    <p>Filtar chamados por: </p>
+                    <CalendarFilterItem title="Todos" className="dark" onClick={() => handleOnClick('')}></CalendarFilterItem>
+                    <CalendarFilterItem title="Aberto" className="primary" onClick={() => handleOnClick('1')}></CalendarFilterItem>
+                    <CalendarFilterItem title="Finalizado" className="success" onClick={() => handleOnClick('3')}></CalendarFilterItem>
+                    <CalendarFilterItem title="Em andamento" className="warning" onClick={() => handleOnClick('2')}></CalendarFilterItem>
+                    <CalendarFilterItem title="Bloqueado/Cancelado" className="danger" onClick={() => handleOnClick('4')}></CalendarFilterItem>
                 </CalendarFilter>
             </CalendarHeader>
             <CalendarWrapper>

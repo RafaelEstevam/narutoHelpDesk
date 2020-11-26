@@ -3,9 +3,17 @@ import styled from 'styled-components';
 import Task from './Task.component';
 import * as V from '../styles/variables';
 import api from '../services/api.service';
+import {useHistory} from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import {ListCardView} from './Calendar.component';
 
 const Column = styled('div')`
     height: 800px;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     background-color: ${V.draculaLight};
     border-radius: 3px;
@@ -15,14 +23,21 @@ const Column = styled('div')`
 function ColumnTask({userId, title, status}){
 
     const [taskList, setTaskList] = useState('');
+    const history = useHistory();
+
+    function handleEventClick (e){
+        const ticketId = e;
+        const path = `/tickets/${ticketId}`;
+        history.push(path);
+    }
 
     useEffect(() => {
         async function getTasks() {
             try {
-                const { data } = await api.get("/users/" + userId + "/tickets/" + status);
+                const { data } = await api.get(`/chamado/listar/${status}/${userId}/` );
                 setTaskList(data);
             } catch (error) {
-                // alert("Ocorreu um erro ao buscar os items");
+                toast.error("Não foi possível carregar os chamados.", {position: "top-center"});
             }
         }
         getTasks();
@@ -34,7 +49,7 @@ function ColumnTask({userId, title, status}){
             {
                 taskList.length > 0 && taskList.map((item) =>{
                     return (
-                        <Task task={item} />
+                        <ListCardView task={item} onClick={() => handleEventClick(item.idChamado)}/>
                     )
                 })
             }

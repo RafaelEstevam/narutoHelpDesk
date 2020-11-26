@@ -132,9 +132,13 @@ function TicketView(){
         await ticketValidation.isValid(ticketData).then( valid =>{
             if(valid){
                 try{
-                    api.post('/chamado/', ticketData);
+                    if(ticketId){
+                        api.put('/chamado/', ticketData);
+                    }else{
+                        api.post('/chamado/', ticketData);
+                    }
                 }catch(err){
-                    toast.error("Não foi possível salvar o chamado.", {position: "top-center"});
+                    toast.error(err.response.data, {position: "top-center"});
                 }
             }
         });

@@ -33,7 +33,7 @@ function LoginView(){
     const [lastName, setLastName] = useState('');
     const [businessName, setBusinessName] = useState('');
     const [plan, setPlan] = useState('');
-    const [userType, setUserType] = useState(1);
+    const [userType, setUserType] = useState(3);
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -103,9 +103,9 @@ function LoginView(){
         }
 
         try{
-            await api.post('/usuario', userData).then((response) => {
-            });
-        }catch(err){
+            await api.post('/usuario', userData);
+        }catch(error){
+            toast.error(error.response.data);
         }
 
     }

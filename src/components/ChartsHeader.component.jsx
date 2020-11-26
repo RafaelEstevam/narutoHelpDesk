@@ -31,7 +31,6 @@ function ChartsHeader({title, color, showFlag}){
                 showFlag &&
                 <BarChartTools color={color}>
                     <small>Semanal</small>
-                    {/* <BarChartBtnContext color={color}><i class="fa fa-bars"></i></BarChartBtnContext> */}
                 </BarChartTools>
             }
         </BarChartHeader>

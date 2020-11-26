@@ -58,7 +58,7 @@ function DashboardView(){
 
     async function getTasks(status, hasCalendar, hasTask) {
         try {
-            const { data } = await api.get(`/chamado/listar/${status}`);
+            const { data } = await api.get(`/chamado/listar/${status}/`);
             
             if(hasTask){
                 setTickets(data);
@@ -74,10 +74,10 @@ function DashboardView(){
     }
 
     function handleLoadCalendar (status){
-        if(status == 'todos'){
+        if(status == ''){
             setAll(all + 1);
         }else{
-            getTasks(convertTaskNumber(status), true, false);
+            getTasks(status, true, false);
         }
     }
 
