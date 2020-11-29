@@ -79,12 +79,17 @@ function LoginView(){
         await registerValidation.isValid(registerData).then( valid =>{
 
             if(valid){
-                try{
-                    api.post('/empresa', businessData).then((response) => {
-                        handleUserSubmit(response.data);
-                    });
-                }catch(err){
-                }
+                // try{
+                //     api.post('/empresa', businessData).then((response) => {
+                //         handleUserSubmit(response.data);
+                //     });
+                // }catch(err){
+                // }
+                api.post('/empresa', businessData).then((response) =>{
+                    handleUserSubmit(response.data);
+                }).catch((err) =>{
+                    toast.error(err.response.data, {position: "top-center"});
+                });
             }
         });
     }
@@ -102,11 +107,17 @@ function LoginView(){
             setor: 0,
         }
 
-        try{
-            await api.post('/usuario', userData);
-        }catch(error){
-            toast.error(error.response.data);
-        }
+        await api.post('/usuario', userData).then((response) =>{
+            toast.success('Conta criada com sucesso', {position: "top-center"});
+        }).catch((err) =>{
+            toast.error(err.response.data, {position: "top-center"});
+        });
+
+        // try{
+        //     await api.post('/usuario', userData);
+        // }catch(error){
+        //     toast.error(error.response.data);
+        // }
 
     }
 
