@@ -1,9 +1,9 @@
 export function convertTask(statusId){
-    return statusId == 1 ? 'Aberto' : statusId == 2 ? 'Iniciado' : statusId == 3 ? 'Finalizado' : 'Bloqueado / Cancelado';
+    return statusId == 1 ? 'Aberto' : statusId == 2 ? 'Em andamento' : statusId == 3 ? 'Finalizado' : 'Bloqueado / Cancelado';
 }
 
 export function convertTaskNumber(statusId){
-    return statusId == 'Aberto' ? 1 : statusId == 'Iniciado' ? 2 : statusId == 'Finalizado' ? 3 : 4;
+    return statusId == 'Aberto' ? 1 : statusId == 'Em andamento' ? 2 : statusId == 'Finalizado' ? 3 : 4;
 }
 
 export function convertTaskList(taskList){

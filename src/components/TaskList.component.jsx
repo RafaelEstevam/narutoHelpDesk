@@ -66,7 +66,7 @@ export function TaskList({tasks, title, handleOnClick}){
                     <TaskListFilterButtons className="dark" onClick={() => handleOnClick('todos')}><i class="fa fa-list"></i> Todos</TaskListFilterButtons>
                     <TaskListFilterButtons className="primary" onClick={() => handleOnClick('aberto')}><i class="fa fa-bullhorn" ></i> Aberto</TaskListFilterButtons>
                     <TaskListFilterButtons className="success" onClick={() => handleOnClick('finalizado')}><i class="fa fa-check" ></i> Finalizado</TaskListFilterButtons>
-                    <TaskListFilterButtons className="warning" onClick={() => handleOnClick('em-atendimento')}><i class="fa fa-spinner" ></i> Em atendimento</TaskListFilterButtons>
+                    <TaskListFilterButtons className="warning" onClick={() => handleOnClick('em-atendimento')}><i class="fa fa-spinner" ></i> Em andamento</TaskListFilterButtons>
                     <TaskListFilterButtons className="danger" onClick={() => handleOnClick('bloqueado')}><i class="fa fa-close" ></i> Bloqueado</TaskListFilterButtons>
                 </TaskListFilterWrapper>
                 {tasks.length > 0 && tasks.map((item) =>{

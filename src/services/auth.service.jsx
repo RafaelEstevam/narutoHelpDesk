@@ -24,6 +24,10 @@ export const setStorageLogin = (userData) => {
   localStorage.setItem('name', userData.nome);
 }
 
+export const setUserLogin = (userName) => {
+  localStorage.setItem('name', userName);
+}
+
 export const auth = () => {
   return {
     auth: {

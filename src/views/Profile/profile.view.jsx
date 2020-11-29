@@ -14,6 +14,8 @@ import FormTitle from '../../components/FormTitle.component';
 import Input from '../../components/Input.component';
 
 import api from '../../services/api.service';
+import { setUserLogin } from '../../services/auth.service';
+import { userValidation, profileValidation } from '../../validations/validations';
 
 function ProfileView(){
 
@@ -22,6 +24,7 @@ function ProfileView(){
     const [lastName, setLastName] = useState('');
     const [userType, setUserType] = useState('');
     const [businessName, setBusinessName] = useState('');
+    const [businessId, setBusinessId] = useState('');
     const [plan, setPlan] = useState('');
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
@@ -29,13 +32,12 @@ function ProfileView(){
     const [confirm, setConfirm] = useState('');
 
     useEffect(() => {
-
         async function getItems() {
             try {
 
                 await api.get("/usuario/id/" + userId).then((response) => {
                     const userData = response.data;
-                    handleGetBusinessData(userData);
+                    handleGetBusinessData(userData.empresa);
                     setName(userData.nome);
                     setLastName(userData.sobrenome);
                     setEmail(userData.email);
@@ -50,21 +52,48 @@ function ProfileView(){
         getItems();
     }, []);
 
-
     const handleSubmit = async e =>{
         e.preventDefault();
+
+        const userData ={
+            email: email,
+            empresa: businessId,
+            idUsuario: userId,
+            nome: name,
+            sobrenome: lastName,
+            tipoUsuario: userType,
+            senha: password,
+            status: true,
+            setor: 0
+        }
+
+        await userValidation.isValid(userData).then( valid =>{
+            if(valid){
+                try{
+                    api.put('/usuario/', userData);
+                    toast.success("Atualizações salvas", {position: "top-center"});
+                    setUserLogin(userData.nome)
+                }catch(err){
+                    toast.error(err.response.data, {position: "top-center"});
+                }
+            }
+        });
+
     }
 
-    const handleGetBusinessData = async (user) => {
-        const businessData = await api.get("/empresa/id/" + user.empresa);
+    const handleGetBusinessData = async (business) => {
+        const businessData = await api.get("/empresa/id/" + business);
+
         setBusinessName(businessData.data.nome);
+        setBusinessId(businessData.data.idEmpresa);
+        setDoc(businessData.data.cnpj);
         setPlan(businessData.data.plano);
     }
 
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <ViewTitle title="Profile" />
+                <ViewTitle title="Dados do usuário" />
                 <Row>
                     <Col md='9'>
                         <FormWrapper>
@@ -99,30 +128,31 @@ function ProfileView(){
                                     <Col md='6'>
                                         <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                                     </Col>
-                                    <Col md='3'>
+                                    <Col md='6'>
                                         <Input placeholder="Senha" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                                     </Col>
-                                    <Col md='3'>
-                                        <Input placeholder="Confirmação" type="password" value={confirm} onChange={e => setConfirm(e.target.value)} />
-                                    </Col>
+                                    
                                 </Row>
                                 <hr/>
                                 <Row>
                                     <Col md='12'>
                                         <div className="d-flex justify-content-between align-items-center">
                                             <button className="btn btn-primary">Salvar</button>
-                                            <button className="btn btn-outline-danger">Voltar</button>
                                         </div>
                                     </Col>
                                 </Row>
                             </form>
                         </FormWrapper>
                     </Col>
-                    {/* <Col md='3'>
-                        <CardWrapper>
-                            adfasdf
-                        </CardWrapper>
-                    </Col> */}
+                    {
+                        userType == 3 &&
+                        <Col md='3'>
+                            <FormWrapper>
+                                <FormTitle title="Detalhes do plano" />
+                            </FormWrapper>
+                        </Col>
+                    }
+                    
                 </Row>
                 
             </ChildContentWrapper>

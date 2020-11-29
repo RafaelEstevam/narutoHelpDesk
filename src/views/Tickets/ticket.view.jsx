@@ -131,14 +131,18 @@ function TicketView(){
         
         await ticketValidation.isValid(ticketData).then( valid =>{
             if(valid){
-                try{
-                    if(ticketId){
-                        api.put('/chamado/', ticketData);
-                    }else{
-                        api.post('/chamado/', ticketData);
-                    }
-                }catch(err){
-                    toast.error(err.response.data, {position: "top-center"});
+                if(ticketId){
+                    api.put('/chamado/', ticketData).then((response) =>{
+                        toast.success('Atualizado com sucesso', {position: "top-center"});
+                    }).catch((err) =>{
+                        toast.error(err.response.data, {position: "top-center"});
+                    });
+                }else{
+                    api.post('/chamado/', ticketData).then((response) =>{
+                        toast.success('Salvo com sucesso', {position: "top-center"});
+                    }).catch((err) =>{
+                        toast.error(err.response.data, {position: "top-center"});
+                    });
                 }
             }
         });
@@ -174,13 +178,12 @@ function TicketView(){
 
         await chatValidation.isValid(chatData).then( valid =>{
             if(valid){
-                try{
-                    api.post('chat_chamado/', chatData).then((response) =>{
-                        getTalkTicket();
-                    });
-                }catch(err){
+                api.post('chat_chamado/', chatData).then((response) =>{
+                    getTalkTicket();
+                    toast.success("Mensagem enviada", {position: "top-center"});
+                }).catch((err) => {
                     toast.error("Não foi possível salvar o chamado.", {position: "top-center"});
-                }
+                });
             }
         });
 
@@ -189,7 +192,7 @@ function TicketView(){
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <ViewTitle title={'Ticket [' + ticketId + '] - ' + title } />
+                <ViewTitle title={'Chamado [' + ticketId + '] - ' + title } />
                 <Row>
                     <Col md='8'>
                         <FormWrapper>
@@ -219,7 +222,7 @@ function TicketView(){
                                         <select className="form-control" value={status} disabled={clientReadyOnly} onChange={e => setStatus(e.target.value)}>
                                             <option value="">Selecione um status</option>
                                             <option value="1">Aberto</option>
-                                            <option value="2">Em atendimento</option>
+                                            <option value="2">Em andamento</option>
                                             <option value="3">Finalizado</option>
                                             <option value="4">Bloqueado</option>
                                         </select>

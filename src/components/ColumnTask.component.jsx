@@ -20,6 +20,19 @@ const Column = styled('div')`
     padding: 15px;
 `
 
+const ColumnHeader = styled('div')`
+    display: flex;
+    // justify-content: center;
+    padding: 10px 0px;
+
+    h2{
+        font-size: 18px;
+        font-weight: 100;
+        color: ${V.whiteColor};
+    }
+    
+`
+
 function ColumnTask({userId, title, status}){
 
     const [taskList, setTaskList] = useState('');
@@ -46,6 +59,9 @@ function ColumnTask({userId, title, status}){
     return(
 
         <Column>
+            <ColumnHeader>
+                <h2>{title}</h2>
+            </ColumnHeader>
             {
                 taskList.length > 0 && taskList.map((item) =>{
                     return (

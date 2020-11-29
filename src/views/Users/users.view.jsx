@@ -78,6 +78,7 @@ function UserView(){
                     keyField={'id'}
                     highlightOnHover
                     pagination
+                    theme={'dark'}
                 />
             </ChildContentWrapper>
         )

@@ -81,6 +81,7 @@ function TicketsView(){
                     keyField={'id'}
                     highlightOnHover
                     pagination
+                    theme={'dark'}
                 />
             </ChildContentWrapper>
         )

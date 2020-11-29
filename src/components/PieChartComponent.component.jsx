@@ -86,7 +86,7 @@ function PieChartComponent({title, stroke, dataKe, data}){
                         <TaskListFilterWrapper>
                             <TaskListFilterButtons className="primary" > Aberto</TaskListFilterButtons>
                             <TaskListFilterButtons className="success" > Finalizado</TaskListFilterButtons>
-                            <TaskListFilterButtons className="warning" > Em atendimento</TaskListFilterButtons>
+                            <TaskListFilterButtons className="warning" > Em andamento</TaskListFilterButtons>
                             <TaskListFilterButtons className="danger" > Bloqueado</TaskListFilterButtons>
                         </TaskListFilterWrapper>
                     </Col>

@@ -126,7 +126,7 @@ function TicketsView(){
     const renderContent = () =>{
         return (
             <ChildContentWrapper>
-                <ViewTitle title="Tickets" />
+                <ViewTitle title="Chamados" />
                 {isClient && 
                     <div>
                         <NewTaskButton onClick={() => handleNewTicket()}>Novo chamado <i className="fa fa-tasks"></i></NewTaskButton>
@@ -135,12 +135,13 @@ function TicketsView(){
                 }
                 
                 <DataTable
-                    title="Tickets"
+                    title="Chamados"
                     columns={columns}
                     data={dataTable}
                     keyField={'id'}
                     highlightOnHover
                     pagination
+                    theme={'dark'}
                 />
             </ChildContentWrapper>
         )
