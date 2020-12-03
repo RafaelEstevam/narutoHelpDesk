@@ -197,14 +197,16 @@ function TicketView(){
                     <Col md='8'>
                         <FormWrapper>
                             <form onSubmit={handleSubmit}>
-                                <FormTitle title="Dados" />
+                                <FormTitle title="Detalhes do chamado" />
 
                                 <Row>
                                     <Col md='6'>
-                                        <Input placeholder="Título do ticket" value={title} readonly={ticketId} onChange={e => setTitle(e.target.value)} />
+                                        <label>Título</label>
+                                        <Input placeholder="Título do chamado" required={'required'} value={title} readonly={ticketId} onChange={e => setTitle(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
-                                        <select className="form-control" value={categotyId} disabled={taskReadyOnly} onChange={e => setCategoryId(e.target.value)}>
+                                        <label>Categoria</label>
+                                        <select className="form-control" required="required" value={categotyId} disabled={taskReadyOnly} onChange={e => setCategoryId(e.target.value)}>
                                         <option value="">Selecione uma categoria</option>
                                             {listCategory && listCategory.length > 0 && 
                                                 listCategory.map((item)=>{
@@ -219,7 +221,8 @@ function TicketView(){
 
                                 <Row>
                                     <Col md='6'>
-                                        <select className="form-control" value={status} disabled={clientReadyOnly} onChange={e => setStatus(e.target.value)}>
+                                        <label>Status</label>
+                                        <select className="form-control" required="required" value={status} disabled={clientReadyOnly} onChange={e => setStatus(e.target.value)}>
                                             <option value="">Selecione um status</option>
                                             <option value="1">Aberto</option>
                                             <option value="2">Em andamento</option>
@@ -228,9 +231,11 @@ function TicketView(){
                                         </select>
                                     </Col>
                                     <Col md='3'>
+                                        <label>Data de abertura</label>
                                         <Input placeholder="Data de abertura" type={'date'} value={created_at} readonly={true} onChange={e => setCreatedAt(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
+                                        <label>Data de conclusão</label>
                                         <Input placeholder="Data de conclusão" type={'date'} value={finished_at} readonly={clientReadyOnly} onChange={e => setFinishedAt(e.target.value)} />
                                     </Col>
                                 </Row>
@@ -238,7 +243,8 @@ function TicketView(){
                                 <FormTitle title="Detalhes do ticket" />
                                 <Row>
                                     <Col md='12'>
-                                        <Textarea placeholder="Detalhes do ticket" height={400} readonly={ticketId} value={description} onChange={e => setDescription(e.target.value)} />
+                                        <label>Descrição</label>
+                                        <Textarea required={'required'} placeholder="Detalhes do ticket" height={400} readonly={ticketId} value={description} onChange={e => setDescription(e.target.value)} />
                                     </Col>
                                 </Row>
 
@@ -278,7 +284,7 @@ function TicketView(){
                                         <Input placeholder="Data" type={'date'} value={chatDate} readonly={true} onChange={e => setChatDate(e.target.value)} />
                                     </Col>
                                     <Col md='12'>
-                                        <Textarea placeholder="Texto" height={130} value={talkText} onChange={e => setTalkText(e.target.value)} />
+                                        <Textarea required={'required'} placeholder="Texto" height={130} value={talkText} onChange={e => setTalkText(e.target.value)} />
                                     </Col>
                                     <Col md='12'>
                                         <input type='file' accept="image/png, image/jpeg" onChange={e => setChatImage(e.target.files[0])} />

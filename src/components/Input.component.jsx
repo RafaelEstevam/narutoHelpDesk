@@ -8,9 +8,9 @@ const InputComponent = styled('input')`
     }
 `
 
-function Input({placeholder, type, onChange, value, readonly}){
+function Input({placeholder, type, onChange, value, readonly, required}){
     return(
-        <InputComponent className="form-control mb-3" readOnly={readonly} placeholder={placeholder} value={value} onChange={onChange} type={type} />
+        <InputComponent className="form-control mb-3" required={required} readOnly={readonly} placeholder={placeholder} value={value} onChange={onChange} type={type} />
     )
 }
 

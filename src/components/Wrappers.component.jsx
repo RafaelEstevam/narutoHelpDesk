@@ -55,6 +55,10 @@ const FormWrapper = styled('div')`
     background-color: ${V.draculaLight};
     border-radius: 3px;
     padding: 15px;
+
+    label{
+        color: ${V.whiteColor};
+    }
 `
 
 const CardWrapper = styled(FormWrapper)`

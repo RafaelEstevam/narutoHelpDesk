@@ -8,7 +8,7 @@ const TextAreaComponent = styled('textarea')`
     }
 `
 
-function Textarea({placeholder, onChange, value, readonly, height}){
+function Textarea({placeholder, onChange, value, readonly, height, required}){
     return(
         <div>
             <TextAreaComponent 
@@ -18,6 +18,7 @@ function Textarea({placeholder, onChange, value, readonly, height}){
                 onChange={onChange}
                 style={{height: height + 'px' }}
                 defaultValue={value}
+                required={required}
             />
         </div>
     )

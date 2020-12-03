@@ -58,7 +58,7 @@ function DashboardView(){
 
     async function getTasks(status, hasCalendar, hasTask) {
         try {
-            const { data } = await api.get(`/chamado/listar/${status}/`);
+            const { data } = status ? await api.get(`/chamado/listar/status/${status}/`) : await api.get(`/chamado/listar/`) ;
             
             if(hasTask){
                 setTickets(data);

@@ -41,7 +41,7 @@ function TicketsView(){
     const [dataTable, setDataTable] = useState('');
     
     const history = useHistory();
-    const {userType} = getStorageLogin();
+    const {userType, userId} = getStorageLogin();
     const isClient = userType == 3 ? true : false;
 
     function handleTableClick (id){
@@ -52,7 +52,7 @@ function TicketsView(){
     useEffect(() => {
         async function getTicket() {
             try {
-                const { data } = await api.get("/chamado/listar/");
+                const { data } = isClient ? await api.get(`/chamado/listar/${userId}/`) : await api.get(`/chamado/listar/`) ;
                 setDataTable(data);
             } catch (error) {
                 toast.error("Não foi possível carregar a lista.", {position: "top-center"});

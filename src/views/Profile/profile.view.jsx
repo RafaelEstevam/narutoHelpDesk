@@ -17,6 +17,12 @@ import api from '../../services/api.service';
 import { setUserLogin } from '../../services/auth.service';
 import { userValidation, profileValidation } from '../../validations/validations';
 
+import * as V from '../../styles/variables';
+
+import StartIcon from '../../assets/001-startup.svg';
+import ProIcon from '../../assets/002-checklist.svg';
+import BusinessIcon from '../../assets/003-bank.svg';
+
 function ProfileView(){
 
     const [userId, setUserId] = useState(useParams().id);
@@ -29,7 +35,9 @@ function ProfileView(){
     const [doc, setDoc] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirm, setConfirm] = useState('');
+    const [planTitle, setPlanTitle] = useState('');
+    const [planQuantity, setPlanQuantity] = useState('');
+    const [planIcon, setPlanIcon] = useState('');
 
     useEffect(() => {
         async function getItems() {
@@ -87,7 +95,15 @@ function ProfileView(){
         setBusinessName(businessData.data.nome);
         setBusinessId(businessData.data.idEmpresa);
         setDoc(businessData.data.cnpj);
-        setPlan(businessData.data.plano);
+        handleGetPlan(businessData.data.plano)
+    }
+
+    const handleGetPlan = async (planId) =>{
+        const {data} = await api.get(`/plano/id/${planId}/`);
+        setPlanTitle(data.nome);
+        setPlanQuantity(data.quantidadeChamadoMes);
+        data.idPlano == 1 ? setPlanIcon(StartIcon) : data.idPlano == 2 ? setPlanIcon(ProIcon) : setPlanIcon(BusinessIcon);
+
     }
 
     const renderContent = () =>{
@@ -101,34 +117,42 @@ function ProfileView(){
                                 <FormTitle title="Dados" />
                                 <Row>
                                     <Col md='6'>
+                                        <label>Nome</label>
                                         <Input placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
+                                        <label>Sobrenome</label>
                                         <Input placeholder="Sobrenome" value={lastName} onChange={e => setLastName(e.target.value)} />
                                     </Col>
                                     <Col md='3'>
-                                        <Input placeholder="Tipo de usuário" readonly value={userType} onChange={e => setUserType(e.target.value)} />
+                                        <label>Tipo usuário</label>
+                                        <Input type="hidden" placeholder="Tipo de usuário" readonly value={userType} onChange={e => setUserType(e.target.value)} />
+                                        <h4 style={{color: V.whiteColor}}>{userType == 1 ? "Administrador" : "Cliente"}</h4>
                                     </Col>
                                 </Row>
                                 <FormTitle title="Dados da empresa" />
                                 <Row>
                                     <Col md='3'>
+                                        <label>Documento</label>
                                         <Input placeholder="CPF/CNPJ" readonly value={doc} onChange={e => setDoc(e.target.value)} />
                                     </Col>
-                                    <Col md='6'>
+                                    <Col md='9'>
+                                        <label>Nome da empresa</label>
                                         <Input placeholder="Nome da empresa" value={businessName} onChange={e => setBusinessName(e.target.value)} />
                                     </Col>
-                                    <Col md='3'>
+                                    {/* <Col md='3'>
                                         <Input placeholder="Plano" readonly value={plan} onChange={e => setPlan(e.target.value)} />
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                                 
                                 <FormTitle title="Acesso" />
                                 <Row>
                                     <Col md='6'>
+                                        <label>Email</label>
                                         <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                                     </Col>
                                     <Col md='6'>
+                                        <label>Senha</label>
                                         <Input placeholder="Senha" type="password" value={password} onChange={e => setPassword(e.target.value)} />
                                     </Col>
                                     
@@ -148,7 +172,13 @@ function ProfileView(){
                         userType == 3 &&
                         <Col md='3'>
                             <FormWrapper>
-                                <FormTitle title="Detalhes do plano" />
+                                <div style={{display:'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: V.whiteColor}}>
+                                    <FormTitle title="Detalhes do plano" />
+                                    <img src={planIcon} style={{width: '200px', filter:'invert(1)'}} />
+                                    <h1 className="display-4 py-5">{planTitle}</h1>
+                                    <h3>Nº Chamados: {planQuantity}</h3>
+                                </div>
+                                
                             </FormWrapper>
                         </Col>
                     }

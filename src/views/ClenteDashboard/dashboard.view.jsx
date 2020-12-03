@@ -21,7 +21,7 @@ function DashboardView(){
                 <Row>
                     <Col md='3'><ColumnTask title={'Aberto'} status={'1'} userId={userId}/></Col>
                     <Col md='3'><ColumnTask title={'Iniciado'} status={'2'} userId={userId}/></Col>
-                    <Col md='3'><ColumnTask title={'Bloqueado/Cancelado'} status={'4'} userId={userId}/></Col>
+                    <Col md='3'><ColumnTask title={'Bloqueado'} status={'4'} userId={userId}/></Col>
                     <Col md='3'><ColumnTask title={'Finalizado'} status={'3'} userId={userId}/></Col>
                 </Row>
             </ChildContentWrapper>

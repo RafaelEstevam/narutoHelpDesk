@@ -278,7 +278,7 @@ export function Calendar({events, title, simple, handleOnClick}){
                     <CalendarFilterItem title="Aberto" className="primary" onClick={() => handleOnClick('1')}></CalendarFilterItem>
                     <CalendarFilterItem title="Finalizado" className="success" onClick={() => handleOnClick('3')}></CalendarFilterItem>
                     <CalendarFilterItem title="Em andamento" className="warning" onClick={() => handleOnClick('2')}></CalendarFilterItem>
-                    <CalendarFilterItem title="Bloqueado/Cancelado" className="danger" onClick={() => handleOnClick('4')}></CalendarFilterItem>
+                    <CalendarFilterItem title="Bloqueado" className="danger" onClick={() => handleOnClick('4')}></CalendarFilterItem>
                 </CalendarFilter>
             </CalendarHeader>
             <CalendarWrapper>
