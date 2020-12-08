@@ -72,21 +72,23 @@ function Header(){
     const isClient = userType == 3 ? true : false;
 
     useEffect(() => {
-        async function getItems() {
-            try {
-
-                await api.get(`/chamado/qtd_chamado/empresa/${userId}/`).then((response) => {
-                    const {data} = response;
-                    setTotalTickets(data.qtd);
-                });
-
-            } catch (error) {
-                toast.error("Não foi possível carregar total de chamados", {position: "top-center"});
-            }
+        if(isClient){
+            getTotalTickets();
         }
-
-        getItems();
+        
     }, []);
+
+    async function getTotalTickets(){
+        try {
+            await api.get(`/chamado/qtd_chamado/empresa/${userId}/`).then((response) => {
+                const {data} = response;
+                setTotalTickets(data.qtd);
+            });
+
+        } catch (error) {
+            toast.error("Não foi possível carregar total de chamados", {position: "top-center"});
+        }
+    }
 
     function handleNewTicket(){
         history.push('/tickets/new');
