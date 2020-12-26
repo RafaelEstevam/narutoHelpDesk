@@ -11,8 +11,6 @@ import 'react-tabs/style/react-tabs.css';
 import * as S from "./styled";
 
 import SelectPlanButton from '../../components/SelectPlanBtn.component';
-// import Space from '../../components/Space.component';
-// import FormTitle from '../../components/FormTitle.component';
 import Application from '../../components/ApplicationName.component';
 import {FullHeightWrapper, CenterWrapper} from '../../components/Wrappers.component';
 
@@ -79,12 +77,6 @@ function LoginView(){
         await registerValidation.isValid(registerData).then( valid =>{
 
             if(valid){
-                // try{
-                //     api.post('/empresa', businessData).then((response) => {
-                //         handleUserSubmit(response.data);
-                //     });
-                // }catch(err){
-                // }
                 api.post('/empresa', businessData).then((response) =>{
                     handleUserSubmit(response.data);
                 }).catch((err) =>{
@@ -112,13 +104,6 @@ function LoginView(){
         }).catch((err) =>{
             toast.error(err.response.data, {position: "top-center"});
         });
-
-        // try{
-        //     await api.post('/usuario', userData);
-        // }catch(error){
-        //     toast.error(error.response.data);
-        // }
-
     }
 
     const handleRedirect = async e =>{
