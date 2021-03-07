@@ -1,6 +1,7 @@
   
 import React, { useEffect, useState, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import socketIOClient from "socket.io-client";
 
 import DefaultWrapper from '../../components/DefaultWrapper.component';
 import { ChildContentWrapper } from '../../components/Wrappers.component';
@@ -19,6 +20,8 @@ import * as V from '../../styles/variables';
 import api from '../../services/api.service';
 import userContext from '../../services/useContext.service';
 import {convertTaskNumber} from '../../services/task.service';
+import base from '../../services/base.service';
+
 
 function DashboardView(){
 
@@ -36,6 +39,20 @@ function DashboardView(){
         getLineChart();
         getPieChart();
     }, [all]);
+
+    const handleChatOn = (e) =>{
+
+        const socket = socketIOClient(`${base}/chat`);
+        socket.on("FromAPI", data => {
+            console.log(data);
+        });
+      
+        return () => socket.disconnect(); 
+    }
+
+    const handleChatOff = (e) =>{
+        console.log("TODO offline");
+    }
 
     async function getLineChart(){
         try {
@@ -92,6 +109,12 @@ function DashboardView(){
                     </Col>
                     
                     <Col md="3">
+
+                        <div>
+                            <button onClick={handleChatOn}>Ficar online</button>
+                            <button onClick={handleChatOff}>Ficar offline</button>
+                        </div>
+
                         <LineChartComponent
                             data={lineData}
                             dataKey={'chamados'}

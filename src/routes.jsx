@@ -8,6 +8,7 @@ import NoMatchView from './views/404/404.view'
 import RegisterView from './views/Register/register.view'
 import ProfileView from './views/Profile/profile.view'
 import UsersView from './views/Users/users.view'
+import ChatsView from './views/Chats/chats.view'
 import TicketView from './views/Tickets/ticket.view'
 import TicketsView from './views/Tickets/tickets.view'
 import TicketsCategoriesView from './views/Tickets/ticketCategories.view'
@@ -48,6 +49,7 @@ function Routes(){
                 <Route path="/register" exact component={RegisterView} />
                 <PrivateRoutes path="/dashboard" exact component={DashboardView} />
                 <PrivateRoutes path="/client-dashboard" exact component={ClientDashboard} />
+                <PrivateRoutes path="/chats" exact component={ChatsView} />
                 <PrivateRoutes path="/users" exact component={UsersView} />
                 <PrivateRoutes path="/users/:id" exact component={ProfileView} />
                 <PrivateRoutes path="/profile" exact component={ProfileView} />

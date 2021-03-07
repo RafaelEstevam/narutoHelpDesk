@@ -3,6 +3,7 @@ const managerRoutes = [
     {label: 'Chamados', icon: 'fa fa-tasks', route: "/tickets", render: true},
     {label: 'Tickets Category', icon: 'fa fa-tag', route: "/tickets-categories", render: false},
     {label: 'Usuários', icon: 'fa fa-user', route: "/users", render: true},
+    {label: 'Conversas', icon: 'fa fa-user', route: "/chats", render: true},
     {label: 'Usuários', icon: 'fa fa-user', route: "/users/:id", render: false},
     {label: 'Report', icon: '', route: "/report", render: false},
     {label: 'Chamados', icon: '', route: "/tickets/:id", render: false},
